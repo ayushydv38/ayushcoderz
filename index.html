@@ -17,11 +17,11 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;}
 .tl{display:flex;align-items:center;gap:6px;}
 .logo{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;}.logo span{color:var(--accent);}
-.ac-icon{width:33px;height:33px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#000;flex-shrink:0;}
+.ac-icon{width:33px;height:33px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#000;flex-shrink:0;cursor:pointer;transition:all .2s;}
+.ac-icon:hover{transform:scale(1.05);}
 .ac-icon.purple{background:var(--purple);}
 .back-btn{display:flex;align-items:center;gap:4px;padding:6px 11px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;white-space:nowrap;}
 .back-btn:hover{background:var(--card2);}
-.btag{padding:4px 11px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2);flex-shrink:0;}
 
 /* HOME */
 #pg-home{background:linear-gradient(135deg,rgba(124,92,191,.04) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(245,166,35,.06) 0%,transparent 50%),var(--bg);}
@@ -67,13 +67,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .bcard{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .22s;}
 .bcard:hover{border-color:rgba(245,166,35,.4);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3);}.bcard:active{transform:scale(.99);}
 .bthumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-
-/* ── BATCH LOGO/IMAGE ── */
-/* .bthumb ke andar ek <img class="bthumb-img"> hai.
-   Jab src set hoga to woh puri thumbnail cover kar legi.
-   Jab src empty hoga to gradient + Hindi text dikhega. */
 .bthumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;display:none;}
-
 .bthumb-grd{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,.25) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(124,92,191,.2) 0%,transparent 60%);}
 .bthumb-name{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(255,255,255,.08);letter-spacing:3px;z-index:1;}
 .bclass-badge{position:absolute;top:9px;left:9px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:var(--accent);color:#000;z-index:4;}
@@ -182,11 +176,9 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 
 /* PLAYER */
 .player-top{display:flex;align-items:center;gap:9px;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;}
-/* The YouTube iframe sits here — takes 16:9 of screen width */
 .v-yt-wrap{width:100%;aspect-ratio:16/9;background:#000;flex-shrink:0;display:none;}
 .v-yt-wrap.active{display:block;}
 .v-yt-wrap iframe{width:100%;height:100%;border:none;display:block;}
-/* Poster (when no URL) */
 .vwrap{width:100%;aspect-ratio:16/9;background:#000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .vbg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0520 0%,#1a0f35 40%,#0e1a25 70%,#0a1a0e 100%);}
 .vglow{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 30%,rgba(124,92,191,.14) 0%,transparent 50%);}
@@ -195,553 +187,686 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .vbatch{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);letter-spacing:2px;margin-bottom:2px;}
 .vlname{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
 .vlnum{font-size:10px;color:var(--muted2);font-family:'Space Mono',monospace;}
-.vplay-ov{position:absolute;z-index:3;width:60px;height:60px;background:rgba(124,92,191,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px;box-shadow:0 0 36px rgba(124,92,191,.5);cursor:pointer;transition:all .2s;top:50%;left:50%;transform:translate(-50%,-50%);}
-.vplay-ov:hover{transform:translate(-50%,-50%) scale(1.08);}
-/* Controls */
-.vctrl{background:var(--bg2);padding:13px 18px;border-top:1px solid var(--border);flex-shrink:0;}
-.prog-row{display:flex;align-items:center;gap:9px;margin-bottom:13px;font-size:11px;font-family:'Space Mono',monospace;color:var(--muted2);}
-.prog-track{flex:1;height:5px;background:var(--border);border-radius:3px;position:relative;cursor:pointer;touch-action:none;}
-.prog-fill{height:100%;width:0%;background:var(--accent);border-radius:3px;pointer-events:none;}
-.prog-handle{width:13px;height:13px;background:var(--accent);border-radius:50%;position:absolute;top:50%;transform:translateY(-50%);left:0;pointer-events:none;box-shadow:0 0 6px rgba(245,166,35,.6);}
-.ctrl-row{display:flex;align-items:center;justify-content:space-between;}
-.ctrl-l{display:flex;align-items:center;gap:10px;}
-.cbtn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
-.cbtn:hover{background:var(--card2);}
-.cbtn.main{width:52px;height:52px;background:var(--accent);color:#000;font-size:20px;border:none;border-radius:50%;}.cbtn.main:hover{background:#e8880a;}
-.ctrl-r{display:flex;align-items:center;gap:7px;}
-.spd-btn{padding:5px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;font-weight:700;font-family:'Space Mono',monospace;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.spd-btn:hover{background:var(--card2);border-color:var(--accent);}
-.fsc-btn{width:38px;height:38px;background:none;border:none;color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-.fsc-btn:hover{background:var(--bg3);color:var(--text);}
-.vinfo{padding:16px 18px;background:var(--bg);flex:1;}
-.vvtitle{font-size:15px;font-weight:700;margin-bottom:5px;}
-.vvmeta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;}
+.vplay-ov{position:absolute;z-index:3;width:60px;height:60px;background:rgba(124,92,191,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px;box-shadow:0 0 30px rgba(124,92,191,.4);}
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
-.page.active .pcard,.page.active .bcard,.page.active .ch-item,.page.active .sfl-card,.page.active .lec-item,.page.active .pdf-item{animation:fadeUp .26s ease forwards;opacity:0;}
-.page.active .pcard:nth-child(1),.page.active .bcard:nth-child(1),.page.active .ch-item:nth-child(1),.page.active .sfl-card:nth-child(1),.page.active .lec-item:nth-child(1),.page.active .pdf-item:nth-child(1){animation-delay:.04s;}
-.page.active .pcard:nth-child(2),.page.active .bcard:nth-child(2),.page.active .ch-item:nth-child(2),.page.active .sfl-card:nth-child(2),.page.active .lec-item:nth-child(2),.page.active .pdf-item:nth-child(2){animation-delay:.09s;}
-.page.active .pcard:nth-child(3),.page.active .bcard:nth-child(3),.page.active .ch-item:nth-child(3),.page.active .lec-item:nth-child(3),.page.active .pdf-item:nth-child(3){animation-delay:.14s;}
-.page.active .pcard:nth-child(4),.page.active .bcard:nth-child(4),.page.active .ch-item:nth-child(4),.page.active .lec-item:nth-child(4),.page.active .pdf-item:nth-child(4){animation-delay:.19s;}
-.page.active .ch-item:nth-child(5),.page.active .lec-item:nth-child(5),.page.active .pdf-item:nth-child(5){animation-delay:.24s;}
-.page.active .ch-item:nth-child(6),.page.active .lec-item:nth-child(6){animation-delay:.29s;}
-.page.active .ch-item:nth-child(7),.page.active .lec-item:nth-child(7){animation-delay:.34s;}
+/* ADMIN STYLES */
+.admin-page{display:none;position:fixed;inset:0;background:var(--bg);z-index:9999;overflow-y:auto;flex-direction:column;}
+.admin-page.active{display:flex;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;padding:20px;background:var(--bg2);border-bottom:1px solid var(--border);}
+.admin-title{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--accent);letter-spacing:1px;}
+.admin-body{flex:1;padding:20px;overflow-y:auto;}
+.admin-tabs{display:flex;gap:10px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:10px;}
+.admin-tab{padding:10px 20px;background:transparent;border:none;color:var(--muted);cursor:pointer;font-weight:600;transition:all .2s;border-bottom:2px solid transparent;}
+.admin-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.admin-form{display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;}
+.admin-form.active{display:block;}
+.admin-form h3{font-size:16px;font-weight:700;margin-bottom:15px;color:var(--accent);}
+.form-group{margin-bottom:15px;}
+.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--muted);}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;transition:border-color .2s;}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent);}
+.admin-btn{padding:10px 20px;background:var(--purple);border:none;border-radius:8px;color:var(--text);cursor:pointer;font-weight:600;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.admin-btn:hover{background:var(--accent);color:#000;transform:translateY(-1px);}
+.admin-btn.danger{background:#f54545;}
+.admin-list{display:flex;flex-direction:column;gap:10px;}
+.admin-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;}
+.admin-item-info{flex:1;}
+.admin-item-name{font-weight:600;font-size:13px;margin-bottom:3px;}
+.admin-item-meta{font-size:10px;color:var(--muted);}
+.admin-item-actions{display:flex;gap:8px;}
+.admin-item-actions button{padding:6px 12px;background:var(--purple);border:none;border-radius:6px;color:var(--text);cursor:pointer;font-size:11px;font-weight:600;}
+.admin-item-actions button.danger{background:#f54545;}
+
+@media(max-width:768px){
+  .admin-tabs{flex-wrap:wrap;}
+  .admin-tab{padding:8px 15px;font-size:12px;}
+}
 </style>
 </head>
 <body>
 
-<!-- ══════ HOME ══════ -->
-<div class="page active" id="pg-home">
-  <div class="topbar">
-    <div class="tl"><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
+<!-- ADMIN PANEL -->
+<div class="admin-page" id="admin-page">
+  <div class="admin-header">
+    <div class="admin-title">⚙️ Admin Panel</div>
+    <button class="admin-btn danger" onclick="closeAdmin()">Close</button>
   </div>
-  <div class="home-hero">
-    <div class="home-bc"><span class="dol">$</span>~/platforms</div>
-    <div class="home-cmd">$ select_platform</div>
-    <h1 class="home-h">Pick your <span class="hl">institute.</span></h1>
-    <p class="home-sub">Direct access to course platforms.<br>Click a card to open.</p>
-  </div>
-  <div class="divider"></div>
-  <div class="plist">
-    <div class="pcard" onclick="go('pg-batches')">
-      <div class="picon" style="background:rgba(34,120,34,.15);">🚀</div>
-      <div class="pinfo"><div class="pname">Next Toppers</div><div class="pmeta">Board Exams · Education</div></div>
-      <div class="parr">→</div>
-    </div>
-    <div class="pcard" onclick="goComingSoon('Physics Wallah','⚡')">
-      <div class="picon" style="background:rgba(220,50,50,.1);">⚡</div>
-      <div class="pinfo"><div class="pname">Physics Wallah</div><div class="pmeta">ALL Classes · Education</div></div>
-      <div class="parr">→</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════ COMING SOON ══════ -->
-<div class="page" id="pg-coming">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-home')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div></div>
-  <div class="cs-body">
-    <div class="cs-icon" id="cs-icon">⚡</div>
-    <div class="cs-pname" id="cs-pname">Physics Wallah</div>
-    <div class="cs-title">COMING<br>SOON</div>
-    <p class="cs-sub">We're working hard to bring this platform to AyushCoderZ. Stay tuned!</p>
-    <div class="cs-badge">🔔 NOTIFY ME WHEN READY</div>
-  </div>
-</div>
-
-<!-- ══════ BATCHES ══════ -->
-<div class="page" id="pg-batches">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-home')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div></div>
-  <div class="bhero">
-    <div class="lbadge"><span class="ldot"></span>YOUR BATCHES</div>
-    <h1 class="btitle">PICK YOUR<br><span class="ac">BATCH & START</span></h1>
-    <p class="btagline">SABSE PEHLE BATCH CHOOSE KARO,<br><span class="or">PHIR LEARNING SHURU</span></p>
-    <div class="srow"><div class="sitem">🔥 1 BATCHES AVAILABLE</div><div class="sitem">⚡ LIVE NOW</div><div class="sitem">🎯 SELF-PACED</div></div>
-  </div>
-  <div class="ddiv"><div class="dl"></div><div class="dd"></div><div class="dd"></div><div class="dl"></div></div>
-  <div class="blist">
-
-    <!--
-    ╔══════════════════════════════════════════════════════════╗
-    ║  BATCH 1 — PRARAMBH PLUS Class 11th                     ║
-    ║  LOGO/IMAGE lagane ke liye:                              ║
-    ║  Niche img tag ka src="" mein apna image link daalo     ║
-    ║  Example: src="https://i.imgur.com/abc123.jpg"          ║
-    ╚══════════════════════════════════════════════════════════╝ -->
-    <div class="bcard" onclick="openBatch(110,'Class 11th','PRARAMBH PLUS Commerce 2026-27','3499','4999','प्रारंभ','PLUS')">
-      <div class="bthumb" style="background:linear-gradient(135deg,#1a0a2e,#2a1a0e,#1a0a20);">
-        <div class="bthumb-grd"></div>
-        <div class="bthumb-name">प्रारंभ</div>
-        <img class="bthumb-img" id="img-batch-110" src="https://i.ibb.co/0y1q2mtn/Screenshot-20260424-234159-Chrome.png" alt="">
-        <div class="bclass-badge">Class 11th</div>
-        <div class="bprice-badge"><div class="bprice-old">₹4999/-</div><div class="bprice-new">3499</div></div>
-      </div>
-      <div class="bcard-body">
-        <div class="bcard-tag"><span class="tdot"></span>CLASS 11TH</div>
-        <div class="bcard-title">PRARAMBH PLUS Commerce 2026-27</div>
-        <div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div>
-        <div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div>
-      </div>
+  
+  <div class="admin-body">
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('batches')">Batches</button>
+      <button class="admin-tab" onclick="switchAdminTab('chapters')">Chapters</button>
+      <button class="admin-tab" onclick="switchAdminTab('lectures')">Lectures</button>
+      <button class="admin-tab" onclick="switchAdminTab('pdfs')">PDFs</button>
     </div>
 
-  </div>
-</div>
-
-<!-- ══════ CONTENT ══════ -->
-<div class="page" id="pg-content">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-batches')">← HOME</button><div class="ac-icon">AC</div><div class="logo" style="font-size:13px;">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag">#110</div></div>
-  <div class="chero">
-    <div class="clabel"><span class="dot"></span>COURSE</div>
-    <div class="ctitle" id="c-title">PRARAMBH PLUS Commerce 2026-27</div>
-    <div class="cthumb">
-      <div class="cthumb-bg"></div>
-      <div style="position:relative;z-index:2;text-align:center;"><div class="cthumb-text" id="c-thumb-text">प्रारंभ</div><span class="cthumb-sub" id="c-thumb-sub">PLUS · 2026-27</span></div>
-      <div class="cclass-badge" id="c-class-badge">Class 11th</div>
-      <div class="cprice-badge"><div class="bprice-old" id="c-old-price">₹4999/-</div><div class="bprice-new" id="c-new-price">₹3499/-</div></div>
+    <!-- BATCHES SECTION -->
+    <div class="admin-form active" id="admin-batches">
+      <h3>Add/Edit Batch</h3>
+      <form onsubmit="saveBatch(event)">
+        <div class="form-group">
+          <label>Batch Name</label>
+          <input type="text" id="batch-name" placeholder="e.g., PRARAMBH" required>
+        </div>
+        <div class="form-group">
+          <label>Class</label>
+          <input type="text" id="batch-class" placeholder="e.g., 11th Science" required>
+        </div>
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" id="batch-price" placeholder="9999" required>
+        </div>
+        <button type="submit" class="admin-btn">Add Batch</button>
+      </form>
+      
+      <h3 style="margin-top:20px;">Existing Batches</h3>
+      <div class="admin-list" id="batch-list"></div>
     </div>
-  </div>
-  <div class="tabs"><div class="tab active" id="tab-ov" onclick="switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="switchTab('ct')">CONTENT</div></div>
 
-  <div id="tab-ov-body">
-    <div class="ov-sec">
-      <div class="tt-wrap">
-        <div class="tt-head"><div class="tt-type">CLASS 11TH</div><div class="tt-bname" id="c-tt-name">COMMERCE</div></div>
-        <div class="tt-ttl"><span>TIME TABLE</span></div>
-        <table class="tt-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-          <tbody>
-            <tr><td>Monday</td><td>BST</td><td>Economics</td></tr>
-            <tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr>
-            <tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr>
-            <tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr>
-            <tr><td>Friday</td><td>Maths</td><td>Accounts</td></tr>
-            <tr><td>Saturday</td><td>Maths</td><td>--</td></tr>
-            <tr><td>Sunday</td><td colspan="2" class="tt-hol">Holiday</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="wp-blk">
-        <div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
-        <table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-          <tbody>
-            <tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
-            <tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
-            <tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
-            <tr><td>Thursday</td><td>Sets (L7)</td><td>Intro to Accounting (L3)</td></tr>
-            <tr><td>Friday</td><td>RELATIONS & FUNCTIONS (L1)</td><td>Intro to Accounting (L4)</td></tr>
-            <tr><td>Saturday</td><td>RELATIONS & FUNCTIONS (L2)</td><td>Accounting Equation (L1)</td></tr>
-            <tr><td>Sunday</td><td colspan="2" class="wp-hol">Holiday</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="cdesc">
-        <div class="cdesc-ttl"><strong>PRARAMBH Plus Class 11th Commerce</strong> – A Year-Long Live Interactive Course for <strong>Class 11 Exams (2026-27).</strong></div>
-        <ul class="flist">
-          <li class="fitem"><span class="fnum">1</span><span>Covers <strong>Accounts, Economics, BST, Maths, English/Hindi.</strong></span></li>
-          <li class="fitem"><span class="fnum">2</span><span><strong>Live & interactive</strong> classes. Recordings on Next Toppers App.</span></li>
-          <li class="fitem"><span class="fnum">3</span><span>Schedule as per <strong>your school timings.</strong></span></li>
-          <li class="fitem"><span class="fnum">4</span><span><strong>2 classes/day</strong>, each 1–1.5 hrs.</span></li>
-          <li class="fitem"><span class="fnum">5</span><span><strong>45-day Crash Course (Nirbhay 2026-27)</strong> included.</span></li>
-          <li class="fitem"><span class="fnum">6</span><span><strong>Weekly schedule</strong> in advance.</span></li>
-          <li class="fitem"><span class="fnum">7</span><span><strong>PDF notes</strong> after every class.</span></li>
-          <li class="fitem"><span class="fnum">8</span><span><strong>Regular tests</strong> to track progress.</span></li>
-          <li class="fitem"><span class="fnum">9</span><span><strong>Full access till final exams (2026-27).</strong></span></li>
-          <li class="fitem"><span class="fnum">10</span><span>English/Hindi in <strong>recorded format.</strong></span></li>
-          <li class="fitem"><span class="fnum">11</span><span><strong>Classes start April 2026.</strong></span></li>
-          <li class="fitem"><span class="fnum">12</span><span>Batch is <strong>non-refundable & non-transferable.</strong></span></li>
-        </ul>
-      </div>
-      <div class="det-blk">
-        <div class="det-hd">DETAILS</div>
-        <div class="det-row"><span class="lbl">Starts</span><span class="val">08 Feb 2026</span></div>
-        <div class="det-row"><span class="lbl">Valid till</span><span class="val">30 Apr 2027</span></div>
-      </div>
-      <button class="vc-btn" onclick="switchTab('ct')">VIEW COURSE CONTENT →</button>
+    <!-- CHAPTERS SECTION -->
+    <div class="admin-form" id="admin-chapters">
+      <h3>Add/Edit Chapter</h3>
+      <form onsubmit="saveChapter(event)">
+        <div class="form-group">
+          <label>Select Batch</label>
+          <select id="chapter-batch" required onchange="updateChapterBatch()">
+            <option value="">Choose...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Chapter Name</label>
+          <input type="text" id="chapter-name" placeholder="e.g., Motion" required>
+        </div>
+        <button type="submit" class="admin-btn">Add Chapter</button>
+      </form>
+      
+      <h3 style="margin-top:20px;">Existing Chapters</h3>
+      <div class="admin-list" id="chapter-list"></div>
     </div>
-  </div>
 
-  <div id="tab-ct-body" style="display:none;">
-    <div class="ch-sec">
-      <div class="slabel">CHAPTERS</div>
-      <div class="ch-list">
-        <div class="ch-item" onclick="openChapter('Micro Economics')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Micro Economics</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick=
-         "openChapter('Stats Economics')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Stats Economics</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick=
-        "openChapter('Accounts')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Accounts</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick="openChapter('Business Studies')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Business Studies</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick="openChapter('Maths')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Maths</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick="openChapter('English')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">English</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick="openChapter('Hindi Core')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Hindi Core</div></div><div class="ch-arr">→</div></div>
-        <div class="ch-item" onclick="openChapter('Hindi Elective')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">Hindi Elective</div></div><div class="ch-arr">→</div></div>
-      </div>
+    <!-- LECTURES SECTION -->
+    <div class="admin-form" id="admin-lectures">
+      <h3>Add Lecture</h3>
+      <form onsubmit="saveLecture(event)">
+        <div class="form-group">
+          <label>Select Batch</label>
+          <select id="lecture-batch" required onchange="updateLectureBatch()">
+            <option value="">Choose...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Chapter</label>
+          <select id="lecture-chapter" required>
+            <option value="">Choose...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Lecture Name</label>
+          <input type="text" id="lecture-name" placeholder="e.g., Introduction - Motion" required>
+        </div>
+        <div class="form-group">
+          <label>Duration (HH:MM:SS)</label>
+          <input type="text" id="lecture-duration" placeholder="1:30:45">
+        </div>
+        <div class="form-group">
+          <label>Video URL (YouTube or MP4)</label>
+          <input type="url" id="lecture-url" placeholder="https://..." required>
+        </div>
+        <button type="submit" class="admin-btn">Add Lecture</button>
+      </form>
+      
+      <h3 style="margin-top:20px;">Existing Lectures</h3>
+      <div class="admin-list" id="lecture-list"></div>
+    </div>
+
+    <!-- PDFS SECTION -->
+    <div class="admin-form" id="admin-pdfs">
+      <h3>Add PDF</h3>
+      <form onsubmit="savePDF(event)">
+        <div class="form-group">
+          <label>Select Batch</label>
+          <select id="pdf-batch" required onchange="updatePDFBatch()">
+            <option value="">Choose...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>PDF Name</label>
+          <input type="text" id="pdf-name" placeholder="e.g., Motion - Notes" required>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select id="pdf-type" required>
+            <option value="">Choose...</option>
+            <option value="notes">Notes</option>
+            <option value="pq">Previous Qs</option>
+            <option value="imp">Important Qs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>PDF URL</label>
+          <input type="url" id="pdf-url" placeholder="https://..." required>
+        </div>
+        <button type="submit" class="admin-btn">Add PDF</button>
+      </form>
+      
+      <h3 style="margin-top:20px;">Existing PDFs</h3>
+      <div class="admin-list" id="pdf-list"></div>
     </div>
   </div>
 </div>
 
-<!-- ══════ SUBCHAPTER ══════ -->
-<div class="page" id="pg-subchapter">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo" style="font-size:13px;">Ayush<span>CoderZ</span></div></div><div class="btag" id="sub-btag">#110</div></div>
-  <div class="sub-hd"><div class="sub-subject" id="sub-subject">COURSE</div><div class="sub-title" id="sub-title">Economics</div></div>
-  <div class="sfl-list">
-    <div class="sfl-card" onclick="openLectures()">
-      <div class="sfl-icon" style="background:rgba(124,92,191,.12);border:1px solid rgba(124,92,191,.28);">🎬</div>
-      <div class="sfl-info"><div class="sfl-name">Lectures</div><div class="sfl-meta" id="sub-lec-meta">Video lectures</div></div>
-      <div class="sfl-arr">→</div>
-    </div>
-    <div class="sfl-card" onclick="openPdfs()">
-      <div class="sfl-icon" style="background:rgba(245,70,70,.1);border:1px solid rgba(245,70,70,.28);">📄</div>
-      <div class="sfl-info"><div class="sfl-name">PDF Notes</div><div class="sfl-meta" id="sub-pdf-meta">Study material</div></div>
-      <div class="sfl-arr">→</div>
-    </div>
-  </div>
+<!-- MAIN WEBSITE PAGES -->
+<div class='page active' id='pg-home'>
+<div class='topbar'>
+<div class='tl'><div class='logo'><span>Ayush</span>CoderZ</div></div>
+<div class='ac-icon' onclick="openAdmin()" title="Admin Panel">⚙️</div>
+</div>
+<div style='flex:1;overflow-y:auto;'>
+<div class='home-hero'><h1 class='home-h'>Welcome to <span class='hl'>AyushCoderZ</span></h1><p class='home-sub'>Learn from expert instructors with live classes, recorded sessions, and detailed study materials.</p></div>
+<div class='divider'></div>
+<div class='plist'>
+<div class='pcard' onclick="go('pg-batches')">
+<div class='picon' style='background:rgba(245,166,35,0.2);color:var(--accent);'>📚</div>
+<div class='pinfo'>
+<div class='pname'>Explore Courses</div>
+<div class='pmeta'>View all available batches</div>
+</div>
+<div class='parr'>→</div>
+</div>
+</div>
+</div>
 </div>
 
-<!-- ══════ LECTURE LIST ══════ -->
-<div class="page" id="pg-lectures">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-subchapter')">← HOME</button><div class="ac-icon">AC</div><div class="logo" style="font-size:13px;">Ayush<span>CoderZ</span></div></div><div class="btag" id="lec-btag">#110</div></div>
-  <div class="lec-hd"><div class="lec-subject" id="lec-subject">ECONOMICS</div><div class="lec-ttl" id="lec-ttl">Economics — Lectures</div><div class="lec-cnt" id="lec-cnt">5 lectures</div></div>
-  <div class="lec-list" id="lec-list"></div>
+<div class='page' id='pg-batches'>
+<div class='topbar'>
+<button class='back-btn' onclick="go('pg-home')">← Back</button>
+<span style='font-size:12px;color:var(--muted);' id='batch-title'>Batches</span>
+</div>
+<div style='flex:1;overflow-y:auto;'>
+<div class='bhero'>
+<div class='lbadge'><span class='ldot'></span>Live Courses</div>
+<h1 class='btitle'>Explore <span class='ac'>Batches</span></h1>
+<div class='btagline'>Learn from the <span class='or'>best instructors</span></div>
+</div>
+<div class='blist' id='batches'></div>
+</div>
 </div>
 
-<!-- ══════ PDF LIST ══════ -->
-<div class="page" id="pg-pdfs">
-  <div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-subchapter')">← HOME</button><div class="ac-icon">AC</div><div class="logo" style="font-size:13px;">Ayush<span>CoderZ</span></div></div><div class="btag" id="pdf-btag">#110</div></div>
-  <div class="lec-hd"><div class="lec-subject" id="pdf-subject">ECONOMICS</div><div class="lec-ttl">PDF Notes</div><div class="lec-cnt" id="pdf-cnt">4 PDFs</div></div>
-  <div class="pdf-list" id="pdf-list"></div>
+<div class='page' id='pg-batch-detail'>
+<div class='topbar'>
+<button class='back-btn' onclick="go('pg-batches')">← Back</button>
+</div>
+<div style='flex:1;overflow-y:auto;display:flex;flex-direction:column;'>
+<div class='chero' id='batch-detail-hero'></div>
+<div class='tabs'>
+<div class='tab active' onclick="swTab('ov')">Overview</div>
+<div class='tab' onclick="swTab('ch')">Chapters</div>
+</div>
+<div style='flex:1;overflow-y:auto;'>
+<div id='ov' class='ov-sec'></div>
+<div id='ch' class='ch-sec' style='display:none;'></div>
+</div>
+</div>
 </div>
 
-<!-- ══════ PLAYER ══════ -->
-<div class="page" id="pg-player">
-  <div class="player-top">
-    <button class="back-btn" onclick="playerBack()">← HOME</button>
-    <div class="ac-icon purple">AC</div>
-    <div class="logo">Ayush<span>CoderZ</span></div>
-  </div>
-
-  <!-- YouTube iframe (shown when URL is set) -->
-  <div class="v-yt-wrap" id="v-yt-wrap">
-    <iframe id="v-yt-iframe"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-      src="">
-    </iframe>
-  </div>
-
-  <!-- Poster + custom controls (shown when no URL) -->
-  <div class="vwrap" id="v-poster-wrap">
-    <div class="vbg"></div><div class="vglow"></div>
-    <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
-      <div class="vcenter">
-        <div class="vs-tag" id="v-stag">CLASS 11TH</div>
-        <div class="vbatch">प्रारंभ</div>
-        <div class="vlname" id="v-lname">Lecture Name</div>
-        <div class="vlnum" id="v-lnum">Lecture 1</div>
-      </div>
-    </div>
-    <div class="vplay-ov" id="v-play-ov" onclick="togglePlay()">▶</div>
-  </div>
-
-  <!-- Custom controls (only for no-URL / demo mode) -->
-  <div class="vctrl" id="v-ctrl">
-    <div class="prog-row">
-      <span id="v-curr">00:00</span>
-      <div class="prog-track" id="v-track"><div class="prog-fill" id="v-fill"></div><div class="prog-handle" id="v-handle"></div></div>
-      <span id="v-total">00:00</span>
-    </div>
-    <div class="ctrl-row">
-      <div class="ctrl-l">
-        <button class="cbtn" onclick="skipBack()">⟲<small style="font-size:7px;vertical-align:sub">10</small></button>
-        <button class="cbtn main" id="v-main-btn" onclick="togglePlay()">▶</button>
-        <button class="cbtn" onclick="skipFwd()">⟳<small style="font-size:7px;vertical-align:sub">10</small></button>
-      </div>
-      <div class="ctrl-r">
-        <button class="spd-btn" id="v-spd" onclick="cycleSpeed()">1x</button>
-        <button class="fsc-btn" onclick="toggleFS()">⛶</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="vinfo">
-    <div class="vvtitle" id="v-title">Lecture Title</div>
-    <div class="vvmeta" id="v-meta">Subject · PRARAMBH Batch</div>
-  </div>
+<div class='page' id='pg-chapter-detail'>
+<div class='topbar'>
+<button class='back-btn' onclick="go('pg-batch-detail')">← Back</button>
+</div>
+<div style='flex:1;overflow-y:auto;display:flex;flex-direction:column;'>
+<div class='lec-hd' id='chapter-header'></div>
+<div class='tabs'>
+<div class='tab active' onclick="swTab2('lecs')">Lectures</div>
+<div class='tab' onclick="swTab2('pdfs')">PDFs</div>
+</div>
+<div style='flex:1;overflow-y:auto;'>
+<div id='lecs' class='lec-list'></div>
+<div id='pdfs' class='pdf-list' style='display:none;'></div>
+</div>
+</div>
 </div>
 
+<div class='page' id='pg-player'>
+<div class='topbar'>
+<button class='back-btn' onclick="playerBack()">← Back</button>
+</div>
+<div class='v-yt-wrap' id='v-yt-wrap'><iframe id='v-yt-iframe' allow='autoplay; encrypted-media' allowfullscreen></iframe></div>
+<div class='vwrap' id='v-poster-wrap'>
+<div class='vbg'></div>
+<div class='vglow'></div>
+<div class='vplay-ov' id='v-play-ov' onclick='togglePlay()'><div style='text-align:center;'>▶</div></div>
+<div class='vcenter'>
+<div class='vs-tag' id='v-stag'>BATCH</div>
+<div class='vbatch' id='v-title'>Lecture</div>
+<div class='vlname' id='v-lname'>Chapter</div>
+<div class='vlnum' id='v-lnum'>Duration: <span id='v-total'>0:00</span></div>
+</div>
+</div>
+<div style='position:absolute;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);padding:12px;' id='v-ctrl' style='display:none;'>
+<div style='display:flex;align-items:center;gap:10px;margin-bottom:10px;'>
+<button style='padding:8px 16px;background:var(--purple);border:none;border-radius:6px;color:var(--text);cursor:pointer;font-weight:600;flex-shrink:0;' id='v-main-btn' onclick='togglePlay()'>▶</button>
+<button style='padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;flex-shrink:0;' onclick='skipBack()'>-10s</button>
+<button style='padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;flex-shrink:0;' onclick='skipFwd()'>+10s</button>
+<button style='padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;margin-left:auto;flex-shrink:0;' id='v-spd' onclick='cycleSpeed()'>1x</button>
+<button style='padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:11px;font-weight:600;flex-shrink:0;' onclick='toggleFS()'>⛶</button>
+</div>
+<div style='background:var(--bg3);border-radius:6px;height:4px;cursor:pointer;position:relative;margin-bottom:8px;' id='v-track'>
+<div style='background:var(--accent);height:100%;border-radius:6px;' id='v-fill'></div>
+<div style='background:var(--accent);width:12px;height:12px;border-radius:50%;position:absolute;top:50%;transform:translateY(-50%);' id='v-handle'></div>
+</div>
+<div style='display:flex;justify-content:space-between;font-size:10px;color:var(--muted);'><span id='v-curr'>0:00</span><span id='v-total'>0:00</span></div>
+</div>
+<div class='player-info' style='padding:18px;'>
+<h3 id='v-meta' style='font-size:12px;color:var(--muted);margin-bottom:5px;'>Lecture</h3>
+<p style='font-size:13px;color:var(--text);'>Playing...</p>
+</div>
+</div>
 
-<!-- ══════════════════════════════════════════════════════
-     ✏️  YAHAN APNA DATA BHARO  ✏️
-══════════════════════════════════════════════════════ -->
 <script>
+// ====== ADMIN DATA ======
+let adminPassword='password123';
+let adminLoggedIn=false;
+let DATA={batches:[]};
 
-/*
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  📌 BATCH LOGO/IMAGE kaise lagayein:
-
-  Har batch card mein upar HTML mein ek img tag hai:
-    <img class="bthumb-img" id="img-batch-110" src="" alt="">
-
-  Bas src="" ke beech apna image link daalo:
-    src="https://i.imgur.com/XXXXX.jpg"
-
-  Image online honi chahiye (Google Drive, ImgBB, etc.)
-  Ya same folder mein ho to:  src="meri-image.jpg"
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  📌 YouTube VIDEO kaise add karein:
-
-  Sirf YouTube video URL copy karo:
-    https://www.youtube.com/watch?v=XXXXXXXXXXX
-                                    ↑↑↑↑↑↑↑↑↑↑↑
-                                  Yahi hai VIDEO_ID
-
-  Niche LECTURES object mein url field mein daalo:
-    url: 'https://www.youtube.com/watch?v=XXXXXXXXXXX'
-
-  Code automatically isko player mein embed kar dega! ✅
-  YouTube ke apne controls (pause/play/fullscreen) kaam karenge.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  📌 PDF kaise add karein:
-
-  Google Drive PDF ka link:
-    1. Drive mein PDF open karo
-    2. Share → "Anyone with the link" set karo
-    3. Woh link copy karo
-    url: 'https://drive.google.com/file/d/FILEID/view'
-
-  Ya koi bhi direct PDF URL:
-    url: 'https://example.com/notes.pdf'
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*/
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//  📹 LECTURES DATA — apna data yahan bharo
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const LECTURES = {
-  'Maths': [
-    { name:'Prarambh Batch 11th Maths- 1st FREE Class | Sets - Lecture 1',                         dur:'1:06:48',   url:'https://www.youtube.com/live/iJiDwf9QZKo?si=j3_EGPQ6MCOcR8Tz' },
-    { name:'Sets - L2',                         dur:'1:05:44',   url:'https://rolexcoderz.in/NT/player.php?token=Vzh0WThSQVdYOHA5ZjVnc0JPT3Q0Zz09Ojp5UjJmTGlnTEl4QlhVL3VNazEvd3FJOG1xTFY3cXhCWWFJeUhSREFEYkFuUEYwTHp1VzI1ZVJrL09OSDFTWGlWK2xXaEhUczY0STVrRTI4MHlCU3NFbTRValJlTUcvQzYyZnpBY2ZJS2hhUDdyYlBNREhrTEtLWll0NSt2ZTA3NWZ6YThHVzQ1ZEpsTVNlKzdPL0dDYXh2YkJTdUtOYy9aOHVBY2ZaSFMrR3JLWDVLUkhMVUJseDM1VTdKR2RySDVodHEzK3AyS3hRVVI1K28rd1J5TXRPMTd2bVZMS2dmZWFORFRsS0ZYU2w3N3V1dTdHVXlkdGFYTnhhTThjTWQ3cFZoVFZiRlUvMHpIZHlhQitnWWJUemhxR1Q0UkV4ZSt3UjhqSE5SQWNzND0%3D&title=Sets%20%7C%20L2' },
-    { name:'Sets - L3',                         dur:'1:11:20',   url:'https://rolexcoderz.in/NT/player.php?token=YVFoSmVUS08zNTlBSExnNnd2aW53UT09OjpKTThLRnJRc1FWdTBZRjg1Z2E4SnhsQzNBUGVxOFEvUU1kbmFzdG1oM00vcHdVRFgzbTd6WmZDUGJ0VkJZQko0ZmdCM0ZlWVdQZ09JZ2xKdDdHRHp5ZDVvaTZOdGR1cjQzdXBMNERGK2ZxS3ZyYldHSGxXTUxzQmtmbTBKQ3hNeVFnZEcrV0ZPQm5ENTk4cnV1OU11OGxwYVN3QnpQTlV1V0JmWHZBVCtzYUtOeHJPUVlJdkdJUUJFaU5SUVZUUlFWUitjZnVYNFNFTXNCVDcyRmI0SVBmbEJHTHN3WjVsRHhsYkRtVUF2aDJZVEcwa3prOVk5TktQaUtlQWk3eitsOU5YVC80eWtrME5Gb01TUEtYYm42N3JRVlJ2akdsNUhhdDVmcC9hS2c4dz0%3D&title=Sets%20%7C%20L3' },
-    { name:'Sets - L4',                         dur:'1:05:12',   url:'https://rolexcoderz.in/NT/player.php?token=b3NvaHdTRHRuR1lHYjU2cHFVVm04dz09OjprdFFjRmhJKytJekVYTEJ2MzJRV2x0MFZ2QmZpZEpHSXpxaUxDRC8vOGc3dGFpeW1vbDMycHpVbk9BejlxSUdMbXcrMkNXb1UwVkM1NEowYTNkeDk5Rjkxc2tHcWpoTTBuZG42QVBVYm5JQjFPUm1jbnpuQmR6WFowRmZnQ20wMGdiNUpoVms3dGVCNXV3YVFLUlhDQUtOcVl3SkNldURnNWJ5dEZxK21aUnM0M0dUM0k2eXhxZ1k3WVU1cjlDYU1rdmRHcmRQYTlBcTQvVzdyKzFsZlAyNk1xaHlSaFZ0bi9CWXF4M2ZROGZMcWhaU2ZGRlMrajBsallaWml2enczaE5XaTIwODlsbTljUkRiOEF6dzBKUDd6TWdRSDFUNnEyaWRkeEc4blVyQT0%3D&title=Sets%20%7C%20L4' },
-    { name:'Sets - L5',                         dur:'1:12:33',   url:'https://rolexcoderz.in/NT/player.php?token=ajF4ekNWUDBOTlNoaE8raTZRQW84dz09Ojppck5oZWtTSGgvVi9hSWJYYU8yRzNud21SVDIwRERzQmJKOWJlMFBRbWE1M0J3TkdoVGpzS1lqb3Yxb3J4MXB1bkE4TUxIRmhETm9LclpraWJlNHc0aFI4cWtHOUw2VFlnYmVxVTJIL1RudEhGRTg3am8zTDF2amZ0TzAyYW5PT2VIbUFxaC95M1B1Si9nNmlyamlUZmY4OEdOREk2bDR1eHYrbVhSVC9wMUxrTVVLd3hqTWRxN2tHV3lFLzhlWlNoZ1poQXkxMkREQlJKR2hWclJ5RzhIQjJaWmhtdEJhaWJPbzZYLzlYTEZvTjhkNWdqZVErYXZRMDRyK0R2TVc2cGRtZXc2STkzbUlrL3hVSm9EaFNKWWNFUDFBVmdLazN6SENEMEthMmxqOD0%3D&title=Sets%20%7C%20L5' },
-    { name:'Sets - L6',                         dur:'1:07:32',   url:'https://rolexcoderz.in/NT/player.php?token=bHdOVDRSQ1FiaStYWUFhenVwRUJOZz09Ojp0MXpqcUVmQmkyditIUGI2ZzhrRDRqUEZkeGRIb2RPYzFYcTU4QnAvVVk5cWk5N1JZNVIrNjhnNktxMEZ6cFhKMXVwK0JDZE5yVmZ3OWt2UXc0SkFOaVd0SUY3NFYxRVROaWYxZ2dhRmd0WDhSbUkvRTNtS3lGakRWbHVXS1ZZeWI3UVdDaXVFRFR2Y2pnaFl2ekRKQi9qeDU5eUlDdVpPeVBCUWZrNmF2dmhDRlRoclRtcW9BQjRXNUtHTzBlYWdrMzZyZGJRdlQ0dU1lNzVsWmhIOURwb0lReUFxa0l3YVMzUXNSY21aVnNSc2t5MkxaQ1I1MXVLSUE2WVRmbUVyYXJTbGlZbUZ5NUFtS2JxUncvSVFFMzlaOEFqS0kzVXZndGNOMnQ0YnVBYz0%3D&title=Sets%20%7C%20L6' },
-    { name:'Sets - L7',                         dur:'1:03:28',   url:'https://rolexcoderz.in/NT/player.php?token=eTNlKzhXL2JzMFZQRmdyQldOWlBpZz09OjpNNWxUMlVrd3BxRWpOMDVaRmNCWXJWWnZQS0hJY092cU1OSTBoMStiUU9iVVpKMTlUQWJ0UWVSRVNEbGJPcE5HNytUWmUvMEZVb2RjSlkwa0ZPaWR0M3VYdUJaRmNMZHZHVW9yTkhRWjFEK0I2b1VZa09pQnRPNkcxMjJqRW1QbnJWS1kwWHdBNlRVaGRtOVF4SnZIbzV6bms0S3lUWkd5RE14MEdHSnordzdteHlKdlRnMENob3VhUG56L0IxL2tBOGxLOFNyWVhhMFJPMzdTczFEN1dxT05UR1hCNjhQUzdDUktvNFZ2TmFhVFdGMUVacStveFpRYmtJQ3FVUTFCN0ViczFudUlZYldOZ09NcDNSWTUzQklnSW9MNGZCd0dnNVRON3Q1Vk9Sbz0%3D&title=Sets%20%7C%20L7' },
-    { name:'Relations and Functions - L1',      dur:'1:00:32', url:'https://rolexcoderz.in/NT/player.php?token=U3MzNHg1eVBVTk5aOEhyQ3A2K09tQT09OjpTVEw0TnBNU2tHOGFscE9CaEhkbDQ5c2pMZk8ybHFDZmxMdVhLODg1WktQbGt2aVllazRZc1BKVlZmbDU4cjMxVFEwMWR6WnhXZURrTkw1dklaTzZUN2VMbGVybFlnb2NOT0JrS3RGMTc0TUxCZXVyTldqbmhXekIrRGoxdXRFcE1XYTdmZ3ZLNVR0aDBMME9lWlFSdFhrdmdxK1oxYUEyaEwxZWFLcnU3aENZS1JmUDZxRVJ2K1dlS3RZWmJxU3JXT3ZyREVRVkhTRDNuSDRqYklNZXNvYkJ5NHQxd1FXbjVDZ2RERjYxK3czOS9LVWxNaTJsRWVEcitZcGM3QUV3WENOaE5HdW9TUHVuL3ArdDI3NVRkQ2dYMlBTRmowaHFnUUVib2dCTUNqMD0%3D&title=Relations%20and%20Functions%20%7C%20L1' },
-    { name:'Relations and Functions - L2',      dur:'1:03::20',   url:'https://rolexcoderz.in/NT/player.php?token=d0pkOTdQSmxmSmZIajhqeFdNTTB5UT09OjphamxSblRKaHdreEJ1bmhXZi9RaVAwWVhVaXhvTVRLQlo0bjlOMWltRjVEQlNlbjZteU5zSFVBeTVLMkRBcVp3QzBPcVFUeGRVQjJrMnJudzlHWGFGOVJSTmZjU2l0ZXNRK080WXBuU1phOEQ3VmJ5dlNydVB0ZytVOVl5OTRRemVWd1ppSmV3YWUyMnYzc0k3L0tHTnVVSEZ2bjZEeVdrcHFLcWY0RHVuVXNVZWZXZXBxMXdRSS8yYzQ3ejVLYmk3SHFNQjZZdWJoZVJFOGRlSGJ5RzRtUTFSTGNlVHU1cUpOZHM4ejlWbDVTM2xUUFRwZ2hNYVVTOUZqaUM3b053KzZxb0ovU3JyNWVkNWZOWVFqSTZSdmViZzU5VVQxUUFXeUdoWXdzTW5Jbz0%3D&title=Relations%20and%20Functions%20%7C%20L2' },
-  ],
-  'Micro Economics': [
-    { name:'Introduction to Microeconomics | L1',        dur:'40:00',   url:'' },
-    { name:'Introduction to Microeconomics | L2',               dur:'1:16:32',   url:'https://rolexcoderz.in/NT/player.php?token=bkVqejlyRU9hSVlUbzRNejdNdDFJQT09OjppVUs5OERROEVtNXJTZHh6ejRJN0N0VXRnSkI1bERGcnlDby94eG5qNUZGVlA0SFFYNG1yWG91OUkwMlIvTDJxcHBKOG1OM2hSalpBb3pzRTloZW5hWkt0T0NORnZLWXNTaVNhQ3hZVnZJTnJvcHpHTTRhNGNzUnVUWFoxQkNMSFYrNVVZOHdBQm9VUExHdXVYam9hcEtjMzUxSGNFL0FZOFduZ1g4QXhrdWVvb2w2cFNxa1lRTXoyaTdDNWFONnV3alpNY1ZZTU5YNnQwMG93NjFlU3NUQzdKaXR1RnJPVXJudHdtWkxZY0Y2WXo2ZTB3WW9GN1JDVkF2VXNCRjQ2T3JKcEJjeFFmU1VWOXN4eGpBaVMrQmIwMlQwZEZ3WmZIR0YrMVBnaHlZcz0%3D&title=Introduction%20to%20Microeconomics%20%7C%20L2' },
-    { name:'Introduction to Microeconomics | L3',                      dur:'1:22:43',   url:'https://rolexcoderz.in/NT/player.php?token=MG9qUjRBMUhIcHBmMGREWXlFRGxxZz09OjpNVkdxalU1WnFWUjFtYU4vaWw3bVJLTXg0Slk1anppZXVmaWVteGNPOVdRVGZPd25sWlg4U1JxdWhIdVhlRjZ3SVRtRVNjRzNGTG9jOWdzMk9odTNvbjhJWWJpMWpRaUwyU1VtNVFFTjhMN3k0MDdRdnJjaVI0VFd6eVg1OVFEb0FIeUozN3ovY0svVVBuYisvTlQwM2t3d3hiai9EY0ZheVlNM1dCRXpPT2tjNCtIa3U1cUJXMTRFTUMxS0l1NldIazB6TGloWVdVWmFuTWMxZ0JaUjFVeXVvTDZJODNMQkhiQndTSWdWWXpqa1FOVUZxMXZMcXJJNDVTT2czazhlZHppQ3A5ZTBTcnAyRGN4U0JRR2E5VGFuV3VwaFBnYkhYOS9PY1RoaGxhMD0%3D&title=Introduction%20to%20Microeconomics%20%7C%20L3' },
-    { name:'Introduction to Microeconomics | L4',                      dur:'1:37:45',   url:'https://rolexcoderz.in/NT/player.php?token=ajNPV0xtNzVBUVZ5S1hlZ0FMSWdSZz09OjpNbTR6SGFzU0owMFdRTHZlcExvOFg0Y1c4blMyR2ExQlJyOHhZRmlOdUFmR2lRaGM1ajJXeWJvcEpBZ0xHNUpMSUVVaGpWdzZzcXpUc1hTdWZRdWVwNzcvU1FBcEI1UnFPV1lPNHpOZVVuOXE5TUhWTEFvVGlRNkczaGowSTZCd1l2RDBadGJIR3UvTUpFVysyL3hwT0tiQ1NjdjJyNWNUNVBQeWJraXNJWDBSTDJWU3o3Y0tvM0oxTEQwaVhWZ2JZdmtob1NiT3B6WXF6VFdaVE1aNC9WMDFUVXdhbzdFeHR1QllreXNYaGFUZTNtZWVqZ0JJOHBob1JST1R1OVdMK3gzNmU2Y2paMVVIN3JpT2ZwM0x3REJuM1AwN3c4eVpkODdsbHhEN3k0RT0%3D&title=Introduction%20to%20Microeconomics%20%7C%20L4' },
-    { name:'Introduction to Microeconomics | L5',                      dur:'1:09:55',   url:'https://rolexcoderz.in/NT/player.php?token=cHVCb0ovOXRRRU9mSmJkZFdDUEE0QT09OjpqVG45NlZ5d1dzYlludm02RmtvbzNaT1puZFMwSkx0QjNKV3NUMDVBbGxSS01NdW1QYkltcHVrellFMnhDdEh2M0hpRFdCUHR6SVFPYS9jOXpkeGNuaGxZWStFeWU5WllQS254a1dIc1RVdG5yRDFJT014dy9LRUQ3U2xIRkVRUFJzWWJ2U3RzTVRKcDU0OFlrbU9RUjV4MkI3dTQxRmFMYnBkWnFBSWVWckExVVdLL3hYajRhSm9XYngwZmJxZ2gza0d5MEFpMHY4dyt5WWhpUWRuSWRMTVRqSmVzS0tqOEVVSlVjQnAxM2xYRW5Ma0JZQ1JZQ1pvaXpRbW4vMlVsWnpCRkNDV2xLVnhsUjluUHhRTUlabGlnTUZNS1dPUGlmQUlKbHlvenF5Yz0%3D&title=Introduction%20to%20Microeconomics%20%7C%20L5' },
-    { name:'Introduction to Microeconomics | L6',                      dur:'1:05:04',   url:'https://rolexcoderz.in/NT/player.php?token=eGo3aTdhai9EUHIyUDkvMURrT0RaUT09Ojp1K1JJZ2FnNFZTUkRrMVZCZW5FdDVwbU1XU0ZYTVpvd3VoYmlkT2lsbTdNcnNFcWtDSktOUU9kdlp6NVQxRkdnOXBnRUtKSzhUMHdZMXZHSXpNcnFmWEw1d090TnU5WG40T0JOTGNpdUNsMFNwUDRvWGVnMW9IS1JVQzBZa2tuU3dTSzUzNlVyL1EvLzdIeTRmWC9ZcitoeUpFbEpQdWFEdmVsR3NvSFNjbkdwUk8zQTNNY0NvamlGZ1YzdFdic0t0bHdHS3dmQU4ycUlVNG1kTUVIdWl5SWpOSEZtUXUrL0JQeWZUd3JBRW16b0tEWllWMWMvZUR2U3F6cFpsZnhsV3RMS0Nic1NOeTc1bU9KSjgvRnBuMGtCNWxSVzdtUkU4VXJJaWxuZGFvRT0%3D&title=Introduction%20to%20Microeconomics%20%7C%20L6' },
-    { name:'More Lecture COMING SOON -->',                      dur:'00:00',   url:'' },
-    
-  ],
-  'Stats Economics': [
-    { name:'Not Started Yet COMING SOON -->',                  dur:'00:00',   url:'' },
-  ],
-  'Accounts': [
-    { name:'Prarambh Batch 11th Accounts - 1st FREE Class | Basic Accounting Terms - Lecture 1',                     dur:'1:35:38',   url:'https://www.youtube.com/live/Xshq7VFMHVk?si=VBG5J7IMT0jH95Lp' },
-    { name:'Basic Accounting Terms | L2',                     dur:'1:23:04',   url:'https://rolexcoderz.in/NT/player.php?token=TDhKV2QyUjVZUm5rTHhPZWtvMWptZz09OjozN0FwdW9ZVlJjUm1YT2VIU2JiMCtxeHVpcURkTlJmTStsOGNNMTJlYStjSlhnZ216NFo3c3dNZHZFb3FFZVEycHRqVWlZRE1iM2dHeDR4RHI1ZW5KVk5Md1JIQjAwM213Y2RFTlJBUmFpN1p4WjY3VzQwYmJ3TlVzczV1NXZKcWJNSzQzV29LTFlSNGRLRk0yMTZiMHpMc21jVW0ycmZRd3lDNjFIWEprWUJCNE9kMVBldENvYUkxTE9hYUUvWlA1NFpTWXZVUnR3c3Bid2FXdnAxNUVHZnU4RFdsUTBiN3FYWkUrSVBQY2d2eDl6VHA1TktFTVFiMXBSUTM0YllnYkNLQ0FaaGhYTm9rUWpXenk2MS9CU2p2NmlMMEpwTDJhOThaa3VxNjd3Zz0%3D&title=Basic%20Accounting%20Terms%20%7C%20L2' },
-    { name:'Basic Accounting Terms | L3',                     dur:'1:33:36',   url:'https://rolexcoderz.in/NT/player.php?token=a1dQaGVKMzlRYWYzNjUxUlhhNzV3UT09Ojorc3RRRlhRTGZHdklEN0hxOExzTTBwYXFkQUlRTkNYeEM1Vzg3OExucVlSLytYY0JWZmVCNUh4NHdzYnpBdHpyNVU1d29NVHRaZHpBMktRWHZjT1djTjlCT2NaWitBejdsTFZHWjVkTjdRak1ZTzVwdk9hMTZoUXBST2N4SjRCL0NBaDRZbWYrMVFKT2swY0RxQ3liSlhDWEZIbjFkdHUrUkIwU0c5QW5xNFZybnIwQ01QTnI4SU1MbWpMTW0rN0gvcmU3Zm41Q0tsRndoYndDQUZqRmRVcHlsSVNKV2tmNXFIR2NYNFp6d1JYS0lyaHcvUG9hT0xIWlZtbjFRZjM4R2JSa3l4Slc3cktQYlo0aFE4d1Fta0x4RHBiSXo5K2NEQlk5UkRrdS9wND0%3D&title=Basic%20Accounting%20Terms%20%7C%20L3' },
-    { name:'Introduction to Accounting | L1',                     dur:'1:18:24',   url:'https://rolexcoderz.in/NT/player.php?token=OTFpSTRYbGdudWZ1SnpDY0NrNURsUT09OjphOG9WTnNQcVRSc0VTNXk2emNRa3JYak5PWkp2UE9FVUxsMERtRkEveEI3UXhaMEVpa2JpUTdSY1g4OHAxMGthQmR3VWVPTGkzZk9XeHlsTnllOEFsL0hHaXl0OGNoMFJYYUtCMGVsRjNwTkNtdkRHK09INTBwQXQwVDRmeVVUUXlHakdKcnJiZkFzZHpqZlQwbnZ2VURVZlUzVDRPL2dQQlFhTG12Zmh3Y0pRM0p4YXEzTk12c01Id0JXSVJIMWtLNjJFd2ZET0xyLzVOS3FhMnc4ekYzdUNROTFkdGFSb1hEWi9jcTduUTBqMGUraHh1UTZYc1lBQnR1QW02UWpMVW5pSEIyY2gvQ3lHQkZCb2ZvaVE5RWJOMWdUQW9qMVJzSm4zT1QrZVN6bz0%3D&title=Introduction%20to%20Accounting%20%7C%20L1' },
-    { name:'Introduction to Accounting | L2',                     dur:'1:08:45',   url:'https://rolexcoderz.in/NT/player.php?token=ejFMcm1ISm96anRNbGc4Wk81TWJ0QT09OjpxdzJhbjdtZlUzRHhOeS9obkVZeFU3dWIraXJnUW5vL1VxTjZ2NHErM3htdjVPUFN2bUtyQmNCTHk1RTBYSWhwanY5TFk4RmdpUzRYSThoMFdiNVB1TnIvQXh1K3FKU2J5a1ZMcXZZc2IxTG5JRHl1OGt2eHdYVzVBS0k5Nkc2QW5reWxWZmxiUDB5VHJTTGEvZjNKcjFsTk1Kc0p0TmM0cDZmanBnTUlBSHg0MjJMSDhvTDN0Tk1aSHVZUlUxSUpEYXJ4cEsrVkxLa1VIOStNZ0VqV1AyVTBxYndWNGs2L0djMUVrTWQ0ekprREtsVXhVME4rVklvS3hXczVpYURkWTNPV2RNV29pSVNJK2wvSk1Yek5TYWlweSs2OE1qRHhkWHZ5MUo1TXlVVT0%3D&title=Introduction%20to%20Accounting%20%7C%20L2' },
-    { name:'Introduction to Accounting | L3',                     dur:'1:01:28',   url:'https://rolexcoderz.in/NT/player.php?token=eW9UYUgzK3doZm90azRuaTBKUCtHZz09OjpuaWxTL3czRDh4TSswcGw5R2Y0dGdRR0QyWkdPUm1NOHZ2K2tBWGoyM2Z2cytvMUF2OFRtbGdtZFlYZTQ3WmFaaGRhVzhpbFp4b1ZPcUNRL0V3blhwTXdEOEtta295MTlVMFJZejRPWmNCQnQzNWVCNnRFK3dTN3ovdUVHRWRXa1NEU0oxZy9nYXJlZWVPazJkbnFyeTU5c29RdjhuS3hZOVVNZlR4ZEs2aEJiQVpYT0w0bkg4RG00cXBKVWpydklCVTgrd2ZTVlB2cUYyQnlxQzBjWG1XbjJXejRORWluVEpoV2RNTlZyRFJ6R0lyd25nYytJU0FaRUpZcVBNc3pNcUdvdGtIKzhNcGxWaTltdUpxYjkyMzRPNUtGMWNvVURZMUtjcGwrcG9KND0%3D&title=Introduction%20to%20Accounting%20%7C%20L3' },
-    { name:'Accounting Equation | L1',                     dur:'1:24:32',   url:'https://rolexcoderz.in/NT/player.php?token=OWV4VnFudU4xR3dsa2p2VFpLWWswQT09OjpFNmFqOVIxRE1nWHNGRHlESVdBd0FMSlNvdXZ3d3NLUHByNm5IQy9xdUhjQ2lSbjgrZFh6aXlnei9IUG9sR2daLzJSa25sMGlEZjhVSmdIenh4ZWxGOTk1NFYxNEg5ZnRJWDdyY2poU0cyRWFsdngyL0JxWDJmVzl5cWFmeENDVERaSTRwZWxobDVvdXNPdzUrVTFuejRIMHlIM1ZNVjdMRGc5dXgwWGlyQnlidEZDOGNPOGE3blFDd3lwYzZhQitaMHgwa0pKVTl4ZDAvUFV5WDF5aXFldUwxcWNYZEdPcTFkU3lCeVJublZVbW91QXM4WnUraXhtTzRieWFHUUYxcVNrdktCangrSWd5ck5qUXJGV2x5d0FMa0orR1dydXU3a3lsbmtGdUQ0WT0%3D&title=Accounting%20Equation%20%7C%20L1' },
-    { name:'Accounting Equation | L2',                     dur:'1:34:58',   url:'https://rolexcoderz.in/NT/player.php?token=L1kwMWZQczVYN3UzbzZISnhxZW1tUT09OjpsR2I5ZUNOZlNXaW9qL3drLyt1S3lFRml1djFCN3pSVjBSQ3dGakRTMzY5eXBPOUpacUlxOEl2Y3loODAxeGlmMjF1Q0Z3Ukt4RkxraDJBR0l2djNiYnRUVjlFb0FyRU1raStXQUROdVpKODN3a1NsRWE0eVpDVzM5d0s5K1dzemRnb1JZRWhmM2NRWUlDeUU2dXNTNldrQy80S0p6eWZnWFJ6cURjY3hwb3Rpcnp2NG9wNUE0bE1XM2p4V0dWSWYwOWNiMzhVeHpReEtlVlVCZ3F0VTl1VzJYaVN6M3E4L3ltOGlpS0JONnJPT2p1ZitDQnNndVA2Y1lkNkZCZkE4eFNlSnZrcUdUU0tUSUJmaXZwZDBXaHJCcnRlMWJiUTdHTnp0TDl6Z0tNYz0%3D&title=Accounting%20Equation%20%7C%20L2' },
-    { name:'More Lecture COMING SOON -->',                     dur:'00:00',   url:'' },
-  ],
-  'Business Studies': [
-    { name:'Prarambh Batch 11th Business Studies - 1st FREE Class | Nature & Purpose of Business | Lecture 1',                     dur:'1:08:19',   url:'https://www.youtube.com/live/IJjMO5t2TkA?si=0yagD4Y4O_eMB9f_' },
-    { name:'Nature & Purpose of Business | L2',                     dur:'1:15:35',   url:'https://rolexcoderz.in/NT/player.php?token=cnhrenZ1WmlzNWVqbnFNc3BXS2pCZz09OjpjdWdxNlluSWRNY0k2ODZtNmc1OGtDYUwzRThLRVFyQUgvOVJuMkxhUUo4bkp5YmdkYzkzRnRPak9PQlB3MThad1FoTmE1aUU0aWVGT2hTZzNBUmZaQWhreU8wSEJKSWxhSGJUNTJUM0dpT0xEZFozM0ZJYURjczJYVC9DVDl3RVhCWk5aUnNrNDRPdFlSVitRSkt6SlNKUjgxaFpZZ1dtTFR2ejdzZ1lhbU5tblRQenRTZ3pxdGhHdmd3czBHd3IxOVo5Mi9MTE5FVUdWVFNCUkFiVzN1VjYwcTI5UWYvS3dSRXlxcHlJdDMyTmg3TXNTcDNMMmNiZi9WU3JsTDcvOW9uT3ZGdE9Na0lzUTYycnN4UHlBT0dhN2Z3dElZak1yWmkrUHNVUUZXUT0%3D&title=Nature%20%26%20Purpose%20of%20Business%20%7C%20L2' },
-    { name:'Nature & Purpose of Business | L3',                     dur:'1:17:11',   url:'https://rolexcoderz.in/NT/player.php?token=dFdKOXh5RVhuSmwvemZGcHV4eCtLZz09OjovUVVrMU91QXlhRjF2QmlBblRVaWZvREMwaVdxRWQvOWZkRXNYSk8wUi96eE9MZWRtd3hRL0FWbGU3aE1aR3pPWFJ2MVdnVEhVN284QXJFcythL0x4enh3QlFGK3FxR0tIbWpORlNVUFI2UW1sS3lUajE0MlI1OE5uZWlnNk4rejJtY0JmUFUzTVhEa3NIcFRXdWpHb0t6NWdKR3pnbGZ3RGpMK0lzY21nUTlrZXNIcEkxMUQwQngzc3E1Zzc5ZzdreWk0Q3lSMnUzS1FjS2NXcmdITURaVUVuU0dydE12WFRQRGVvYm5aWHlXNkNua3JpSHF5ZXg1a1VCYmVDeTQ4MzBQVkpDM1J6TTBpQjRkM3QyVTdiMWpadk83MXY1TFo1SlFzaTFoSFEzdz0%3D&title=Nature%20%26%20Purpose%20of%20Business%20%7C%20L3' },
-    { name:'Nature & Purpose of Business | L4',                     dur:'1:18:57',   url:'https://rolexcoderz.in/NT/player.php?token=QmNYOWsyQW5Xd28raTdkM1J6NTNKZz09OjpKYjVDb29GTXl3NHV6elNjTUtXUHNxM09qbUtLNGRyTlpiZDltU1ZPdWs2anhXWG9mQ1VyMTB1T2ZaQytzWTU2SWlxV1ZVZlYvME5YaEowWXdNMytjUjRzcis5K01qK053bzJhMjdVenN1bGZucEo4Q0FHcUJCT1B0QUhFakdtTlIxN3BzRXd6ZTAwNjFxa3orVW8wVGFyWEZ4V3JXdEtjaDEvbHZidjRscjNWT05LTVRyY1NlNWJMTnlhc0dhcXhwZ2NRRFNaRXNYbnNBeFN0a2Fnc0Q2eEZFMUxSV1V6SG1UWUorZDRjVDV6elh6bytxQlZMUCtiRjc4WDk2bWZIWmh4ZWxFSktGZ2c0dlVuMFVUNEVEdi9IdDBkYmZWTXYreTV4VUlmZ29Udz0%3D&title=Nature%20%26%20Purpose%20of%20Business%20%7C%20L4' },
-    { name:'Nature & Purpose of Business | L5',                     dur:'1:19:36',   url:'https://rolexcoderz.in/NT/player.php?token=N2xlVGNvTmRjVDhndUNxc05NZURwdz09OjpsMHdXSXYzcWtvbkprYlU1eUJWamVhT2NRNlZmUkIvUXoxcnlNZDNoUjdhMVpFZU9aZWVLQzVXYkZTZHNXTTNkUUc3SVZXdVQ2QXFzNlJFQmhpT0dGanA3VnNaaVhRZFhiM1RaeHl4blQxODlpVjFDRTRCUmhWQkR2ZE5Sdk5BbUpUV3NaL2xkSFl5aDZxOU1TTzhrMDd6Y1pZaWRoTlhXczlWZXdFTGVlK3V4aFBhOTViRGJYcEk5ZFJVU1RMeStuMUNwZDRkdGlHRGtIczBmUTFrZzFmbnRqMGV3UGIxUjZEM3YxamlvT0Q0bkl5YTRRVmU0U1FBTnlXNkQvSmVxUktBN2wyUlc0WVlZSURLTDdUNmp0Vm93UWxvM0VvdEFEU1l5b3lNTUhEVT0%3D&title=Nature%20%26%20Purpose%20of%20Business%20%7C%20L5' },
-    { name:'Nature & Purpose of Business | L6',                     dur:'1:24:06',   url:'https://rolexcoderz.in/NT/player.php?token=YzlESWh5WTU5UTU2TnNKZFFuUDl0UT09OjpwdUQ1SVZBV0VCbGxJeUJKQjhDUGt5c1dXaTdpR2dyWWpQUS81Qk5LV2xmNnZQbWRzQlBTY2EwSS9Nck9hODVpM0hyWHRMZ2lucFZmWVZsZ2JtdGJ4VkI2RCtmcGZYQXFtSTRJcXJmMDJVVXZFZUlPdVcvR2F6eE10QWtLTFZNMFhwR21TUEl2bEdoaXVSZ2haWHFmUkhCVUFuUFZicFhPWkdzZEpTcmliZFRuN1hkWFo3dUwzb2Q1VndZWVNrN0I0OU15c1FqRmJOelNBNFA2dVJEVFhNNncrOE5zSG82RzVhTVoya0xWY0JpeEtEMmJkZUdHcWh4dExsQUtBWGJiKzk5NVMzZWkyT0NLZExLM1gxVVBMUE14aWh1MVNqNHY4ek9mdjd3UjBGRT0%3D&title=Nature%20%26%20Purpose%20of%20Business%20%20%7C%20L6' },
-    { name:'Nature & Significance of Mnagement',                     dur:'1:24:16',   url:'https://rolexcoderz.in/NT/player.php?token=b3ZRWi9hMmVmOWVNMXhjQkdBNUgyUT09OjpRZHNQQ05UOEp4OUtydjNiZTgvbjV3Q1RKSndFV0ZwRW9PbXB2WXM5RHhGVkt4WS9SeUZlbGNxSWJjU2E5NEt3SnNmREtmbnhEVnEyZWJmRGg1ZEZ5eTYzQTBVNGE5MFcwdG5FaStJTUprUk1rWVdOTk94Q2V5S1lwKzB2VmF0ampVeFliNlJuYlF1UEo2WXJoMkZOUWwvbFc4ZFhnSGM3Tzl6VEQ5bDd1UXgzZTZyc1gzN0hFakhGV3orcjRzMkljdnJBZE5QTEM5NTdsV1QyeTNtcG1PZ2l5N0haT2dwUGlmMFlaZkQ1VHhEZzU3V0JveXRSNGl6TEp1VmpIaWN5SEpYNlVNeUdhTEk2d1ZjK1g4bkpwbjdTelAxNW9ERlJoRFpEVktISmxDST0%3D&title=Nature%20%26%20Significance%20of%20Management%20%7C%20L7' },
-    { name:'More Lecture COMING SOON -->',                     dur:'00:00',   url:'' },
-  ],
-  'Hindi Elective': [
-    { name:'कहानी - पाठ 1',                     dur:'40:20',   url:'' },
-    { name:'निबंध - पाठ 1',                     dur:'35:45',   url:'' },
-  ],
-};
-
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//  📄 PDF DATA — apna data yahan bharo
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const PDFS = {
-  'Maths': [
-    { name:'Prarambh Batch 11th Maths- 1st FREE Class | Sets - Lecture 1',                 pages:'16 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//1119214_148_Prarambh%20Batch%2011th%20Maths%20-%201st%20FREE%20Class%20%20Sets%20Lecture%201.pdf' },
-    { name:'Sets - L2',                 pages:'10 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//7592602_148_Sets%20%20L2.pdf' },
-    { name:'Sets - L3',                 pages:'14 pages', url:'' },
-    { name:'Sets - L4',                 pages:'14 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//7598138_148_Sets%20%20L4.pdf' },
-    { name:'Sets - L5',                 pages:'24 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//3937916_148_Sets%20L5.pdf' },
-    { name:'Sets - L6',                 pages:'7 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//3300329_148_Sets%20L6.pdf' },
-    { name:'Sets - L7',                 pages:'14 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//5952277_148_Sets%20_%20L7.pdf' },
-    { name:'Relations and Functions - L1',       pages:'11 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//5510439_148_Relations%20and%20Functions%20%20L1.pdf' },
-    { name:'Relations and Functions - L2',       pages:'8 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2543474_148_Class%2011%20Maths%20-%202026Prarambh%20-%20%20Relations%20and%20Functions%20%20L2.pdf' },
-  ],
-  'Micro Economics': [
-    { name:'Prarambh Batch 11th Economics - 1st FREE',           pages:'29 pages',  url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2300071_148_Prarambh%20Batch%2011th%20Economics%20-%201st%20FREE%20Class%20%20Introduction%20to%20Microeconomics%20-%20Lecture%201.pdf' },
-    { name:'Introduction to Microeconomics | L2',              pages:'22 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2261484_148_Introduction%20to%20Microeconomics%20-%20L2.pdf' },
-    { name:'Introduction to Microeconomics | L3',           pages:'16 pages',  url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//806937_148_Introduction%20to%20Microeconomics%20%20L3.pdf' },
-    { name:'Introduction to Microeconomics | L4',              pages:'19 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//5431835_148_20260416214041316.pdf' },
-    { name:'Introduction to Microeconomics | L5',           pages:'17 pages',  url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//1544378_148_Introduction%20to%20Microeconomics%20%20L5.pdf' },
-    { name:'Introduction to Microeconomics | L6',              pages:'32 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2188206_148_20260418211439564.pdf' },
-    { name:'More PDF COMING Soon -->',           pages:'0 pages',  url:'' },
-  ],
-  'Accounts': [
-    { name:'Prarambh Batch 11th Accounts - 1st FREE Class | Basic Accounting Terms - Lecture 1',                    pages:'46 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//3824013_148_Prarambh%20Batch%2011th%20Accounts%20-%201st%20FREE%20Class%20%20Basic%20Accounting%20Terms%20-%20Lecture%201.pdf' },
-    { name:'Basic Accounting Terms | L2',                        pages:'19 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//1475544_148_20260413212957751.pdf' },
-    { name:'Basic Accounting Terms L3',                        pages:'27 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//1136799_148_Basic%20Accounting%20Terms%20%20L3.pdf' },
-    { name:'Introduction to Accounting L1',                        pages:'20 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//3245223_148_Introduction%20to%20Accounting%20%20L1.pdf' },
-    { name:'Introduction to Accounting | L2',                        pages:'22 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//6162876_148_Introduction%20to%20Accounting%20_%20L2.pdf' },
-    { name:'Introduction to Accounting L3',                        pages:'30 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//1223568_148_Introduction%20to%20Accounting%20%20L3.pdf' },
-    { name:'Accounting Equation | L1',                        pages:'13 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//6514670_148_Accounting%20Equation%20%20L1%20.pdf' },
-    { name:'Accounting Equation | L2',                        pages:'14 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2187596_148_20260425213659944.pdf' },
-    { name:'More PDF COMING Soon -->',                        pages:'0 pages', url:'' },
-  ],
-  'Business Studies': [
-    { name:'Prarambh Batch 11th Business Studies - 1st FREE Class | Nature & Purpose of Business | Lecture 1',                    pages:'26 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//4591991_148_Prarambh%20Batch%2011th%20Business%20Studies%20-%201st%20FREE%20Class%20%20Nature%20%26%20Purpose%20of%20Business%20-%20Lecture%201%20.pdf' },
-    { name:'Nature & Purpose of Business | L2',                        pages:'22 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//7809884_148_Ch.pdf' },
-    { name:'Nature & Purpose of Business | L3',                        pages:'38 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2851178_148_Nature%20%26%20Purpose%20of%20Business%20L3.pdf' },
-    { name:'Nature & Purpose of Business | L4',                        pages:'42 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//6037087_148_Nature%20%26%20Purpose%20of%20Business%20%20L4.pdf' },
-    { name:'Nature & Purpose of Business | L5',                        pages:'39 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//5209743_148_Nature%20%26%20Purpose%20of%20Business%20%20L5%20.pdf' },
-    { name:'Nature & Significance of Management',                        pages:'43 pages', url:'https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/content/pdf//2639269_148_Nature%20%26%20Significance%20of%20Management%20_%20L7.pdf' },
-    { name:'More PDF COMING Soon -->',                        pages:'0 pages', url:'' },
-  ],
-  'Hindi Elective': [
-    { name:'कहानी नोट्स',                        pages:'9 pages',  url:'' },
-    { name:'निबंध नोट्स',                        pages:'7 pages',  url:'' },
-  ],
-};
-
-const THUMB_GRADS = {
-  'Economics':'linear-gradient(135deg,#200a28,#280a0a)',
-  'Accounts':'linear-gradient(135deg,#281a0a,#0a1528)',
-  'Business Studies':'linear-gradient(135deg,#0a2010,#201a0a)',
-  'Maths':'linear-gradient(135deg,#0a1228,#1a350e)',
-  'English':'linear-gradient(135deg,#0d0820,#1a0e35)',
-  'Hindi Core':'linear-gradient(135deg,#1a0a0a,#0a1a28)',
-  'Hindi Elective':'linear-gradient(135deg,#0a0a1a,#1a0a1a)',
-};
-
-// ── STATE ──
-let curChapter='', curBtag='#110', prevPage='pg-lectures';
-let isPlaying=false, curTime=0, totalDur=0, pInterval=null, speed=1, speedIdx=2;
-const SPEEDS=[0.5,0.75,1,1.25,1.5,2];
-
-// ── NAV ──
-function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function goComingSoon(n,i){document.getElementById('cs-icon').textContent=i;document.getElementById('cs-pname').textContent=n;go('pg-coming');}
-
-function openBatch(id,cls,name,price,oldPrice,thumb,sub){
-  curBtag='#'+id;
-  document.getElementById('c-btag').textContent=curBtag;
-  document.getElementById('c-title').textContent=name;
-  document.getElementById('c-thumb-text').textContent=thumb;
-  document.getElementById('c-thumb-sub').textContent=sub+' · 2026-27';
-  document.getElementById('c-class-badge').textContent=cls;
-  document.getElementById('c-old-price').textContent='₹'+oldPrice+'/-';
-  document.getElementById('c-new-price').textContent='₹'+price+'/-';
-  document.getElementById('c-tt-name').textContent=name.split(' ').slice(0,2).join(' ').toUpperCase();
-  switchTab('ov');
-  go('pg-content');
+// Load data from localStorage
+function loadData(){
+  const saved=localStorage.getItem('ayushcoderz-data');
+  if(saved){
+    try{DATA=JSON.parse(saved);}catch(e){DATA={batches:[]};}
+  } else {
+    DATA={batches:[]};
+  }
 }
 
-function switchTab(w){
-  const o=w==='ov';
-  document.getElementById('tab-ov-body').style.display=o?'':'none';
-  document.getElementById('tab-ct-body').style.display=o?'none':'';
-  document.getElementById('tab-ov').classList.toggle('active',o);
-  document.getElementById('tab-ct').classList.toggle('active',!o);
-  window.scrollTo(0,0);
-}
-function backToChapters(){switchTab('ct');go('pg-content');}
-
-function openChapter(name){
-  curChapter=name;
-  const lecs=LECTURES[name]||[], pdfs=PDFS[name]||[];
-  document.getElementById('sub-title').textContent=name;
-  document.getElementById('sub-subject').textContent='COURSE · '+name.toUpperCase();
-  document.getElementById('sub-btag').textContent=curBtag;
-  document.getElementById('sub-lec-meta').textContent=lecs.length+' lecture'+(lecs.length!==1?'s':'')+' available';
-  document.getElementById('sub-pdf-meta').textContent=pdfs.length+' PDF'+(pdfs.length!==1?'s':'')+' available';
-  go('pg-subchapter');
+// Save data to localStorage
+function saveData(){
+  localStorage.setItem('ayushcoderz-data',JSON.stringify(DATA));
+  location.reload();
 }
 
-function openLectures(){
-  const lecs=LECTURES[curChapter]||[], grad=THUMB_GRADS[curChapter]||'linear-gradient(135deg,#0a0820,#1a0e35)';
-  document.getElementById('lec-subject').textContent=curChapter.toUpperCase()+' · PRARAMBH BATCH';
-  document.getElementById('lec-ttl').textContent=curChapter+' — Lectures';
-  document.getElementById('lec-cnt').textContent=lecs.length+' lecture'+(lecs.length!==1?'s':'');
-  document.getElementById('lec-btag').textContent=curBtag;
-  document.getElementById('lec-list').innerHTML=lecs.map(l=>`
-    <div class="lec-item" onclick='openVideo(${JSON.stringify(l)},${JSON.stringify(curChapter)})'>
-      <div class="lec-thumb"><div class="lec-thumb-bg" style="background:${grad};"></div><div class="lec-play">▶</div></div>
-      <div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div>
-      <div class="lec-dur">${l.dur}</div>
-    </div>`).join('');
-  prevPage='pg-lectures';
-  go('pg-lectures');
+// ====== ADMIN PANEL ======
+function openAdmin(){
+  const pass=prompt('Enter Admin Password:');
+  if(pass===adminPassword){
+    adminLoggedIn=true;
+    document.getElementById('admin-page').classList.add('active');
+    refreshAdminLists();
+  } else {
+    alert('❌ Wrong password!');
+  }
 }
 
-function openPdfs(){
-  const pdfs=PDFS[curChapter]||[];
-  document.getElementById('pdf-subject').textContent=curChapter.toUpperCase()+' · PRARAMBH BATCH';
-  document.getElementById('pdf-cnt').textContent=pdfs.length+' PDF'+(pdfs.length!==1?'s':'');
-  document.getElementById('pdf-btag').textContent=curBtag;
-  document.getElementById('pdf-list').innerHTML=pdfs.map(p=>`
-    <div class="pdf-item" onclick='viewPdf(${JSON.stringify(p)})'>
-      <div class="pdf-icon">📄</div>
-      <div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div>
-      <span class="pdf-badge">PDF</span>
-    </div>`).join('');
-  go('pg-pdfs');
+function closeAdmin(){
+  adminLoggedIn=false;
+  document.getElementById('admin-page').classList.remove('active');
+}
+
+function switchAdminTab(tab){
+  document.querySelectorAll('.admin-form').forEach(f=>f.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('admin-'+tab).classList.add('active');
+  event.target.classList.add('active');
+  
+  if(tab==='batches') updateBatchSelect();
+  if(tab==='chapters') updateChapterBatchSelect();
+  if(tab==='lectures') updateLectureBatchSelect();
+  if(tab==='pdfs') updatePDFBatchSelect();
+}
+
+function saveBatch(e){
+  e.preventDefault();
+  const name=document.getElementById('batch-name').value;
+  const cls=document.getElementById('batch-class').value;
+  const price=document.getElementById('batch-price').value;
+  
+  DATA.batches.push({
+    id:Date.now(),
+    name,
+    class:cls,
+    price,
+    chapters:[]
+  });
+  
+  saveData();
+}
+
+function saveBatchEdit(batchId){
+  const name=prompt('New name?',DATA.batches.find(b=>b.id==batchId).name);
+  if(name){
+    DATA.batches.find(b=>b.id==batchId).name=name;
+    saveData();
+  }
+}
+
+function deleteBatch(batchId){
+  if(confirm('Delete batch?')){
+    DATA.batches=DATA.batches.filter(b=>b.id!=batchId);
+    saveData();
+  }
+}
+
+function updateBatchSelect(){
+  const sel=document.getElementById('chapter-batch');
+  sel.innerHTML='<option value="">Choose...</option>'+DATA.batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  refreshBatchList();
+}
+
+function updateChapterBatchSelect(){
+  const sel=document.getElementById('chapter-batch');
+  sel.innerHTML='<option value="">Choose...</option>'+DATA.batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+}
+
+function updateLectureBatchSelect(){
+  const sel=document.getElementById('lecture-batch');
+  sel.innerHTML='<option value="">Choose...</option>'+DATA.batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  refreshLectureList();
+}
+
+function updatePDFBatchSelect(){
+  const sel=document.getElementById('pdf-batch');
+  sel.innerHTML='<option value="">Choose...</option>'+DATA.batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  refreshPDFList();
+}
+
+function updateChapterBatch(){
+  const batchId=document.getElementById('chapter-batch').value;
+  refreshChapterList();
+}
+
+function updateLectureBatch(){
+  const batchId=document.getElementById('lecture-batch').value;
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  const sel=document.getElementById('lecture-chapter');
+  sel.innerHTML='<option value="">Choose...</option>'+(batch?.chapters||[]).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  refreshLectureList();
+}
+
+function saveChapter(e){
+  e.preventDefault();
+  const batchId=document.getElementById('chapter-batch').value;
+  const name=document.getElementById('chapter-name').value;
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  if(batch){
+    if(!batch.chapters) batch.chapters=[];
+    batch.chapters.push({id:Date.now(),name,lectures:[]});
+    document.getElementById('chapter-name').value='';
+    saveData();
+  }
+}
+
+function deleteChapter(batchId,chapterId){
+  if(confirm('Delete?')){
+    const batch=DATA.batches.find(b=>b.id==batchId);
+    if(batch) batch.chapters=batch.chapters.filter(c=>c.id!=chapterId);
+    saveData();
+  }
+}
+
+function saveLecture(e){
+  e.preventDefault();
+  const batchId=document.getElementById('lecture-batch').value;
+  const chapterId=document.getElementById('lecture-chapter').value;
+  const name=document.getElementById('lecture-name').value;
+  const dur=document.getElementById('lecture-duration').value;
+  const url=document.getElementById('lecture-url').value;
+  
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  const chapter=batch?.chapters?.find(c=>c.id==chapterId);
+  if(chapter){
+    if(!chapter.lectures) chapter.lectures=[];
+    chapter.lectures.push({id:Date.now(),name,dur,url});
+    document.getElementById('lecture-name').value='';
+    document.getElementById('lecture-duration').value='';
+    document.getElementById('lecture-url').value='';
+    saveData();
+  }
+}
+
+function deleteLecture(batchId,chapterId,lectureId){
+  if(confirm('Delete?')){
+    const batch=DATA.batches.find(b=>b.id==batchId);
+    const chapter=batch?.chapters?.find(c=>c.id==chapterId);
+    if(chapter) chapter.lectures=chapter.lectures.filter(l=>l.id!=lectureId);
+    saveData();
+  }
+}
+
+function savePDF(e){
+  e.preventDefault();
+  const batchId=document.getElementById('pdf-batch').value;
+  const name=document.getElementById('pdf-name').value;
+  const type=document.getElementById('pdf-type').value;
+  const url=document.getElementById('pdf-url').value;
+  
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  if(batch){
+    if(!batch.pdfs) batch.pdfs=[];
+    batch.pdfs.push({id:Date.now(),name,type,url});
+    document.getElementById('pdf-name').value='';
+    document.getElementById('pdf-type').value='';
+    document.getElementById('pdf-url').value='';
+    saveData();
+  }
+}
+
+function deletePDF(batchId,pdfId){
+  if(confirm('Delete?')){
+    const batch=DATA.batches.find(b=>b.id==batchId);
+    if(batch) batch.pdfs=batch.pdfs.filter(p=>p.id!=pdfId);
+    saveData();
+  }
+}
+
+function refreshAdminLists(){
+  updateBatchSelect();
+  updateChapterBatchSelect();
+  updateLectureBatchSelect();
+  updatePDFBatchSelect();
+}
+
+function refreshBatchList(){
+  const html=DATA.batches.map(b=>`
+    <div class='admin-item'>
+      <div class='admin-item-info'>
+        <div class='admin-item-name'>${b.name}</div>
+        <div class='admin-item-meta'>${b.class} • ₹${b.price}</div>
+      </div>
+      <div class='admin-item-actions'>
+        <button onclick="saveBatchEdit(${b.id})">Edit</button>
+        <button class='danger' onclick="deleteBatch(${b.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('batch-list').innerHTML=html||'<p style="color:var(--muted);">No batches</p>';
+}
+
+function refreshChapterList(){
+  const batchId=document.getElementById('chapter-batch').value;
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  const html=(batch?.chapters||[]).map(c=>`
+    <div class='admin-item'>
+      <div class='admin-item-info'>
+        <div class='admin-item-name'>${c.name}</div>
+        <div class='admin-item-meta'>${(c.lectures||[]).length} lectures</div>
+      </div>
+      <div class='admin-item-actions'>
+        <button class='danger' onclick="deleteChapter(${batchId},${c.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('chapter-list').innerHTML=html||'<p style="color:var(--muted);">No chapters</p>';
+}
+
+function refreshLectureList(){
+  const batchId=document.getElementById('lecture-batch').value;
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  let html='';
+  (batch?.chapters||[]).forEach(ch=>{
+    (ch.lectures||[]).forEach(l=>{
+      html+=`
+        <div class='admin-item'>
+          <div class='admin-item-info'>
+            <div class='admin-item-name'>${l.name}</div>
+            <div class='admin-item-meta'>${ch.name} • ${l.dur}</div>
+          </div>
+          <div class='admin-item-actions'>
+            <button class='danger' onclick="deleteLecture(${batchId},${ch.id},${l.id})">Delete</button>
+          </div>
+        </div>
+      `;
+    });
+  });
+  document.getElementById('lecture-list').innerHTML=html||'<p style="color:var(--muted);">No lectures</p>';
+}
+
+function refreshPDFList(){
+  const batchId=document.getElementById('pdf-batch').value;
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  const html=(batch?.pdfs||[]).map(p=>`
+    <div class='admin-item'>
+      <div class='admin-item-info'>
+        <div class='admin-item-name'>${p.name}</div>
+        <div class='admin-item-meta'>${p.type}</div>
+      </div>
+      <div class='admin-item-actions'>
+        <button class='danger' onclick="deletePDF(${batchId},${p.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('pdf-list').innerHTML=html||'<p style="color:var(--muted);">No PDFs</p>';
+}
+
+// ====== WEBSITE PAGES ======
+const BATCHES=DATA.batches;
+const CHAPTERS={'prarambh':[]};
+const LECTURES={};
+const PDFS={};
+let prevPage='pg-home';
+
+function go(p){
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.getElementById(p).classList.add('active');
+  if(p==='pg-batches') renderBatches();
+  prevPage=p;
+}
+
+function swTab(t){
+  document.querySelectorAll('.tab').forEach(tb=>tb.classList.remove('active'));
+  document.querySelectorAll('#ov,#ch').forEach(s=>s.style.display='none');
+  event.target.classList.add('active');
+  document.getElementById(t).style.display='';
+}
+
+function swTab2(t){
+  document.querySelectorAll('.tab').forEach(tb=>tb.classList.remove('active'));
+  document.querySelectorAll('#lecs,#pdfs').forEach(s=>s.style.display='none');
+  event.target.classList.add('active');
+  document.getElementById(t).style.display='';
+}
+
+function renderBatches(){
+  const html=DATA.batches.map(b=>`
+    <div class='bcard' onclick="viewBatch(${b.id})">
+      <div class='bthumb'>
+        <div class='bthumb-grd'></div>
+        <div class='bthumb-name'>${b.name.substring(0,4).toUpperCase()}</div>
+        <span class='bclass-badge'>${b.class}</span>
+        <div class='bprice-badge'><div class='bprice-new'>₹${b.price}</div></div>
+      </div>
+      <div class='bcard-body'>
+        <div class='bcard-tag'><span class='tdot'></span>${(b.chapters||[]).length} Chapters</div>
+        <h3 class='bcard-title'>${b.name}</h3>
+        <div class='bcard-meta'><div class='mitem'>📚 ${(b.chapters||[]).reduce((t,c)=>(c.lectures||[]).length+t,0)} Lectures</div></div>
+        <div class='bcard-foot'><span class='sl'>View</span><button class='arr-btn' style='cursor:pointer;'>→</button></div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('batches').innerHTML=html;
+}
+
+function viewBatch(batchId){
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  if(!batch) return;
+  
+  document.getElementById('batch-detail-hero').innerHTML=`<div class='clabel'><span class='dot'></span>${batch.class}</div><h2 class='ctitle'>${batch.name}</h2><div style='margin-top:12px;color:var(--muted2);font-size:11px;'>₹${batch.price}</div>`;
+  
+  const ovHtml=`
+    <div class='cdesc'>
+      <div class='cdesc-ttl'>Batch Info</div>
+      <ul class='flist'>
+        <li class='fitem'><span class='fnum'>1</span><strong>Class:</strong> ${batch.class}</li>
+        <li class='fitem'><span class='fnum'>2</span><strong>Chapters:</strong> ${(batch.chapters||[]).length}</li>
+        <li class='fitem'><span class='fnum'>3</span><strong>Lectures:</strong> ${(batch.chapters||[]).reduce((t,c)=>(c.lectures||[]).length+t,0)}</li>
+        <li class='fitem'><span class='fnum'>4</span><strong>Price:</strong> ₹${batch.price}</li>
+      </ul>
+    </div>
+  `;
+  document.getElementById('ov').innerHTML=ovHtml;
+  
+  const chHtml=`<div class='ch-list'>${(batch.chapters||[]).map(c=>`
+    <div class='ch-item' onclick="viewChapter(${batch.id},${c.id})">
+      <div class='ch-l'>
+        <div class='ch-icon'>📖</div>
+        <div class='ch-name'>${c.name}</div>
+      </div>
+      <div class='ch-arr'>→</div>
+    </div>
+  `).join('')}</div>`;
+  document.getElementById('ch').innerHTML=chHtml;
+  
+  go('pg-batch-detail');
+}
+
+function viewChapter(batchId,chapterId){
+  const batch=DATA.batches.find(b=>b.id==batchId);
+  const chapter=batch?.chapters?.find(c=>c.id==chapterId);
+  if(!chapter) return;
+  
+  document.getElementById('chapter-header').innerHTML=`
+    <div class='lec-subject'>${batch.name}</div>
+    <h2 class='lec-ttl'>${chapter.name}</h2>
+    <div class='lec-cnt'>${(chapter.lectures||[]).length} lectures</div>
+  `;
+  
+  const lecHtml=(chapter.lectures||[]).map(l=>`
+    <div class='lec-item' onclick="openVideo({name:'${l.name}',dur:'${l.dur}',url:'${l.url}'},'${chapter.name}')">
+      <div class='lec-thumb'><div class='lec-play'>▶</div></div>
+      <div class='lec-info'><div class='lec-name'>${l.name}</div><span class='lec-badge'>${chapter.name}</span></div>
+      <div class='lec-dur'>${l.dur}</div>
+    </div>
+  `).join('');
+  document.getElementById('lecs').innerHTML=lecHtml;
+  
+  const pdfHtml=(batch.pdfs||[]).map(p=>`
+    <div class='pdf-item' onclick="viewPdf({url:'${p.url}'})">
+      <div class='pdf-icon'>📄</div>
+      <div class='pdf-info'><div class='pdf-name'>${p.name}</div><div class='pdf-meta'>${p.type}</div></div>
+      <div class='pdf-badge'>${p.type.toUpperCase()}</div>
+    </div>
+  `).join('');
+  document.getElementById('pdfs').innerHTML=pdfHtml;
+  
+  go('pg-chapter-detail');
 }
 
 function viewPdf(p){
   if(p.url&&p.url.trim()!=='') window.open(p.url,'_blank');
-  else alert('PDF ka link abhi add nahi kiya gaya.\nPDFS object mein "'+p.name+'" ka url daalo.');
+  else alert('PDF link not found');
 }
 
-// ── Extracts YouTube video ID from any YouTube URL ──
 function getYouTubeId(url){
-  // handles: youtube.com/watch?v=ID, youtu.be/ID, youtube.com/embed/ID, youtube.com/shorts/ID
   const m=url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
   return m?m[1]:null;
 }
 
-// ── VIDEO PLAYER ──
-function openVideo(lec, chapter){
-  const parts=lec.name.split(' - ');
+const SPEEDS=[0.5,0.75,1,1.25,1.5,1.75,2];
+let speedIdx=2, speed=1, curTime=0, totalDur=0, isPlaying=false, pInterval;
+
+function openVideo(lec,chapter){
   document.getElementById('v-title').textContent=lec.name;
-  document.getElementById('v-meta').textContent=chapter+' · PRARAMBH Batch';
-  document.getElementById('v-lname').textContent=parts[0];
-  document.getElementById('v-lnum').textContent=parts[1]||'Lecture';
+  document.getElementById('v-meta').textContent=chapter+' · AyushCoderZ';
+  document.getElementById('v-lname').textContent=lec.name.split(' - ')[0];
+  document.getElementById('v-lnum').textContent=lec.name.split(' - ')[1]||'Lecture';
   document.getElementById('v-stag').textContent=chapter.toUpperCase();
   document.getElementById('v-total').textContent=lec.dur;
 
@@ -750,29 +875,26 @@ function openVideo(lec, chapter){
   const posterWrap=document.getElementById('v-poster-wrap');
   const ctrl=document.getElementById('v-ctrl');
 
-  const ytId = lec.url ? getYouTubeId(lec.url) : null;
+  const ytId=lec.url?getYouTubeId(lec.url):null;
 
   if(ytId){
-    // ── YouTube mode ──
     ytFrame.src='https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&modestbranding=1';
     ytWrap.classList.add('active');
     posterWrap.style.display='none';
     ctrl.style.display='none';
-  } else if(lec.url && lec.url.trim()!==''){
-    // ── Other embed (Google Drive, MP4 etc.) ──
+  } else if(lec.url&&lec.url.trim()!==''){
     ytFrame.src=lec.url;
     ytWrap.classList.add('active');
     posterWrap.style.display='none';
     ctrl.style.display='none';
   } else {
-    // ── No URL: demo mode with timer ──
     ytWrap.classList.remove('active');
     ytFrame.src='';
     posterWrap.style.display='';
     ctrl.style.display='';
     const t=lec.dur.split(':');
     totalDur=t.length===3?+t[0]*3600+ +t[1]*60+ +t[2]:+t[0]*60+ +t[1];
-    stopPlayer(); curTime=0; speed=1; speedIdx=2;
+    stopPlayer();curTime=0;speed=1;speedIdx=2;
     document.getElementById('v-spd').textContent='1x';
     updateUI();
   }
@@ -781,8 +903,7 @@ function openVideo(lec, chapter){
 
 function playerBack(){
   stopPlayer();
-  const ytFrame=document.getElementById('v-yt-iframe');
-  ytFrame.src='';
+  document.getElementById('v-yt-iframe').src='';
   document.getElementById('v-yt-wrap').classList.remove('active');
   document.getElementById('v-poster-wrap').style.display='';
   document.getElementById('v-ctrl').style.display='';
@@ -790,29 +911,38 @@ function playerBack(){
 }
 
 function togglePlay(){
-  isPlaying=!isPlaying; updateUI();
+  isPlaying=!isPlaying;updateUI();
   if(isPlaying){pInterval=setInterval(()=>{curTime+=speed;if(curTime>=totalDur){curTime=totalDur;isPlaying=false;clearInterval(pInterval);}updateProgress();},1000);}
   else clearInterval(pInterval);
 }
+
 function stopPlayer(){isPlaying=false;clearInterval(pInterval);}
+
 function updateUI(){document.getElementById('v-main-btn').textContent=isPlaying?'⏸':'▶';document.getElementById('v-play-ov').style.display=isPlaying?'none':'flex';updateProgress();}
+
 function updateProgress(){const p=totalDur>0?Math.min((curTime/totalDur)*100,100):0;document.getElementById('v-fill').style.width=p+'%';document.getElementById('v-handle').style.left='calc('+p+'% - 6px)';document.getElementById('v-curr').textContent=fmt(Math.floor(curTime));}
+
 function fmt(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?h+':'+pad(m)+':'+pad(sec):pad(m)+':'+pad(sec);}
+
 function pad(n){return n.toString().padStart(2,'0');}
+
 function skipBack(){curTime=Math.max(0,curTime-10);updateProgress();}
+
 function skipFwd(){curTime=Math.min(totalDur,curTime+10);updateProgress();}
+
 function cycleSpeed(){speedIdx=(speedIdx+1)%SPEEDS.length;speed=SPEEDS[speedIdx];document.getElementById('v-spd').textContent=speed+'x';if(isPlaying){clearInterval(pInterval);pInterval=setInterval(()=>{curTime+=speed;if(curTime>=totalDur){curTime=totalDur;isPlaying=false;clearInterval(pInterval);}updateProgress();},1000);}}
+
 function toggleFS(){const el=document.getElementById('v-yt-wrap').classList.contains('active')?document.getElementById('v-yt-iframe'):document.getElementById('pg-player');if(!document.fullscreenElement)el.requestFullscreen&&el.requestFullscreen();else document.exitFullscreen&&document.exitFullscreen();}
 
-// Batch img: auto-show when src is set
+// Batch img handler
 document.addEventListener('DOMContentLoaded',()=>{
+  loadData();
   document.querySelectorAll('.bthumb-img').forEach(img=>{
     if(img.src&&img.src!==window.location.href){img.style.display='block';}
     img.addEventListener('load',()=>{img.style.display='block';});
     img.addEventListener('error',()=>{img.style.display='none';});
   });
 
-  // Seek
   let dragging=false;
   function seek(cx){const t=document.getElementById('v-track'),r=t.getBoundingClientRect(),p=Math.max(0,Math.min(1,(cx-r.left)/r.width));curTime=p*totalDur;updateProgress();}
   const tr=document.getElementById('v-track');
