@@ -235,7 +235,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="blist" id="batches-list"></div></div>
 
 <!-- CONTENT -->
-<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🧑‍💻 Admin</div></div>
 <div class="chero"><div class="clabel"><span class="dot"></span>COURSE</div><div class="ctitle" id="c-title"></div>
 <div class="cthumb"><div class="cthumb-bg"></div><div><div class="cthumb-text" id="c-thumb-text"></div><span class="cthumb-sub" id="c-thumb-sub"></span></div><div class="cclass-badge" id="c-class-badge"></div><div class="cprice-badge"><div class="bprice-old" id="c-old-price"></div><div class="bprice-new" id="c-new-price"></div></div></div></div>
 <div class="tabs"><div class="tab active" id="tab-ov" onclick="window.switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="window.switchTab('ct')">CONTENT</div></div>
@@ -250,9 +250,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
 </tbody></table></div>
 <div class="wp-blk"><div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
-<table class="wp-tbl"><thead>
-
-<th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
+<table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
 <tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
 <tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
 <tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
@@ -316,12 +314,12 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyA8Udy4K2Z4Cel33x1qm9yKcSSUYIZlNjM",
-    authDomain: "ayushcoderz-edu.firebaseapp.com",
-    projectId: "ayushcoderz-edu",
-    storageBucket: "ayushcoderz-edu.firebasestorage.app",
-    messagingSenderId: "133499223114",
-    appId: "1:133499223114:web:82f18889d39245a300bab3"
+    apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
+    authDomain: "ayushcoderz-edu-final.firebaseapp.com",
+    projectId: "ayushcoderz-edu-final",
+    storageBucket: "ayushcoderz-edu-final.firebasestorage.app",
+    messagingSenderId: "575316793225",
+    appId: "1:575316793225:web:cd7f2df83470648328b358"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -357,12 +355,9 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   window.goHome = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-home').classList.add('active'); }
   window.goToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
   window.goComingSoon = function(name, icon) { document.getElementById('cs-icon').textContent=icon; document.getElementById('cs-pname').textContent=name; document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-coming').classList.add('active'); }
-  window.goBackToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
   window.goBackToSubChapter = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active'); }
   window.switchTab = function(w) { const o=w==='ov'; document.getElementById('tab-ov-body').style.display=o?'':'none'; document.getElementById('tab-ct-body').style.display=o?'none':''; document.getElementById('tab-ov').classList.toggle('active',o); document.getElementById('tab-ct').classList.toggle('active',!o); }
-  window.backToChapters = function() { window.switchTab('ct'); window.goBackToBatches(); goToContent(); }
-  
-  function goToContent() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-content').classList.add('active'); }
+  window.backToChapters = function() { window.switchTab('ct'); window.goToBatches(); setTimeout(()=>{ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-content').classList.add('active'); },100); }
   
   function renderBatches() {
     const c = document.getElementById('batches-list');
@@ -376,7 +371,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     const batch = batches.find(b => b.id === id);
     if(!batch) return;
     window.currentBatch = batch;
-    document.getElementById('c-btag').textContent = '#'+id;
+    document.getElementById('c-btag').textContent = '#'+id.substring(0,8);
     document.getElementById('c-title').textContent = batch.name;
     document.getElementById('c-thumb-text').textContent = batch.thumb;
     document.getElementById('c-thumb-sub').textContent = batch.sub + ' · 2026-27';
@@ -386,7 +381,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('c-tt-name').textContent = batch.name.split(' ').slice(0,2).join(' ').toUpperCase();
     document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="window.selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('');
     window.switchTab('ov');
-    goToContent();
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-content').classList.add('active');
   }
 
   window.selectChapter = function(name) {
@@ -395,7 +390,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === name && p.batchId === window.currentBatch?.id; });
     document.getElementById('sub-title').textContent = name;
     document.getElementById('sub-subject').textContent = 'COURSE · '+name.toUpperCase();
-    document.getElementById('sub-btag').textContent = '#'+window.currentBatch?.id;
+    document.getElementById('sub-btag').textContent = '#'+window.currentBatch?.id.substring(0,8);
     document.getElementById('sub-lec-meta').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('sub-pdf-meta').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active');
@@ -406,8 +401,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('lec-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
     document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
     document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
-    document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id;
-    document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
+    document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id.substring(0,8);
+    document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-thumb-bg"></div><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-lectures').classList.add('active');
   }
 
@@ -415,7 +410,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === window.currentChapter && p.batchId === window.currentBatch?.id; });
     document.getElementById('pdf-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
     document.getElementById('pdf-cnt').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
-    document.getElementById('pdf-btag').textContent = '#'+window.currentBatch?.id;
+    document.getElementById('pdf-btag').textContent = '#'+window.currentBatch?.id.substring(0,8);
     document.getElementById('pdf-list').innerHTML = pdfsCh.map(p => `<div class="pdf-item" onclick='window.open("${p.url}","_blank")'><div class="pdf-icon">📄</div><div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div><span class="pdf-badge">PDF</span></div>`).join('');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-pdfs').classList.add('active');
   }
@@ -518,7 +513,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     if(!authenticated){ const pwd=prompt('Enter Admin Password:'); if(pwd==='admin34'){ authenticated=true; isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); } else alert('Wrong password!'); }
     else { isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); }
   }
-  document.querySelectorAll('#topAdminBtn, #topAdminBtn2, #topAdminBtn3, #topAdminBtn4, #topAdminBtn5, #topAdminBtn6, #topAdminBtn7, #topAdminBtn8').forEach(btn => btn.addEventListener('click', openAdmin));
+  document.querySelectorAll('[id^="topAdminBtn"]').forEach(btn => btn.addEventListener('click', openAdmin));
   closeAdmin.addEventListener('click',()=>{ overlay.style.display='none'; isAdminOpen=false; renderBatches(); });
   document.querySelectorAll('.admin-tab').forEach(btn=>{ btn.addEventListener('click',()=>{ document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.admin-pane').forEach(p=>p.classList.remove('active-pane')); document.getElementById(btn.dataset.tab+'Pane').classList.add('active-pane'); }); });
 
