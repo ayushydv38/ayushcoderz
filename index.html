@@ -225,10 +225,20 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="tabs"><div class="tab active" id="tab-ov" onclick="switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="switchTab('ct')">CONTENT</div></div>
 <div id="tab-ov-body"><div class="ov-sec"><div class="tt-wrap"><div class="tt-head"><div class="tt-type">CLASS 11TH</div><div class="tt-bname" id="c-tt-name">COMMERCE</div></div><div class="tt-ttl"><span>TIME TABLE</span></div>
 <table class="tt-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td></tr><tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr><tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr><tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr><tr><td>Friday</td><td>Maths</td><td>Accounts</td></tr><tr><td>Saturday</td><td>Maths</td><td>--</td></tr><tr><td>Sunday</td><td colspan="2">Holiday</td></tr></tbody></table></div>
+<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td></tr><tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr><tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr><tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr><tr><td>Friday</td><td>Maths</td><td rowspan="2">Accounts</td></tr>
+<tr><td>Saturday</td><td>Maths</td><td>--</td></tr>
+<tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
+</tbody></table></div>
 <div class="wp-blk"><div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
 <table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr><tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr><tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr><tr><td>Thursday</td><td>Sets (L7)</td><td>Intro to Accounting (L3)</td></tr><tr><td>Friday</td><td>RELATIONS & FUNCTIONS (L1)</td><td>Intro to Accounting (L4)</td></tr><tr><td>Saturday</td><td>RELATIONS & FUNCTIONS (L2)</td><td>Accounting Equation (L1)</td></tr><tr><td>Sunday</td><td colspan="2">Holiday</td></tr></tbody></table></div>
+<tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
+<tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
+<tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
+<tr><td>Thursday</td><td>Sets (L7)</td><td>Intro to Accounting (L3)</td></tr>
+<tr><td>Friday</td><td>RELATIONS & FUNCTIONS (L1)</td><td>Intro to Accounting (L4)</td></tr>
+<tr><td>Saturday</td><td>RELATIONS & FUNCTIONS (L2)</td><td>Accounting Equation (L1)</td></tr>
+<tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
+</tbody></table></div>
 <div class="cdesc"><div class="cdesc-ttl"><strong>PRARAMBH Plus Class 11th Commerce</strong> – A Year-Long Live Interactive Course for <strong>Class 11 Exams (2026-27).</strong></div>
 <ul class="flist"><li class="fitem"><span class="fnum">1</span><span>Covers <strong>Accounts, Economics, BST, Maths, English/Hindi.</strong></span></li>
 <li class="fitem"><span class="fnum">2</span><span><strong>Live & interactive</strong> classes. Recordings available.</span></li>
@@ -278,217 +288,237 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div id="pdfsPane" class="admin-pane"><h3>➕ Add PDF</h3><div class="form-grid"><div class="form-field"><label>Select Batch</label><select id="pdfBatchSelect"></select></div><div class="form-field"><label>Select Chapter</label><select id="pdfChapterSelect"></select></div><div class="form-field full-width"><label>PDF Name</label><input type="text" id="pdfName" placeholder="PDF Name"></div><div class="form-field"><label>Pages</label><input type="text" id="pdfPages" placeholder="e.g., 12 pages"></div><div class="form-field full-width"><label>PDF URL</label><input type="text" id="pdfUrl" placeholder="PDF link"></div></div><button id="addPdfBtn">➕ Add PDF</button><div id="pdfsListAdmin" style="margin-top:15px;"></div></div>
 </div></div>
 
-<script>
-// ==================== GOOGLE SHEETS BACKEND (Permanent Storage) ====================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUsXKqfKvWn-pBQwLJK3x8aD9qyAbE8E1RYZHR7A21MMy6ZxwCx6TZ7NshbCkV-pU/exec";
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-let batches = [], chapters = [], lectures = [], pdfs = [];
+  const firebaseConfig = {
+    apiKey: "AIzaSyA8Udy4K2Z4Cel33x1qm9yKcSSUYIZlNjM",
+    authDomain: "ayushcoderz-edu.firebaseapp.com",
+    projectId: "ayushcoderz-edu",
+    storageBucket: "ayushcoderz-edu.firebasestorage.app",
+    messagingSenderId: "133499223114",
+    appId: "1:133499223114:web:82f18889d39245a300bab3",
+    measurementId: "G-4BPYCG04DZ"
+  };
 
-async function loadData() {
-  try {
-    const res = await fetch(`${SCRIPT_URL}?action=load`);
-    const data = await res.json();
-    batches = data.batches || [];
-    chapters = data.chapters || [];
-    lectures = data.lectures || [];
-    pdfs = data.pdfs || [];
-    
-    if(batches.length === 0) {
-      batches.push({ id: 110, name: "PRARAMBH PLUS Commerce 2026-27", className: "Class 11th", price: "3499", oldPrice: "4999", thumb: "प्रारंभ", sub: "PLUS" });
-      chapters = ["Micro Economics", "Stats Economics", "Accounts", "Business Studies", "Maths", "English", "Hindi Core", "Hindi Elective"].map((n,i) => ({ id: Date.now()+i, batchId: 110, name: n }));
-      lectures.push({ id: Date.now(), batchId: 110, chapterId: chapters.find(c=>c.name==="Maths")?.id, name: "Relations and Functions - L1", duration: "1:00:32", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" });
-      await saveData();
-    }
-    renderAll();
-  } catch(e) { console.error(e); }
-}
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-async function saveData() {
-  try {
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ batches, chapters, lectures, pdfs })
+  // Data references
+  const batchesRef = collection(db, "batches");
+  const chaptersRef = collection(db, "chapters");
+  const lecturesRef = collection(db, "lectures");
+  const pdfsRef = collection(db, "pdfs");
+
+  let batches = [], chapters = [], lectures = [], pdfs = [];
+
+  async function loadData() {
+    try {
+      const batchSnap = await getDocs(batchesRef);
+      batches = batchSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      const chapSnap = await getDocs(chaptersRef);
+      chapters = chapSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      const lecSnap = await getDocs(lecturesRef);
+      lectures = lecSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      const pdfSnap = await getDocs(pdfsRef);
+      pdfs = pdfSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      if(batches.length === 0) {
+        await addDoc(batchesRef, { name: "PRARAMBH PLUS Commerce 2026-27", className: "Class 11th", price: "3499", oldPrice: "4999", thumb: "प्रारंभ", sub: "PLUS" });
+        await addDoc(chaptersRef, { batchId: "temp", name: "Micro Economics" });
+        await loadData();
+      }
+      renderAll();
+    } catch(e) { console.error(e); }
+  }
+
+  window.renderBatches = function() {
+    const c = document.getElementById('batches-list');
+    if(!c) return;
+    document.getElementById('batch-count').innerText = batches.length;
+    if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;">No batches. Add from Admin! 🔧</div>'; return; }
+    c.innerHTML = batches.map(b => `<div class="bcard" onclick="selectBatch('${b.id}')"><div class="bthumb"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
+  }
+
+  window.selectBatch = function(id) {
+    const batch = batches.find(b => b.id === id);
+    if(!batch) return;
+    window.currentBatch = batch;
+    document.getElementById('c-btag').textContent = '#'+id;
+    document.getElementById('c-title').textContent = batch.name;
+    document.getElementById('c-thumb-text').textContent = batch.thumb;
+    document.getElementById('c-thumb-sub').textContent = batch.sub + ' · 2026-27';
+    document.getElementById('c-class-badge').textContent = batch.className;
+    document.getElementById('c-old-price').textContent = '₹'+batch.oldPrice+'/-';
+    document.getElementById('c-new-price').textContent = '₹'+batch.price+'/-';
+    document.getElementById('c-tt-name').textContent = batch.name.split(' ').slice(0,2).join(' ').toUpperCase();
+    document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('');
+    switchTab('ov');
+    go('pg-content');
+  }
+
+  window.selectChapter = function(name) {
+    window.currentChapter = name;
+    const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === name && l.batchId === window.currentBatch?.id; });
+    const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === name && p.batchId === window.currentBatch?.id; });
+    document.getElementById('sub-title').textContent = name;
+    document.getElementById('sub-subject').textContent = 'COURSE · '+name.toUpperCase();
+    document.getElementById('sub-btag').textContent = '#'+window.currentBatch?.id;
+    document.getElementById('sub-lec-meta').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
+    document.getElementById('sub-pdf-meta').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
+    go('pg-subchapter');
+  }
+
+  window.openLectures = function() {
+    const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === window.currentChapter && l.batchId === window.currentBatch?.id; });
+    document.getElementById('lec-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
+    document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
+    document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
+    document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id;
+    document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
+    go('pg-lectures');
+  }
+
+  window.openPdfs = function() {
+    const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === window.currentChapter && p.batchId === window.currentBatch?.id; });
+    document.getElementById('pdf-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
+    document.getElementById('pdf-cnt').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
+    document.getElementById('pdf-btag').textContent = '#'+window.currentBatch?.id;
+    document.getElementById('pdf-list').innerHTML = pdfsCh.map(p => `<div class="pdf-item" onclick='window.open("${p.url}","_blank")'><div class="pdf-icon">📄</div><div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div><span class="pdf-badge">PDF</span></div>`).join('');
+    go('pg-pdfs');
+  }
+
+  async function renderBatchesAdmin() {
+    document.getElementById('batchesListAdmin').innerHTML = batches.map(b => `<div class="item-card"><span><strong>${b.name}</strong> (${b.className}) ₹${b.price}</span><button class="delete-btn" data-id="${b.id}" data-type="batch">Delete</button></div>`).join('');
+    attachDelete();
+  }
+  async function renderChaptersAdmin() {
+    const sel = document.getElementById('chapterBatchSelect');
+    sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+    document.getElementById('chaptersListAdmin').innerHTML = chapters.map(c => `<div class="item-card"><span><strong>${c.name}</strong> (${batches.find(b=>b.id===c.batchId)?.name})</span><button class="delete-btn" data-id="${c.id}" data-type="chapter">Delete</button></div>`).join('');
+    attachDelete();
+  }
+  async function renderLecturesAdmin() {
+    const sel = document.getElementById('lectureBatchSelect');
+    sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+    document.getElementById('lecturesListAdmin').innerHTML = lectures.map(l => `<div class="item-card"><span><strong>${l.name}</strong> (${batches.find(b=>b.id===l.batchId)?.name}/${chapters.find(c=>c.id===l.chapterId)?.name}) ${l.duration}</span><button class="delete-btn" data-id="${l.id}" data-type="lecture">Delete</button></div>`).join('');
+    attachDelete();
+  }
+  async function renderPdfsAdmin() {
+    const sel = document.getElementById('pdfBatchSelect');
+    sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
+    document.getElementById('pdfsListAdmin').innerHTML = pdfs.map(p => `<div class="item-card"><span><strong>${p.name}</strong> (${batches.find(b=>b.id===p.batchId)?.name}/${chapters.find(c=>c.id===p.chapterId)?.name}) ${p.pages}</span><button class="delete-btn" data-id="${p.id}" data-type="pdf">Delete</button></div>`).join('');
+    attachDelete();
+  }
+  function attachDelete() {
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.onclick = async () => {
+      const id = btn.dataset.id, type = btn.dataset.type;
+      if(type === 'batch') { await deleteDoc(doc(db, "batches", id)); batches = batches.filter(b => b.id !== id); chapters = chapters.filter(c => c.batchId !== id); lectures = lectures.filter(l => l.batchId !== id); pdfs = pdfs.filter(p => p.batchId !== id); }
+      if(type === 'chapter') { await deleteDoc(doc(db, "chapters", id)); chapters = chapters.filter(c => c.id !== id); lectures = lectures.filter(l => l.chapterId !== id); pdfs = pdfs.filter(p => p.chapterId !== id); }
+      if(type === 'lecture') { await deleteDoc(doc(db, "lectures", id)); lectures = lectures.filter(l => l.id !== id); }
+      if(type === 'pdf') { await deleteDoc(doc(db, "pdfs", id)); pdfs = pdfs.filter(p => p.id !== id); }
+      fullRefresh();
     });
-  } catch(e) { console.error(e); }
-}
+  }
+  function updateSelects() {
+    const bid = document.getElementById('lectureBatchSelect')?.value;
+    if(bid) document.getElementById('lectureChapterSelect').innerHTML = '<option value="">-- Select Chapter --</option>' + chapters.filter(c => c.batchId == bid).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    const pbid = document.getElementById('pdfBatchSelect')?.value;
+    if(pbid) document.getElementById('pdfChapterSelect').innerHTML = '<option value="">-- Select Chapter --</option>' + chapters.filter(c => c.batchId == pbid).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  }
+  async function fullRefresh() { renderBatches(); if(isAdminOpen) { await renderBatchesAdmin(); await renderChaptersAdmin(); await renderLecturesAdmin(); await renderPdfsAdmin(); } }
+  function renderAll() { renderBatches(); if(isAdminOpen) { renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); } }
 
-function renderBatches() {
-  const c = document.getElementById('batches-list');
-  if(!c) return;
-  document.getElementById('batch-count').innerText = batches.length;
-  if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;">No batches. Add from Admin! 🔧</div>'; return; }
-  c.innerHTML = batches.map(b => `<div class="bcard" onclick="selectBatch(${b.id})"><div class="bthumb"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
-}
-
-let currentBatch = null, currentChapter = null;
-
-function selectBatch(id) {
-  currentBatch = batches.find(b => b.id === id);
-  if(!currentBatch) return;
-  document.getElementById('c-btag').textContent = '#'+id;
-  document.getElementById('c-title').textContent = currentBatch.name;
-  document.getElementById('c-thumb-text').textContent = currentBatch.thumb;
-  document.getElementById('c-thumb-sub').textContent = currentBatch.sub + ' · 2026-27';
-  document.getElementById('c-class-badge').textContent = currentBatch.className;
-  document.getElementById('c-old-price').textContent = '₹'+currentBatch.oldPrice+'/-';
-  document.getElementById('c-new-price').textContent = '₹'+currentBatch.price+'/-';
-  document.getElementById('c-tt-name').textContent = currentBatch.name.split(' ').slice(0,2).join(' ').toUpperCase();
-  document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('');
-  switchTab('ov');
-  go('pg-content');
-}
-
-function selectChapter(name) {
-  currentChapter = name;
-  const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === name && l.batchId === currentBatch?.id; });
-  const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === name && p.batchId === currentBatch?.id; });
-  document.getElementById('sub-title').textContent = name;
-  document.getElementById('sub-subject').textContent = 'COURSE · '+name.toUpperCase();
-  document.getElementById('sub-btag').textContent = '#'+currentBatch?.id;
-  document.getElementById('sub-lec-meta').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
-  document.getElementById('sub-pdf-meta').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
-  go('pg-subchapter');
-}
-
-function openLectures() {
-  const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === currentChapter && l.batchId === currentBatch?.id; });
-  document.getElementById('lec-subject').textContent = currentChapter.toUpperCase()+' · PRARAMBH BATCH';
-  document.getElementById('lec-ttl').textContent = currentChapter+' — Lectures';
-  document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
-  document.getElementById('lec-btag').textContent = '#'+currentBatch?.id;
-  document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='openVideo(${JSON.stringify(l)}, ${JSON.stringify(currentChapter)})'><div class="lec-thumb"><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
-  go('pg-lectures');
-}
-
-function openPdfs() {
-  const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === currentChapter && p.batchId === currentBatch?.id; });
-  document.getElementById('pdf-subject').textContent = currentChapter.toUpperCase()+' · PRARAMBH BATCH';
-  document.getElementById('pdf-cnt').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
-  document.getElementById('pdf-btag').textContent = '#'+currentBatch?.id;
-  document.getElementById('pdf-list').innerHTML = pdfsCh.map(p => `<div class="pdf-item" onclick='window.open("${p.url}","_blank")'><div class="pdf-icon">📄</div><div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div><span class="pdf-badge">PDF</span></div>`).join('');
-  go('pg-pdfs');
-}
-
-function renderBatchesAdmin() {
-  document.getElementById('batchesListAdmin').innerHTML = batches.map(b => `<div class="item-card"><span><strong>${b.name}</strong> (${b.className}) ₹${b.price}</span><button class="delete-btn" data-id="${b.id}" data-type="batch">Delete</button></div>`).join('');
-  attachDelete();
-}
-function renderChaptersAdmin() {
-  const sel = document.getElementById('chapterBatchSelect');
-  sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
-  document.getElementById('chaptersListAdmin').innerHTML = chapters.map(c => `<div class="item-card"><span><strong>${c.name}</strong> (${batches.find(b=>b.id===c.batchId)?.name})</span><button class="delete-btn" data-id="${c.id}" data-type="chapter">Delete</button></div>`).join('');
-  attachDelete();
-}
-function renderLecturesAdmin() {
-  const sel = document.getElementById('lectureBatchSelect');
-  sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
-  document.getElementById('lecturesListAdmin').innerHTML = lectures.map(l => `<div class="item-card"><span><strong>${l.name}</strong> (${batches.find(b=>b.id===l.batchId)?.name}/${chapters.find(c=>c.id===l.chapterId)?.name}) ${l.duration}</span><button class="delete-btn" data-id="${l.id}" data-type="lecture">Delete</button></div>`).join('');
-  attachDelete();
-}
-function renderPdfsAdmin() {
-  const sel = document.getElementById('pdfBatchSelect');
-  sel.innerHTML = '<option value="">-- Select Batch --</option>' + batches.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
-  document.getElementById('pdfsListAdmin').innerHTML = pdfs.map(p => `<div class="item-card"><span><strong>${p.name}</strong> (${batches.find(b=>b.id===p.batchId)?.name}/${chapters.find(c=>c.id===p.chapterId)?.name}) ${p.pages}</span><button class="delete-btn" data-id="${p.id}" data-type="pdf">Delete</button></div>`).join('');
-  attachDelete();
-}
-function attachDelete() {
-  document.querySelectorAll('.delete-btn').forEach(btn => btn.onclick = async () => {
-    const id = parseInt(btn.dataset.id), type = btn.dataset.type;
-    if(type === 'batch') { batches = batches.filter(b => b.id !== id); chapters = chapters.filter(c => c.batchId !== id); lectures = lectures.filter(l => l.batchId !== id); pdfs = pdfs.filter(p => p.batchId !== id); }
-    if(type === 'chapter') { chapters = chapters.filter(c => c.id !== id); lectures = lectures.filter(l => l.chapterId !== id); pdfs = pdfs.filter(p => p.chapterId !== id); }
-    if(type === 'lecture') { lectures = lectures.filter(l => l.id !== id); }
-    if(type === 'pdf') { pdfs = pdfs.filter(p => p.id !== id); }
-    await saveData(); fullRefresh();
+  document.getElementById('addBatchBtn')?.addEventListener('click', async () => {
+    const n=document.getElementById('batchName').value, cl=document.getElementById('batchClass').value, p=document.getElementById('batchPrice').value, op=document.getElementById('batchOldPrice').value, t=document.getElementById('batchThumb').value, s=document.getElementById('batchSub').value;
+    if(n&&cl&&p){ const docRef = await addDoc(batchesRef, { name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'' }); batches.push({ id:docRef.id, name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'' }); fullRefresh(); alert('Batch added!'); }
+    else alert('Fill name, class and price');
   });
-}
-function updateSelects() {
-  const bid = document.getElementById('lectureBatchSelect')?.value;
-  if(bid) document.getElementById('lectureChapterSelect').innerHTML = '<option value="">-- Select Chapter --</option>' + chapters.filter(c => c.batchId == bid).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-  const pbid = document.getElementById('pdfBatchSelect')?.value;
-  if(pbid) document.getElementById('pdfChapterSelect').innerHTML = '<option value="">-- Select Chapter --</option>' + chapters.filter(c => c.batchId == pbid).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-}
-async function fullRefresh() { renderBatches(); if(isAdminOpen) { renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); } }
-function renderAll() { renderBatches(); if(isAdminOpen) { renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); } }
+  document.getElementById('addChapterBtn')?.addEventListener('click', async () => {
+    const bid=document.getElementById('chapterBatchSelect').value, n=document.getElementById('chapterName').value;
+    if(bid&&n){ const docRef = await addDoc(chaptersRef, { batchId:bid, name:n }); chapters.push({ id:docRef.id, batchId:bid, name:n }); fullRefresh(); alert('Chapter added!'); }
+    else alert('Select batch & enter name');
+  });
+  document.getElementById('addLectureBtn')?.addEventListener('click', async () => {
+    const bid=document.getElementById('lectureBatchSelect').value, cid=document.getElementById('lectureChapterSelect').value, n=document.getElementById('lectureName').value, d=document.getElementById('lectureDuration').value, u=document.getElementById('lectureUrl').value;
+    if(bid&&cid&&n&&d&&u){ const docRef = await addDoc(lecturesRef, { batchId:bid, chapterId:cid, name:n, duration:d, url:u }); lectures.push({ id:docRef.id, batchId:bid, chapterId:cid, name:n, duration:d, url:u }); fullRefresh(); alert('Lecture added!'); }
+    else alert('Fill all fields');
+  });
+  document.getElementById('addPdfBtn')?.addEventListener('click', async () => {
+    const bid=document.getElementById('pdfBatchSelect').value, cid=document.getElementById('pdfChapterSelect').value, n=document.getElementById('pdfName').value, p=document.getElementById('pdfPages').value, u=document.getElementById('pdfUrl').value;
+    if(bid&&cid&&n&&u){ const docRef = await addDoc(pdfsRef, { batchId:bid, chapterId:cid, name:n, pages:p||'N/A', url:u }); pdfs.push({ id:docRef.id, batchId:bid, chapterId:cid, name:n, pages:p||'N/A', url:u }); fullRefresh(); alert('PDF added!'); }
+    else alert('Fill all fields');
+  });
+  document.getElementById('lectureBatchSelect')?.addEventListener('change', updateSelects);
+  document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSelects);
 
-document.getElementById('addBatchBtn')?.addEventListener('click', async () => {
-  const n=document.getElementById('batchName').value, cl=document.getElementById('batchClass').value, p=document.getElementById('batchPrice').value, op=document.getElementById('batchOldPrice').value, t=document.getElementById('batchThumb').value, s=document.getElementById('batchSub').value;
-  if(n&&cl&&p){ batches.push({ id:Date.now(), name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'' }); await saveData(); fullRefresh(); alert('Batch added!'); }
-  else alert('Fill name, class and price');
-});
-document.getElementById('addChapterBtn')?.addEventListener('click', async () => {
-  const bid=parseInt(document.getElementById('chapterBatchSelect').value), n=document.getElementById('chapterName').value;
-  if(bid&&n){ chapters.push({ id:Date.now(), batchId:bid, name:n }); await saveData(); fullRefresh(); alert('Chapter added!'); }
-  else alert('Select batch & enter name');
-});
-document.getElementById('addLectureBtn')?.addEventListener('click', async () => {
-  const bid=parseInt(document.getElementById('lectureBatchSelect').value), cid=parseInt(document.getElementById('lectureChapterSelect').value), n=document.getElementById('lectureName').value, d=document.getElementById('lectureDuration').value, u=document.getElementById('lectureUrl').value;
-  if(bid&&cid&&n&&d&&u){ lectures.push({ id:Date.now(), batchId:bid, chapterId:cid, name:n, duration:d, url:u }); await saveData(); fullRefresh(); alert('Lecture added!'); }
-  else alert('Fill all fields');
-});
-document.getElementById('addPdfBtn')?.addEventListener('click', async () => {
-  const bid=parseInt(document.getElementById('pdfBatchSelect').value), cid=parseInt(document.getElementById('pdfChapterSelect').value), n=document.getElementById('pdfName').value, p=document.getElementById('pdfPages').value, u=document.getElementById('pdfUrl').value;
-  if(bid&&cid&&n&&u){ pdfs.push({ id:Date.now(), batchId:bid, chapterId:cid, name:n, pages:p||'N/A', url:u }); await saveData(); fullRefresh(); alert('PDF added!'); }
-  else alert('Fill all fields');
-});
-document.getElementById('lectureBatchSelect')?.addEventListener('change', updateSelects);
-document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSelects);
+  function go(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+  function goComingSoon(n,i){ document.getElementById('cs-icon').textContent=i; document.getElementById('cs-pname').textContent=n; go('pg-coming'); }
+  window.switchTab = function(w){ const o=w==='ov'; document.getElementById('tab-ov-body').style.display=o?'':'none'; document.getElementById('tab-ct-body').style.display=o?'none':''; document.getElementById('tab-ov').classList.toggle('active',o); document.getElementById('tab-ct').classList.toggle('active',!o); }
+  window.backToChapters = function(){ switchTab('ct'); go('pg-content'); }
 
-function go(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-function goComingSoon(n,i){ document.getElementById('cs-icon').textContent=i; document.getElementById('cs-pname').textContent=n; go('pg-coming'); }
-function switchTab(w){ const o=w==='ov'; document.getElementById('tab-ov-body').style.display=o?'':'none'; document.getElementById('tab-ct-body').style.display=o?'none':''; document.getElementById('tab-ov').classList.toggle('active',o); document.getElementById('tab-ct').classList.toggle('active',!o); }
-function backToChapters(){ switchTab('ct'); go('pg-content'); }
+  let isPlaying=false, curTime=0, totalDur=0, pInterval=null, speed=1, speedIdx=2;
+  const SPEEDS=[0.5,0.75,1,1.25,1.5,2];
+  function getYouTubeId(url){ const m=url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/); return m?m[1]:null; }
+  window.openVideo = function(lec, ch){
+    document.getElementById('v-title').textContent=lec.name;
+    document.getElementById('v-meta').textContent=ch+' · PRARAMBH Batch';
+    document.getElementById('v-lname').textContent=lec.name.split(' - ')[0];
+    document.getElementById('v-lnum').textContent=lec.name.split(' - ')[1]||'Lecture';
+    document.getElementById('v-stag').textContent=ch.toUpperCase();
+    document.getElementById('v-total').textContent=lec.duration;
+    const ytWrap=document.getElementById('v-yt-wrap'), ytFrame=document.getElementById('v-yt-iframe'), posterWrap=document.getElementById('v-poster-wrap'), ctrl=document.getElementById('v-ctrl'), ytId=lec.url?getYouTubeId(lec.url):null;
+    if(ytId){ ytFrame.src='https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&fs=1'; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
+    else if(lec.url && lec.url.trim()!==''){ ytFrame.src=lec.url; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
+    else { ytWrap.classList.remove('active'); ytFrame.src=''; posterWrap.style.display=''; ctrl.style.display=''; const t=lec.duration.split(':'); totalDur=t.length===3?+t[0]*3600+ +t[1]*60+ +t[2]:+t[0]*60+ +t[1]; stopPlayer(); curTime=0; speed=1; speedIdx=2; document.getElementById('v-spd').textContent='1x'; updateUI(); }
+    go('pg-player');
+  }
+  function playerBack(){ stopPlayer(); document.getElementById('v-yt-iframe').src=''; document.getElementById('v-yt-wrap').classList.remove('active'); document.getElementById('v-poster-wrap').style.display=''; document.getElementById('v-ctrl').style.display=''; go('pg-subchapter'); }
+  function togglePlay(){ isPlaying=!isPlaying; updateUI(); if(isPlaying){ pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } else clearInterval(pInterval); }
+  function stopPlayer(){ isPlaying=false; clearInterval(pInterval); }
+  function updateUI(){ document.getElementById('v-main-btn').textContent=isPlaying?'⏸':'▶'; document.getElementById('v-play-ov').style.display=isPlaying?'none':'flex'; updateProgress(); }
+  function updateProgress(){ const p=totalDur>0?Math.min((curTime/totalDur)*100,100):0; document.getElementById('v-fill').style.width=p+'%'; document.getElementById('v-handle').style.left='calc('+p+'% - 6px)'; document.getElementById('v-curr').textContent=fmt(Math.floor(curTime)); }
+  function fmt(s){ const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60; return h>0?h+':'+pad(m)+':'+pad(sec):pad(m)+':'+pad(sec); }
+  function pad(n){ return n.toString().padStart(2,'0'); }
+  function skipBack(){ curTime=Math.max(0,curTime-10); updateProgress(); }
+  function skipFwd(){ curTime=Math.min(totalDur,curTime+10); updateProgress(); }
+  function cycleSpeed(){ speedIdx=(speedIdx+1)%SPEEDS.length; speed=SPEEDS[speedIdx]; document.getElementById('v-spd').textContent=speed+'x'; if(isPlaying){ clearInterval(pInterval); pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } }
+  function toggleFS(){ const el=document.getElementById('v-yt-wrap').classList.contains('active')?document.getElementById('v-yt-iframe'):document.getElementById('pg-player'); if(!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.(); }
 
-let isPlaying=false, curTime=0, totalDur=0, pInterval=null, speed=1, speedIdx=2;
-const SPEEDS=[0.5,0.75,1,1.25,1.5,2];
-function getYouTubeId(url){ const m=url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/); return m?m[1]:null; }
-function openVideo(lec, ch){
-  document.getElementById('v-title').textContent=lec.name;
-  document.getElementById('v-meta').textContent=ch+' · PRARAMBH Batch';
-  document.getElementById('v-lname').textContent=lec.name.split(' - ')[0];
-  document.getElementById('v-lnum').textContent=lec.name.split(' - ')[1]||'Lecture';
-  document.getElementById('v-stag').textContent=ch.toUpperCase();
-  document.getElementById('v-total').textContent=lec.duration;
-  const ytWrap=document.getElementById('v-yt-wrap'), ytFrame=document.getElementById('v-yt-iframe'), posterWrap=document.getElementById('v-poster-wrap'), ctrl=document.getElementById('v-ctrl'), ytId=lec.url?getYouTubeId(lec.url):null;
-  if(ytId){ ytFrame.src='https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&fs=1'; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
-  else if(lec.url && lec.url.trim()!==''){ ytFrame.src=lec.url; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
-  else { ytWrap.classList.remove('active'); ytFrame.src=''; posterWrap.style.display=''; ctrl.style.display=''; const t=lec.duration.split(':'); totalDur=t.length===3?+t[0]*3600+ +t[1]*60+ +t[2]:+t[0]*60+ +t[1]; stopPlayer(); curTime=0; speed=1; speedIdx=2; document.getElementById('v-spd').textContent='1x'; updateUI(); }
-  go('pg-player');
-}
-function playerBack(){ stopPlayer(); document.getElementById('v-yt-iframe').src=''; document.getElementById('v-yt-wrap').classList.remove('active'); document.getElementById('v-poster-wrap').style.display=''; document.getElementById('v-ctrl').style.display=''; go('pg-subchapter'); }
-function togglePlay(){ isPlaying=!isPlaying; updateUI(); if(isPlaying){ pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } else clearInterval(pInterval); }
-function stopPlayer(){ isPlaying=false; clearInterval(pInterval); }
-function updateUI(){ document.getElementById('v-main-btn').textContent=isPlaying?'⏸':'▶'; document.getElementById('v-play-ov').style.display=isPlaying?'none':'flex'; updateProgress(); }
-function updateProgress(){ const p=totalDur>0?Math.min((curTime/totalDur)*100,100):0; document.getElementById('v-fill').style.width=p+'%'; document.getElementById('v-handle').style.left='calc('+p+'% - 6px)'; document.getElementById('v-curr').textContent=fmt(Math.floor(curTime)); }
-function fmt(s){ const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60; return h>0?h+':'+pad(m)+':'+pad(sec):pad(m)+':'+pad(sec); }
-function pad(n){ return n.toString().padStart(2,'0'); }
-function skipBack(){ curTime=Math.max(0,curTime-10); updateProgress(); }
-function skipFwd(){ curTime=Math.min(totalDur,curTime+10); updateProgress(); }
-function cycleSpeed(){ speedIdx=(speedIdx+1)%SPEEDS.length; speed=SPEEDS[speedIdx]; document.getElementById('v-spd').textContent=speed+'x'; if(isPlaying){ clearInterval(pInterval); pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } }
-function toggleFS(){ const el=document.getElementById('v-yt-wrap').classList.contains('active')?document.getElementById('v-yt-iframe'):document.getElementById('pg-player'); if(!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.(); }
+  window.playerBack = playerBack;
+  window.togglePlay = togglePlay;
+  window.skipBack = skipBack;
+  window.skipFwd = skipFwd;
+  window.cycleSpeed = cycleSpeed;
+  window.toggleFS = toggleFS;
 
-let isAdminOpen=false, authenticated=false;
-const overlay=document.getElementById('adminOverlay'), closeAdmin=document.getElementById('closeAdminBtn');
-function openAdmin() {
-  if(!authenticated){ const pwd=prompt('Enter Admin Password:'); if(pwd==='admin34'){ authenticated=true; isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); } else alert('Wrong password!'); }
-  else { isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); }
-}
-document.querySelectorAll('#topAdminBtn, #topAdminBtn2, #topAdminBtn3, #topAdminBtn4, #topAdminBtn5, #topAdminBtn6, #topAdminBtn7, #topAdminBtn8').forEach(btn => btn.addEventListener('click', openAdmin));
-closeAdmin.addEventListener('click',()=>{ overlay.style.display='none'; isAdminOpen=false; renderBatches(); });
-document.querySelectorAll('.admin-tab').forEach(btn=>{ btn.addEventListener('click',()=>{ document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.admin-pane').forEach(p=>p.classList.remove('active-pane')); document.getElementById(btn.dataset.tab+'Pane').classList.add('active-pane'); }); });
+  let isAdminOpen=false, authenticated=false;
+  const overlay=document.getElementById('adminOverlay'), closeAdmin=document.getElementById('closeAdminBtn');
+  function openAdmin() {
+    if(!authenticated){ const pwd=prompt('Enter Admin Password:'); if(pwd==='admin34'){ authenticated=true; isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); } else alert('Wrong password!'); }
+    else { isAdminOpen=true; overlay.style.display='flex'; renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); }
+  }
+  document.querySelectorAll('#topAdminBtn, #topAdminBtn2, #topAdminBtn3, #topAdminBtn4, #topAdminBtn5, #topAdminBtn6, #topAdminBtn7, #topAdminBtn8').forEach(btn => btn.addEventListener('click', openAdmin));
+  closeAdmin.addEventListener('click',()=>{ overlay.style.display='none'; isAdminOpen=false; renderBatches(); });
+  document.querySelectorAll('.admin-tab').forEach(btn=>{ btn.addEventListener('click',()=>{ document.querySelectorAll('.admin-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.admin-pane').forEach(p=>p.classList.remove('active-pane')); document.getElementById(btn.dataset.tab+'Pane').classList.add('active-pane'); }); });
 
-let dragging=false;
-const tr=document.getElementById('v-track');
-if(tr){ function seek(e){ const r=tr.getBoundingClientRect(), cx=e.clientX, p=Math.max(0,Math.min(1,(cx-r.left)/r.width)); curTime=p*totalDur; updateProgress(); }
-  tr.addEventListener('mousedown',e=>{ dragging=true; seek(e); });
-  tr.addEventListener('touchstart',e=>{ dragging=true; seek(e.touches[0]); },{passive:true});
-  document.addEventListener('mousemove',e=>{ if(dragging) seek(e); });
-  document.addEventListener('touchmove',e=>{ if(dragging) seek(e.touches[0]); },{passive:true});
-  document.addEventListener('mouseup',()=>dragging=false);
-  document.addEventListener('touchend',()=>dragging=false);
-}
+  let dragging=false;
+  const tr=document.getElementById('v-track');
+  if(tr){ function seek(e){ const r=tr.getBoundingClientRect(), cx=e.clientX, p=Math.max(0,Math.min(1,(cx-r.left)/r.width)); curTime=p*totalDur; updateProgress(); }
+    tr.addEventListener('mousedown',e=>{ dragging=true; seek(e); });
+    tr.addEventListener('touchstart',e=>{ dragging=true; seek(e.touches[0]); },{passive:true});
+    document.addEventListener('mousemove',e=>{ if(dragging) seek(e); });
+    document.addEventListener('touchmove',e=>{ if(dragging) seek(e.touches[0]); },{passive:true});
+    document.addEventListener('mouseup',()=>dragging=false);
+    document.addEventListener('touchend',()=>dragging=false);
+  }
 
-loadData();
+  loadData();
 </script>
 </body>
 </html>
