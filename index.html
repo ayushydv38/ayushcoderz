@@ -100,77 +100,92 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .wp-tbl{width:100%;border-collapse:collapse;}
 .wp-tbl th{background:rgba(245,166,35,.12);color:var(--accent);padding:6px;font-size:8px;border:1px solid rgba(245,166,35,.15);}
 .wp-tbl td{padding:5px;font-size:8px;border:1px solid var(--border);color:var(--muted2);}
+.wp-tbl td:first-child{color:var(--text);font-weight:500;font-size:9px;}
 .cdesc{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px;margin-bottom:14px;}
 .cdesc-ttl{font-size:13px;font-weight:700;margin-bottom:9px;}.cdesc-ttl strong{color:var(--accent);}
 .flist{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.fitem{display:flex;gap:9px;font-size:11px;color:var(--muted2);}
-.fnum{width:17px;height:17px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--accent);font-weight:700;flex-shrink:0;}
+.fitem{display:flex;gap:9px;font-size:11px;line-height:1.5;color:var(--muted2);}
+.fnum{width:17px;height:17px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px;}
+.fitem strong{color:var(--text);}
 .det-blk{background:var(--card);border:1px solid var(--border);border-radius:11px;overflow:hidden;}
 .det-hd{padding:8px 14px;font-size:9px;color:var(--muted);border-bottom:1px solid var(--border);}
 .det-row{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;}
+.det-row .lbl{color:var(--muted2);}.det-row .val{font-weight:600;font-family:'Space Mono',monospace;font-size:11px;}
 .vc-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:calc(100% - 36px);margin:0 18px 28px;padding:14px;background:var(--purple);border-radius:11px;font-weight:700;font-size:13px;cursor:pointer;border:none;color:var(--text);}
+.vc-btn:hover{background:var(--purple2);}
 .ch-sec{padding:18px;}
-.slabel{font-size:9px;color:var(--muted);margin-bottom:11px;}
+.slabel{font-size:9px;letter-spacing:1.5px;color:var(--muted);font-weight:600;margin-bottom:11px;}
 .ch-list{display:flex;flex-direction:column;gap:8px;}
-.ch-item{display:flex;justify-content:space-between;padding:13px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;}
+.ch-item{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;}
+.ch-item:hover{border-color:rgba(245,166,35,.4);}
 .ch-l{display:flex;align-items:center;gap:11px;}
 .ch-icon{width:36px;height:36px;background:rgba(245,166,35,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
 .ch-name{font-size:14px;font-weight:500;}
 .ch-arr{color:var(--muted);font-size:13px;}
 .sub-hd{padding:18px;background:var(--bg2);border-bottom:1px solid var(--border);}
-.sub-subject{font-size:9px;color:var(--purple2);margin-bottom:5px;}
+.sub-subject{font-size:9px;letter-spacing:1.5px;color:var(--purple2);font-weight:600;margin-bottom:5px;}
 .sub-title{font-size:21px;font-weight:700;}
 .sfl-list{padding:18px;display:flex;flex-direction:column;gap:11px;}
 .sfl-card{display:flex;align-items:center;gap:13px;padding:15px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;cursor:pointer;}
-.sfl-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(124,92,191,.12);}
+.sfl-card:hover{border-color:rgba(245,166,35,.4);transform:translateX(3px);}
+.sfl-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .sfl-info{flex:1;}.sfl-name{font-size:15px;font-weight:600;margin-bottom:3px;}
 .sfl-meta{font-size:11px;color:var(--muted2);}
 .sfl-arr{color:var(--muted);font-size:15px;}
 .lec-hd{padding:18px;background:var(--bg2);border-bottom:1px solid var(--border);}
-.lec-subject{font-size:9px;color:var(--purple2);margin-bottom:3px;}
+.lec-subject{font-size:9px;letter-spacing:1.5px;color:var(--purple2);font-weight:600;margin-bottom:3px;}
 .lec-ttl{font-size:19px;font-weight:700;}
-.lec-cnt{font-size:11px;color:var(--muted2);margin-top:3px;}
+.lec-cnt{font-size:11px;color:var(--muted2);margin-top:3px;font-family:'Space Mono',monospace;}
 .lec-list{padding:14px;display:flex;flex-direction:column;gap:9px;}
 .lec-item{display:flex;align-items:center;gap:11px;padding:13px;background:var(--card);border:1px solid var(--border);border-radius:11px;cursor:pointer;}
-.lec-thumb{width:68px;height:44px;border-radius:7px;background:linear-gradient(135deg,#0a0820,#1a0e35);display:flex;align-items:center;justify-content:center;position:relative;}
-.lec-play{position:absolute;width:24px;height:24px;background:rgba(124,92,191,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;}
-.lec-info{flex:1;}.lec-name{font-size:12px;font-weight:500;margin-bottom:5px;}
-.lec-badge{display:inline-block;padding:2px 7px;background:rgba(124,92,191,.15);border:1px solid rgba(124,92,191,.3);border-radius:4px;font-size:8px;color:var(--purple2);}
-.lec-dur{font-size:10px;color:var(--muted);}
+.lec-item:hover{border-color:rgba(124,92,191,.5);}
+.lec-thumb{width:68px;height:44px;border-radius:7px;position:relative;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.lec-thumb-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0820,#1a0e35);}
+.lec-play{position:absolute;width:24px;height:24px;background:rgba(124,92,191,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;padding-left:2px;}
+.lec-info{flex:1;min-width:0;}
+.lec-name{font-size:12px;font-weight:500;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lec-badge{display:inline-block;padding:2px 7px;background:rgba(124,92,191,.15);border:1px solid rgba(124,92,191,.3);border-radius:4px;font-size:8px;font-weight:700;letter-spacing:.7px;color:var(--purple2);}
+.lec-dur{font-size:10px;color:var(--muted);font-family:'Space Mono',monospace;flex-shrink:0;}
 .pdf-list{padding:14px;display:flex;flex-direction:column;gap:9px;}
 .pdf-item{display:flex;align-items:center;gap:11px;padding:13px;background:var(--card);border:1px solid var(--border);border-radius:11px;cursor:pointer;}
-.pdf-icon{width:42px;height:42px;background:rgba(245,70,70,.1);border:1px solid rgba(245,70,70,.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:19px;}
-.pdf-info{flex:1;}.pdf-name{font-size:12px;font-weight:500;margin-bottom:4px;}
+.pdf-item:hover{border-color:rgba(245,70,70,.4);}
+.pdf-icon{width:42px;height:42px;background:rgba(245,70,70,.1);border:1px solid rgba(245,70,70,.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.pdf-info{flex:1;min-width:0;}
+.pdf-name{font-size:12px;font-weight:500;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pdf-meta{font-size:10px;color:var(--muted2);}
-.pdf-badge{display:inline-block;padding:2px 7px;background:rgba(245,70,70,.12);border:1px solid rgba(245,70,70,.3);border-radius:4px;font-size:8px;color:#f55;}
-.player-top{display:flex;align-items:center;gap:9px;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--border);}
-.v-yt-wrap{width:100%;aspect-ratio:16/9;background:#000;display:none;}
+.pdf-badge{display:inline-block;padding:2px 7px;background:rgba(245,70,70,.12);border:1px solid rgba(245,70,70,.3);border-radius:4px;font-size:8px;font-weight:700;letter-spacing:.7px;color:#f55;}
+.player-top{display:flex;align-items:center;gap:9px;padding:11px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;}
+.v-yt-wrap{width:100%;aspect-ratio:16/9;background:#000;flex-shrink:0;display:none;}
 .v-yt-wrap.active{display:block;}
-.v-yt-wrap iframe{width:100%;height:100%;border:none;}
-.vwrap{width:100%;aspect-ratio:16/9;background:#000;position:relative;display:flex;align-items:center;justify-content:center;}
-.vbg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0520,#1a0f35,#0e1a25);}
-.vglow{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,.18) 0%,transparent 55%);}
-.vcenter{position:relative;z-index:2;background:rgba(0,0,0,.58);border:1px solid rgba(245,166,35,.25);border-radius:13px;padding:16px 22px;text-align:center;max-width:260px;}
-.vs-tag{font-size:8px;color:var(--accent);margin-bottom:5px;}
-.vbatch{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);margin-bottom:2px;}
-.vlname{font-size:15px;font-weight:700;margin-bottom:4px;}
-.vlnum{font-size:10px;color:var(--muted2);}
-.vplay-ov{position:absolute;z-index:3;width:60px;height:60px;background:rgba(124,92,191,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;top:50%;left:50%;transform:translate(-50%,-50%);}
-.vctrl{background:var(--bg2);padding:13px 18px;border-top:1px solid var(--border);}
-.prog-row{display:flex;align-items:center;gap:9px;margin-bottom:13px;font-size:11px;color:var(--muted2);}
-.prog-track{flex:1;height:5px;background:var(--border);border-radius:3px;position:relative;cursor:pointer;}
-.prog-fill{height:100%;width:0%;background:var(--accent);border-radius:3px;}
-.prog-handle{width:13px;height:13px;background:var(--accent);border-radius:50%;position:absolute;top:50%;transform:translateY(-50%);left:0;}
-.ctrl-row{display:flex;justify-content:space-between;}
-.ctrl-l{display:flex;gap:10px;}
-.cbtn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;}
-.cbtn.main{width:52px;height:52px;background:var(--accent);color:#000;font-size:20px;border:none;}
-.ctrl-r{display:flex;gap:7px;}
-.spd-btn{padding:5px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;font-weight:700;cursor:pointer;}
-.fsc-btn{width:38px;height:38px;background:none;border:none;color:var(--muted2);cursor:pointer;font-size:18px;}
-.vinfo{padding:16px 18px;background:var(--bg);}
+.v-yt-wrap iframe{width:100%;height:100%;border:none;display:block;}
+.vwrap{width:100%;aspect-ratio:16/9;background:#000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.vbg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0520 0%,#1a0f35 40%,#0e1a25 70%,#0a1a0e 100%);}
+.vglow{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 30%,rgba(124,92,191,.14) 0%,transparent 50%);}
+.vcenter{position:relative;z-index:2;background:rgba(0,0,0,.58);border:1px solid rgba(245,166,35,.25);border-radius:13px;padding:16px 22px;text-align:center;max-width:260px;backdrop-filter:blur(4px);}
+.vs-tag{font-size:8px;letter-spacing:2px;color:var(--accent);font-weight:700;margin-bottom:5px;}
+.vbatch{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);letter-spacing:2px;margin-bottom:2px;}
+.vlname{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.vlnum{font-size:10px;color:var(--muted2);font-family:'Space Mono',monospace;}
+.vplay-ov{position:absolute;z-index:3;width:60px;height:60px;background:rgba(124,92,191,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:4px;box-shadow:0 0 36px rgba(124,92,191,.5);cursor:pointer;transition:all .2s;top:50%;left:50%;transform:translate(-50%,-50%);}
+.vplay-ov:hover{transform:translate(-50%,-50%) scale(1.08);}
+.vctrl{background:var(--bg2);padding:13px 18px;border-top:1px solid var(--border);flex-shrink:0;}
+.prog-row{display:flex;align-items:center;gap:9px;margin-bottom:13px;font-size:11px;font-family:'Space Mono',monospace;color:var(--muted2);}
+.prog-track{flex:1;height:5px;background:var(--border);border-radius:3px;position:relative;cursor:pointer;touch-action:none;}
+.prog-fill{height:100%;width:0%;background:var(--accent);border-radius:3px;pointer-events:none;}
+.prog-handle{width:13px;height:13px;background:var(--accent);border-radius:50%;position:absolute;top:50%;transform:translateY(-50%);left:0;pointer-events:none;box-shadow:0 0 6px rgba(245,166,35,.6);}
+.ctrl-row{display:flex;align-items:center;justify-content:space-between;}
+.ctrl-l{display:flex;align-items:center;gap:10px;}
+.cbtn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent;}
+.cbtn:hover{background:var(--card2);}
+.cbtn.main{width:52px;height:52px;background:var(--accent);color:#000;font-size:20px;border:none;border-radius:50%;}.cbtn.main:hover{background:#e8880a;}
+.ctrl-r{display:flex;align-items:center;gap:7px;}
+.spd-btn{padding:5px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;font-weight:700;font-family:'Space Mono',monospace;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.spd-btn:hover{background:var(--card2);border-color:var(--accent);}
+.fsc-btn{width:38px;height:38px;background:none;border:none;color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:8px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
+.fsc-btn:hover{background:var(--bg3);color:var(--text);}
+.vinfo{padding:16px 18px;background:var(--bg);flex:1;}
 .vvtitle{font-size:15px;font-weight:700;margin-bottom:5px;}
-.vvmeta{font-size:11px;color:var(--muted2);}
+.vvmeta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;}
 
 .admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);z-index:10000;display:none;justify-content:center;align-items:center;overflow-y:auto;padding:20px;}
 .admin-card{background:#0c1020;border:1px solid #0ff;border-radius:28px;width:100%;max-width:950px;padding:20px;}
@@ -187,6 +202,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .form-field{display:flex;flex-direction:column;}
 .form-field label{font-size:11px;color:#88aaff;margin-bottom:4px;}
 .admin-card input,.admin-card select{width:100%;padding:10px 12px;background:#111c28;border:1px solid #2c5a6e;color:#fff;border-radius:20px;outline:none;font-size:13px;}
+.admin-card input:focus,.admin-card select:focus{border-color:#0ff;}
 .admin-card button{background:#0ff;border:none;padding:8px 22px;border-radius:30px;font-weight:bold;cursor:pointer;margin:5px 0;color:#000;}
 .full-width{grid-column:span 2;}
 .item-card{background:#0f1a2a;margin:8px 0;padding:10px 15px;border-radius:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;border-left:3px solid #0ff;}
@@ -202,35 +218,41 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   <h1 class="home-h">Pick your <span class="hl">institute.</span></h1><p class="home-sub">Direct access to course platforms.<br>Click a card to open.</p></div>
   <div class="divider"></div>
   <div class="plist">
-    <div class="pcard" onclick="go('pg-batches')"><div class="picon" style="background:rgba(34,120,34,.15);">🚀</div><div class="pinfo"><div class="pname">Next Toppers</div><div class="pmeta">Board Exams · Education</div></div><div class="parr">→</div></div>
-    <div class="pcard" onclick="goComingSoon('Physics Wallah','⚡')"><div class="picon" style="background:rgba(220,50,50,.1);">⚡</div><div class="pinfo"><div class="pname">Physics Wallah</div><div class="pmeta">ALL Classes · Education</div></div><div class="parr">→</div></div>
+    <div class="pcard" onclick="window.goToBatches()"><div class="picon" style="background:rgba(34,120,34,.15);">🚀</div><div class="pinfo"><div class="pname">Next Toppers</div><div class="pmeta">Board Exams · Education</div></div><div class="parr">→</div></div>
+    <div class="pcard" onclick="window.goComingSoon('Physics Wallah','⚡')"><div class="picon" style="background:rgba(220,50,50,.1);">⚡</div><div class="pinfo"><div class="pname">Physics Wallah</div><div class="pmeta">ALL Classes · Education</div></div><div class="parr">→</div></div>
   </div>
 </div>
 
 <!-- COMING SOON -->
-<div class="page" id="pg-coming"><div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-home')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn2">🔧 Admin</div></div>
+<div class="page" id="pg-coming"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn2">🔧 Admin</div></div>
 <div class="cs-body"><div class="cs-icon" id="cs-icon">⚡</div><div class="cs-pname" id="cs-pname">Physics Wallah</div><div class="cs-title">COMING<br>SOON</div><p class="cs-sub">We're working hard to bring this platform to AyushCoderZ. Stay tuned!</p><div class="cs-badge">🔔 NOTIFY ME WHEN READY</div></div></div>
 
 <!-- BATCHES -->
-<div class="page" id="pg-batches"><div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-home')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn3">🔧 Admin</div></div>
+<div class="page" id="pg-batches"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn3">🔧 Admin</div></div>
 <div class="bhero"><div class="lbadge"><span class="ldot"></span>YOUR BATCHES</div><h1 class="btitle">PICK YOUR<br><span class="ac">BATCH & START</span></h1><p class="btagline">SABSE PEHLE BATCH CHOOSE KARO,<br><span class="or">PHIR LEARNING SHURU</span></p>
 <div class="srow"><div class="sitem">🔥 <span id="batch-count">0</span> BATCHES AVAILABLE</div><div class="sitem">⚡ LIVE NOW</div><div class="sitem">🎯 SELF-PACED</div></div></div>
 <div class="ddiv"><div class="dl"></div><div class="dd"></div><div class="dd"></div><div class="dl"></div></div>
 <div class="blist" id="batches-list"></div></div>
 
 <!-- CONTENT -->
-<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-batches')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🔧 Admin</div></div>
+<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🔧 Admin</div></div>
 <div class="chero"><div class="clabel"><span class="dot"></span>COURSE</div><div class="ctitle" id="c-title"></div>
 <div class="cthumb"><div class="cthumb-bg"></div><div><div class="cthumb-text" id="c-thumb-text"></div><span class="cthumb-sub" id="c-thumb-sub"></span></div><div class="cclass-badge" id="c-class-badge"></div><div class="cprice-badge"><div class="bprice-old" id="c-old-price"></div><div class="bprice-new" id="c-new-price"></div></div></div></div>
-<div class="tabs"><div class="tab active" id="tab-ov" onclick="switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="switchTab('ct')">CONTENT</div></div>
+<div class="tabs"><div class="tab active" id="tab-ov" onclick="window.switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="window.switchTab('ct')">CONTENT</div></div>
 <div id="tab-ov-body"><div class="ov-sec"><div class="tt-wrap"><div class="tt-head"><div class="tt-type">CLASS 11TH</div><div class="tt-bname" id="c-tt-name">COMMERCE</div></div><div class="tt-ttl"><span>TIME TABLE</span></div>
 <table class="tt-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td></tr><tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr><tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr><tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr><tr><td>Friday</td><td>Maths</td><td rowspan="2">Accounts</td></tr>
+<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td></tr>
+<tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr>
+<tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr>
+<tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr>
+<tr><td>Friday</td><td>Maths</td><td>Accounts</td></tr>
 <tr><td>Saturday</td><td>Maths</td><td>--</td></tr>
 <tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
 </tbody></table></div>
 <div class="wp-blk"><div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
-<table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
+<table class="wp-tbl"><thead>
+
+<th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
 <tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
 <tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
 <tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
@@ -251,32 +273,32 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <li class="fitem"><span class="fnum">9</span><span><strong>Classes start April 2026.</strong></span></li>
 <li class="fitem"><span class="fnum">10</span><span>Batch is <strong>non-refundable & non-transferable.</strong></span></li></ul></div>
 <div class="det-blk"><div class="det-hd">DETAILS</div><div class="det-row"><span class="lbl">Starts</span><span class="val">08 Feb 2026</span></div><div class="det-row"><span class="lbl">Valid till</span><span class="val">30 Apr 2027</span></div></div>
-<button class="vc-btn" onclick="switchTab('ct')">VIEW COURSE CONTENT →</button></div></div>
+<button class="vc-btn" onclick="window.switchTab('ct')">VIEW COURSE CONTENT →</button></div></div>
 <div id="tab-ct-body" style="display:none;"><div class="ch-sec"><div class="slabel">CHAPTERS</div><div class="ch-list" id="chapters-list"></div></div></div></div>
 
 <!-- SUBCHAPTER -->
-<div class="page" id="pg-subchapter"><div class="topbar"><div class="tl"><button class="back-btn" onclick="backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="sub-btag"></div><div class="admin-top-btn" id="topAdminBtn5">🔧 Admin</div></div>
+<div class="page" id="pg-subchapter"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="sub-btag"></div><div class="admin-top-btn" id="topAdminBtn5">🔧 Admin</div></div>
 <div class="sub-hd"><div class="sub-subject" id="sub-subject">COURSE</div><div class="sub-title" id="sub-title">Loading...</div></div>
-<div class="sfl-list"><div class="sfl-card" onclick="openLectures()"><div class="sfl-icon">🎬</div><div class="sfl-info"><div class="sfl-name">Lectures</div><div class="sfl-meta" id="sub-lec-meta">0 lectures</div></div><div class="sfl-arr">→</div></div>
-<div class="sfl-card" onclick="openPdfs()"><div class="sfl-icon">📄</div><div class="sfl-info"><div class="sfl-name">PDF Notes</div><div class="sfl-meta" id="sub-pdf-meta">0 PDFs</div></div><div class="sfl-arr">→</div></div></div></div>
+<div class="sfl-list"><div class="sfl-card" onclick="window.openLectures()"><div class="sfl-icon">🎬</div><div class="sfl-info"><div class="sfl-name">Lectures</div><div class="sfl-meta" id="sub-lec-meta">0 lectures</div></div><div class="sfl-arr">→</div></div>
+<div class="sfl-card" onclick="window.openPdfs()"><div class="sfl-icon">📄</div><div class="sfl-info"><div class="sfl-name">PDF Notes</div><div class="sfl-meta" id="sub-pdf-meta">0 PDFs</div></div><div class="sfl-arr">→</div></div></div></div>
 
 <!-- LECTURES -->
-<div class="page" id="pg-lectures"><div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-subchapter')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="lec-btag"></div><div class="admin-top-btn" id="topAdminBtn6">🔧 Admin</div></div>
+<div class="page" id="pg-lectures"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="lec-btag"></div><div class="admin-top-btn" id="topAdminBtn6">🔧 Admin</div></div>
 <div class="lec-hd"><div class="lec-subject" id="lec-subject"></div><div class="lec-ttl" id="lec-ttl"></div><div class="lec-cnt" id="lec-cnt"></div></div>
 <div class="lec-list" id="lec-list"></div></div>
 
 <!-- PDFS -->
-<div class="page" id="pg-pdfs"><div class="topbar"><div class="tl"><button class="back-btn" onclick="go('pg-subchapter')">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="pdf-btag"></div><div class="admin-top-btn" id="topAdminBtn7">🔧 Admin</div></div>
+<div class="page" id="pg-pdfs"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="pdf-btag"></div><div class="admin-top-btn" id="topAdminBtn7">🔧 Admin</div></div>
 <div class="lec-hd"><div class="lec-subject" id="pdf-subject"></div><div class="lec-ttl">PDF Notes</div><div class="lec-cnt" id="pdf-cnt"></div></div>
 <div class="pdf-list" id="pdf-list"></div></div>
 
 <!-- PLAYER -->
-<div class="page" id="pg-player"><div class="player-top"><button class="back-btn" onclick="playerBack()">← HOME</button><div class="ac-icon purple">AC</div><div class="logo">Ayush<span>CoderZ</span></div><div class="admin-top-btn" id="topAdminBtn8">🔧 Admin</div></div>
+<div class="page" id="pg-player"><div class="player-top"><button class="back-btn" onclick="window.playerBack()">← HOME</button><div class="ac-icon purple">AC</div><div class="logo">Ayush<span>CoderZ</span></div><div class="admin-top-btn" id="topAdminBtn8">🔧 Admin</div></div>
 <div class="v-yt-wrap" id="v-yt-wrap"><iframe id="v-yt-iframe" allowfullscreen src=""></iframe></div>
-<div class="vwrap" id="v-poster-wrap"><div class="vbg"></div><div class="vglow"></div><div><div class="vcenter"><div class="vs-tag" id="v-stag"></div><div class="vbatch">प्रारंभ</div><div class="vlname" id="v-lname"></div><div class="vlnum" id="v-lnum"></div></div></div><div class="vplay-ov" id="v-play-ov" onclick="togglePlay()">▶</div></div>
+<div class="vwrap" id="v-poster-wrap"><div class="vbg"></div><div class="vglow"></div><div><div class="vcenter"><div class="vs-tag" id="v-stag"></div><div class="vbatch">प्रारंभ</div><div class="vlname" id="v-lname"></div><div class="vlnum" id="v-lnum"></div></div></div><div class="vplay-ov" id="v-play-ov" onclick="window.togglePlay()">▶</div></div>
 <div class="vctrl" id="v-ctrl"><div class="prog-row"><span id="v-curr">00:00</span><div class="prog-track" id="v-track"><div class="prog-fill" id="v-fill"></div><div class="prog-handle" id="v-handle"></div></div><span id="v-total">00:00</span></div>
-<div class="ctrl-row"><div class="ctrl-l"><button class="cbtn" onclick="skipBack()">⟲10</button><button class="cbtn main" id="v-main-btn" onclick="togglePlay()">▶</button><button class="cbtn" onclick="skipFwd()">⟳10</button></div>
-<div class="ctrl-r"><button class="spd-btn" id="v-spd" onclick="cycleSpeed()">1x</button><button class="fsc-btn" onclick="toggleFS()">⛶</button></div></div></div>
+<div class="ctrl-row"><div class="ctrl-l"><button class="cbtn" onclick="window.skipBack()">⟲10</button><button class="cbtn main" id="v-main-btn" onclick="window.togglePlay()">▶</button><button class="cbtn" onclick="window.skipFwd()">⟳10</button></div>
+<div class="ctrl-r"><button class="spd-btn" id="v-spd" onclick="window.cycleSpeed()">1x</button><button class="fsc-btn" onclick="window.toggleFS()">⛶</button></div></div></div>
 <div class="vinfo"><div class="vvtitle" id="v-title"></div><div class="vvmeta" id="v-meta"></div></div></div>
 
 <!-- ADMIN PANEL -->
@@ -291,7 +313,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyA8Udy4K2Z4Cel33x1qm9yKcSSUYIZlNjM",
@@ -299,14 +321,12 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     projectId: "ayushcoderz-edu",
     storageBucket: "ayushcoderz-edu.firebasestorage.app",
     messagingSenderId: "133499223114",
-    appId: "1:133499223114:web:82f18889d39245a300bab3",
-    measurementId: "G-4BPYCG04DZ"
+    appId: "1:133499223114:web:82f18889d39245a300bab3"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Data references
   const batchesRef = collection(db, "batches");
   const chaptersRef = collection(db, "chapters");
   const lecturesRef = collection(db, "lectures");
@@ -318,31 +338,38 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     try {
       const batchSnap = await getDocs(batchesRef);
       batches = batchSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      
       const chapSnap = await getDocs(chaptersRef);
       chapters = chapSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      
       const lecSnap = await getDocs(lecturesRef);
       lectures = lecSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      
       const pdfSnap = await getDocs(pdfsRef);
       pdfs = pdfSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
       if(batches.length === 0) {
         await addDoc(batchesRef, { name: "PRARAMBH PLUS Commerce 2026-27", className: "Class 11th", price: "3499", oldPrice: "4999", thumb: "प्रारंभ", sub: "PLUS" });
-        await addDoc(chaptersRef, { batchId: "temp", name: "Micro Economics" });
         await loadData();
+        return;
       }
-      renderAll();
-    } catch(e) { console.error(e); }
+      renderBatches();
+    } catch(e) { console.error("Load error:", e); }
   }
 
-  window.renderBatches = function() {
+  window.goHome = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-home').classList.add('active'); }
+  window.goToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
+  window.goComingSoon = function(name, icon) { document.getElementById('cs-icon').textContent=icon; document.getElementById('cs-pname').textContent=name; document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-coming').classList.add('active'); }
+  window.goBackToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
+  window.goBackToSubChapter = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active'); }
+  window.switchTab = function(w) { const o=w==='ov'; document.getElementById('tab-ov-body').style.display=o?'':'none'; document.getElementById('tab-ct-body').style.display=o?'none':''; document.getElementById('tab-ov').classList.toggle('active',o); document.getElementById('tab-ct').classList.toggle('active',!o); }
+  window.backToChapters = function() { window.switchTab('ct'); window.goBackToBatches(); goToContent(); }
+  
+  function goToContent() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-content').classList.add('active'); }
+  
+  function renderBatches() {
     const c = document.getElementById('batches-list');
     if(!c) return;
     document.getElementById('batch-count').innerText = batches.length;
     if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;">No batches. Add from Admin! 🔧</div>'; return; }
-    c.innerHTML = batches.map(b => `<div class="bcard" onclick="selectBatch('${b.id}')"><div class="bthumb"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
+    c.innerHTML = batches.map(b => `<div class="bcard" onclick="window.selectBatch('${b.id}')"><div class="bthumb"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
   }
 
   window.selectBatch = function(id) {
@@ -357,9 +384,9 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('c-old-price').textContent = '₹'+batch.oldPrice+'/-';
     document.getElementById('c-new-price').textContent = '₹'+batch.price+'/-';
     document.getElementById('c-tt-name').textContent = batch.name.split(' ').slice(0,2).join(' ').toUpperCase();
-    document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('');
-    switchTab('ov');
-    go('pg-content');
+    document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="window.selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('');
+    window.switchTab('ov');
+    goToContent();
   }
 
   window.selectChapter = function(name) {
@@ -371,7 +398,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('sub-btag').textContent = '#'+window.currentBatch?.id;
     document.getElementById('sub-lec-meta').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('sub-pdf-meta').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
-    go('pg-subchapter');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active');
   }
 
   window.openLectures = function() {
@@ -380,8 +407,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
     document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id;
-    document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
-    go('pg-lectures');
+    document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-lectures').classList.add('active');
   }
 
   window.openPdfs = function() {
@@ -390,7 +417,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     document.getElementById('pdf-cnt').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
     document.getElementById('pdf-btag').textContent = '#'+window.currentBatch?.id;
     document.getElementById('pdf-list').innerHTML = pdfsCh.map(p => `<div class="pdf-item" onclick='window.open("${p.url}","_blank")'><div class="pdf-icon">📄</div><div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div><span class="pdf-badge">PDF</span></div>`).join('');
-    go('pg-pdfs');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-pdfs').classList.add('active');
   }
 
   async function renderBatchesAdmin() {
@@ -432,7 +459,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     if(pbid) document.getElementById('pdfChapterSelect').innerHTML = '<option value="">-- Select Chapter --</option>' + chapters.filter(c => c.batchId == pbid).map(c => `<option value="${c.id}">${c.name}</option>`).join('');
   }
   async function fullRefresh() { renderBatches(); if(isAdminOpen) { await renderBatchesAdmin(); await renderChaptersAdmin(); await renderLecturesAdmin(); await renderPdfsAdmin(); } }
-  function renderAll() { renderBatches(); if(isAdminOpen) { renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); } }
 
   document.getElementById('addBatchBtn')?.addEventListener('click', async () => {
     const n=document.getElementById('batchName').value, cl=document.getElementById('batchClass').value, p=document.getElementById('batchPrice').value, op=document.getElementById('batchOldPrice').value, t=document.getElementById('batchThumb').value, s=document.getElementById('batchSub').value;
@@ -457,11 +483,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   document.getElementById('lectureBatchSelect')?.addEventListener('change', updateSelects);
   document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSelects);
 
-  function go(id){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-  function goComingSoon(n,i){ document.getElementById('cs-icon').textContent=i; document.getElementById('cs-pname').textContent=n; go('pg-coming'); }
-  window.switchTab = function(w){ const o=w==='ov'; document.getElementById('tab-ov-body').style.display=o?'':'none'; document.getElementById('tab-ct-body').style.display=o?'none':''; document.getElementById('tab-ov').classList.toggle('active',o); document.getElementById('tab-ct').classList.toggle('active',!o); }
-  window.backToChapters = function(){ switchTab('ct'); go('pg-content'); }
-
+  // Player functions
   let isPlaying=false, curTime=0, totalDur=0, pInterval=null, speed=1, speedIdx=2;
   const SPEEDS=[0.5,0.75,1,1.25,1.5,2];
   function getYouTubeId(url){ const m=url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/); return m?m[1]:null; }
@@ -476,26 +498,19 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     if(ytId){ ytFrame.src='https://www.youtube.com/embed/'+ytId+'?autoplay=1&rel=0&fs=1'; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
     else if(lec.url && lec.url.trim()!==''){ ytFrame.src=lec.url; ytWrap.classList.add('active'); posterWrap.style.display='none'; ctrl.style.display='none'; }
     else { ytWrap.classList.remove('active'); ytFrame.src=''; posterWrap.style.display=''; ctrl.style.display=''; const t=lec.duration.split(':'); totalDur=t.length===3?+t[0]*3600+ +t[1]*60+ +t[2]:+t[0]*60+ +t[1]; stopPlayer(); curTime=0; speed=1; speedIdx=2; document.getElementById('v-spd').textContent='1x'; updateUI(); }
-    go('pg-player');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-player').classList.add('active');
   }
-  function playerBack(){ stopPlayer(); document.getElementById('v-yt-iframe').src=''; document.getElementById('v-yt-wrap').classList.remove('active'); document.getElementById('v-poster-wrap').style.display=''; document.getElementById('v-ctrl').style.display=''; go('pg-subchapter'); }
-  function togglePlay(){ isPlaying=!isPlaying; updateUI(); if(isPlaying){ pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } else clearInterval(pInterval); }
+  window.playerBack = function(){ stopPlayer(); document.getElementById('v-yt-iframe').src=''; document.getElementById('v-yt-wrap').classList.remove('active'); document.getElementById('v-poster-wrap').style.display=''; document.getElementById('v-ctrl').style.display=''; document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active'); }
+  window.togglePlay = function(){ isPlaying=!isPlaying; updateUI(); if(isPlaying){ pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } else clearInterval(pInterval); }
   function stopPlayer(){ isPlaying=false; clearInterval(pInterval); }
   function updateUI(){ document.getElementById('v-main-btn').textContent=isPlaying?'⏸':'▶'; document.getElementById('v-play-ov').style.display=isPlaying?'none':'flex'; updateProgress(); }
   function updateProgress(){ const p=totalDur>0?Math.min((curTime/totalDur)*100,100):0; document.getElementById('v-fill').style.width=p+'%'; document.getElementById('v-handle').style.left='calc('+p+'% - 6px)'; document.getElementById('v-curr').textContent=fmt(Math.floor(curTime)); }
   function fmt(s){ const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60; return h>0?h+':'+pad(m)+':'+pad(sec):pad(m)+':'+pad(sec); }
   function pad(n){ return n.toString().padStart(2,'0'); }
-  function skipBack(){ curTime=Math.max(0,curTime-10); updateProgress(); }
-  function skipFwd(){ curTime=Math.min(totalDur,curTime+10); updateProgress(); }
-  function cycleSpeed(){ speedIdx=(speedIdx+1)%SPEEDS.length; speed=SPEEDS[speedIdx]; document.getElementById('v-spd').textContent=speed+'x'; if(isPlaying){ clearInterval(pInterval); pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } }
-  function toggleFS(){ const el=document.getElementById('v-yt-wrap').classList.contains('active')?document.getElementById('v-yt-iframe'):document.getElementById('pg-player'); if(!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.(); }
-
-  window.playerBack = playerBack;
-  window.togglePlay = togglePlay;
-  window.skipBack = skipBack;
-  window.skipFwd = skipFwd;
-  window.cycleSpeed = cycleSpeed;
-  window.toggleFS = toggleFS;
+  window.skipBack = function(){ curTime=Math.max(0,curTime-10); updateProgress(); }
+  window.skipFwd = function(){ curTime=Math.min(totalDur,curTime+10); updateProgress(); }
+  window.cycleSpeed = function(){ speedIdx=(speedIdx+1)%SPEEDS.length; speed=SPEEDS[speedIdx]; document.getElementById('v-spd').textContent=speed+'x'; if(isPlaying){ clearInterval(pInterval); pInterval=setInterval(()=>{ curTime+=speed; if(curTime>=totalDur){ curTime=totalDur; isPlaying=false; clearInterval(pInterval); } updateProgress(); },1000); } }
+  window.toggleFS = function(){ const el=document.getElementById('v-yt-wrap').classList.contains('active')?document.getElementById('v-yt-iframe'):document.getElementById('pg-player'); if(!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.(); }
 
   let isAdminOpen=false, authenticated=false;
   const overlay=document.getElementById('adminOverlay'), closeAdmin=document.getElementById('closeAdminBtn');
