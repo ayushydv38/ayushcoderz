@@ -187,17 +187,21 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .vvtitle{font-size:15px;font-weight:700;margin-bottom:5px;}
 .vvmeta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;}
 
-.admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);z-index:10000;display:none;justify-content:center;align-items:center;overflow-y:auto;padding:20px;}
-.admin-card{background:#0c1020;border:1px solid #0ff;border-radius:28px;width:100%;max-width:950px;padding:20px;}
-.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+/* ADMIN PANEL FIX - SCROLL & VISIBLE CLOSE BUTTON */
+.admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);z-index:10000;display:none;justify-content:center;align-items:flex-start;overflow-y:auto;padding:20px;}
+.admin-card{background:#0c1020;border:1px solid #0ff;border-radius:28px;width:100%;max-width:950px;margin:30px auto;padding:20px;}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:sticky;top:0;background:#0c1020;z-index:10;padding-bottom:10px;}
 .admin-header h2{color:#0ff;font-size:22px;}
-.close-admin{background:#0ff;border:none;padding:6px 18px;border-radius:30px;color:#000;font-weight:bold;cursor:pointer;}
-.admin-tabs{display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #0ff;padding-bottom:12px;margin-bottom:20px;}
+.close-admin{background:#0ff;border:none;padding:6px 18px;border-radius:30px;color:#000;font-weight:bold;cursor:pointer;flex-shrink:0;}
+.admin-tabs{display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid #0ff;padding-bottom:12px;margin-bottom:20px;position:sticky;top:55px;background:#0c1020;z-index:9;}
 .admin-tab{background:transparent;border:none;color:#88bbff;padding:6px 18px;border-radius:30px;cursor:pointer;font-weight:600;}
 .admin-tab.active{background:#0ff;color:#000;box-shadow:0 0 10px #0ff;}
-.admin-pane{display:none;}
+.admin-pane{display:none;max-height:55vh;overflow-y:auto;padding-right:8px;}
 .admin-pane.active-pane{display:block;}
-.admin-pane h3{color:#0ff;font-size:16px;margin-bottom:12px;border-left:3px solid #0ff;padding-left:10px;}
+.admin-pane h3{color:#0ff;font-size:16px;margin-bottom:12px;border-left:3px solid #0ff;padding-left:10px;position:sticky;top:0;background:#0c1020;padding-top:5px;}
+.admin-pane::-webkit-scrollbar{width:5px;}
+.admin-pane::-webkit-scrollbar-track{background:#1a1a2e;border-radius:5px;}
+.admin-pane::-webkit-scrollbar-thumb{background:#0ff;border-radius:5px;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px;}
 .form-field{display:flex;flex-direction:column;}
 .form-field label{font-size:11px;color:#88aaff;margin-bottom:4px;}
@@ -245,13 +249,13 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr>
 <tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr>
 <tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr>
-<tr><td>Friday</td><td>Maths</td><td>Accounts</td></tr>
-<tr><td>Saturday</td><td>Maths</td><td>--</td></tr>
+<tr><td>Friday</td><td>Maths</td><td>Accounts</td></table>
+<tr><td>Saturday</tr><tr><td>Maths</td><td>--</td></tr>
 <tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
 </tbody></table></div>
 <div class="wp-blk"><div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
 <table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
+<tbody><tr><td>Monday</tr><tr><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
 <tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
 <tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
 <tr><td>Thursday</td><td>Sets (L7)</td><td>Intro to Accounting (L3)</td></tr>
@@ -399,7 +403,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   window.openLectures = function() {
     const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === window.currentChapter && l.batchId === window.currentBatch?.id; });
     document.getElementById('lec-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
-    document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
+    document.getElementById('lec-ttl').textContent = window.currentchapter+' — Lectures';
     document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id.substring(0,8);
     document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-thumb-bg"></div><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
