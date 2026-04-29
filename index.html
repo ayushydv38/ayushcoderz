@@ -55,6 +55,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .bcard{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .22s;}
 .bcard:hover{border-color:rgba(245,166,35,.4);transform:translateY(-2px);}
 .bthumb{width:100%;aspect-ratio:16/9;position:relative;background:linear-gradient(135deg,#1a0a2e,#2a1a0e);display:flex;align-items:center;justify-content:center;}
+.bthumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;display:none;}
 .bthumb-grd{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,166,35,.25) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(124,92,191,.2) 0%,transparent 60%);}
 .bthumb-name{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:48px;color:rgba(255,255,255,.08);z-index:1;}
 .bclass-badge{position:absolute;top:9px;left:9px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:var(--accent);color:#000;z-index:4;}
@@ -187,7 +188,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .vvtitle{font-size:15px;font-weight:700;margin-bottom:5px;}
 .vvmeta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;}
 
-/* ADMIN PANEL FIX - SCROLL & VISIBLE CLOSE BUTTON */
+/* ADMIN PANEL */
 .admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);z-index:10000;display:none;justify-content:center;align-items:flex-start;overflow-y:auto;padding:20px;}
 .admin-card{background:#0c1020;border:1px solid #0ff;border-radius:28px;width:100%;max-width:950px;margin:30px auto;padding:20px;}
 .admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;position:sticky;top:0;background:#0c1020;z-index:10;padding-bottom:10px;}
@@ -217,7 +218,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 
 <!-- HOME -->
 <div class="page active" id="pg-home">
-  <div class="topbar"><div class="tl"><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn">🧑‍💻 Admin</div></div>
+  <div class="topbar"><div class="tl"><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn">🔧 Admin</div></div>
   <div class="home-hero"><div class="home-bc"><span class="dol">$</span>~/platforms</div><div class="home-cmd">$ select_platform</div>
   <h1 class="home-h">Pick your <span class="hl">institute.</span></h1><p class="home-sub">Direct access to course platforms.<br>Click a card to open.</p></div>
   <div class="divider"></div>
@@ -228,34 +229,34 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 </div>
 
 <!-- COMING SOON -->
-<div class="page" id="pg-coming"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn2">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-coming"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn2">🔧 Admin</div></div>
 <div class="cs-body"><div class="cs-icon" id="cs-icon">⚡</div><div class="cs-pname" id="cs-pname">Physics Wallah</div><div class="cs-title">COMING<br>SOON</div><p class="cs-sub">We're working hard to bring this platform to AyushCoderZ. Stay tuned!</p><div class="cs-badge">🔔 NOTIFY ME WHEN READY</div></div></div>
 
 <!-- BATCHES -->
-<div class="page" id="pg-batches"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn3">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-batches"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="admin-top-btn" id="topAdminBtn3">🔧 Admin</div></div>
 <div class="bhero"><div class="lbadge"><span class="ldot"></span>YOUR BATCHES</div><h1 class="btitle">PICK YOUR<br><span class="ac">BATCH & START</span></h1><p class="btagline">SABSE PEHLE BATCH CHOOSE KARO,<br><span class="or">PHIR LEARNING SHURU</span></p>
 <div class="srow"><div class="sitem">🔥 <span id="batch-count">0</span> BATCHES AVAILABLE</div><div class="sitem">⚡ LIVE NOW</div><div class="sitem">🎯 SELF-PACED</div></div></div>
 <div class="ddiv"><div class="dl"></div><div class="dd"></div><div class="dd"></div><div class="dl"></div></div>
 <div class="blist" id="batches-list"></div></div>
 
 <!-- CONTENT -->
-<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-content"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="c-btag"></div><div class="admin-top-btn" id="topAdminBtn4">🔧 Admin</div></div>
 <div class="chero"><div class="clabel"><span class="dot"></span>COURSE</div><div class="ctitle" id="c-title"></div>
 <div class="cthumb"><div class="cthumb-bg"></div><div><div class="cthumb-text" id="c-thumb-text"></div><span class="cthumb-sub" id="c-thumb-sub"></span></div><div class="cclass-badge" id="c-class-badge"></div><div class="cprice-badge"><div class="bprice-old" id="c-old-price"></div><div class="bprice-new" id="c-new-price"></div></div></div></div>
 <div class="tabs"><div class="tab active" id="tab-ov" onclick="window.switchTab('ov')">OVERVIEW</div><div class="tab" id="tab-ct" onclick="window.switchTab('ct')">CONTENT</div></div>
 <div id="tab-ov-body"><div class="ov-sec"><div class="tt-wrap"><div class="tt-head"><div class="tt-type">CLASS 11TH</div><div class="tt-bname" id="c-tt-name">COMMERCE</div></div><div class="tt-ttl"><span>TIME TABLE</span></div>
 <table class="tt-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td></tr>
+<tbody><tr><td>Monday</td><td>BST</td><td>Economics</td><tr>
 <tr><td>Tuesday</td><td>BST</td><td>Economics</td></tr>
 <tr><td>Wednesday</td><td>BST</td><td>Accounts</td></tr>
 <tr><td>Thursday</td><td>Maths</td><td>Accounts</td></tr>
-<tr><td>Friday</td><td>Maths</td><td>Accounts</td></table>
-<tr><td>Saturday</tr><tr><td>Maths</td><td>--</td></tr>
+<tr><td>Friday</td><td>Maths</td><td>Accounts</td></tr>
+<tr><td>Saturday</td><td>Maths</td><td>--</td></tr>
 <tr><td>Sunday</td><td colspan="2">Holiday</td></tr>
 </tbody></table></div>
 <div class="wp-blk"><div class="wp-hd"><div class="wp-cls">CLASS 11TH</div><div class="wp-ttl">COMMERCE Weekly Planner</div></div>
 <table class="wp-tbl"><thead><tr><th>Days</th><th>5:00 PM – 6:30 PM</th><th>8:00 PM – 9:30 PM</th></tr></thead>
-<tbody><tr><td>Monday</tr><tr><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
+<tbody><tr><td>Monday</td><td>Nature & Purpose of Business (L5)</td><td>Consumer Equilibrium (L1)</td></tr>
 <tr><td>Tuesday</td><td>Nature & Purpose of Business (L6)</td><td>Consumer Equilibrium (L2)</td></tr>
 <tr><td>Wednesday</td><td>Nature & Purpose of Business (L7)</td><td>Intro to Accounting (L2)</td></tr>
 <tr><td>Thursday</td><td>Sets (L7)</td><td>Intro to Accounting (L3)</td></tr>
@@ -279,23 +280,23 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div id="tab-ct-body" style="display:none;"><div class="ch-sec"><div class="slabel">CHAPTERS</div><div class="ch-list" id="chapters-list"></div></div></div></div>
 
 <!-- SUBCHAPTER -->
-<div class="page" id="pg-subchapter"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="sub-btag"></div><div class="admin-top-btn" id="topAdminBtn5">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-subchapter"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="sub-btag"></div><div class="admin-top-btn" id="topAdminBtn5">🔧 Admin</div></div>
 <div class="sub-hd"><div class="sub-subject" id="sub-subject">COURSE</div><div class="sub-title" id="sub-title">Loading...</div></div>
 <div class="sfl-list"><div class="sfl-card" onclick="window.openLectures()"><div class="sfl-icon">🎬</div><div class="sfl-info"><div class="sfl-name">Lectures</div><div class="sfl-meta" id="sub-lec-meta">0 lectures</div></div><div class="sfl-arr">→</div></div>
 <div class="sfl-card" onclick="window.openPdfs()"><div class="sfl-icon">📄</div><div class="sfl-info"><div class="sfl-name">PDF Notes</div><div class="sfl-meta" id="sub-pdf-meta">0 PDFs</div></div><div class="sfl-arr">→</div></div></div></div>
 
 <!-- LECTURES -->
-<div class="page" id="pg-lectures"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="lec-btag"></div><div class="admin-top-btn" id="topAdminBtn6">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-lectures"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="lec-btag"></div><div class="admin-top-btn" id="topAdminBtn6">🔧 Admin</div></div>
 <div class="lec-hd"><div class="lec-subject" id="lec-subject"></div><div class="lec-ttl" id="lec-ttl"></div><div class="lec-cnt" id="lec-cnt"></div></div>
 <div class="lec-list" id="lec-list"></div></div>
 
 <!-- PDFS -->
-<div class="page" id="pg-pdfs"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="pdf-btag"></div><div class="admin-top-btn" id="topAdminBtn7">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-pdfs"><div class="topbar"><div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div><div class="btag" id="pdf-btag"></div><div class="admin-top-btn" id="topAdminBtn7">🔧 Admin</div></div>
 <div class="lec-hd"><div class="lec-subject" id="pdf-subject"></div><div class="lec-ttl">PDF Notes</div><div class="lec-cnt" id="pdf-cnt"></div></div>
 <div class="pdf-list" id="pdf-list"></div></div>
 
 <!-- PLAYER -->
-<div class="page" id="pg-player"><div class="player-top"><button class="back-btn" onclick="window.playerBack()">← HOME</button><div class="ac-icon purple">AC</div><div class="logo">Ayush<span>CoderZ</span></div><div class="admin-top-btn" id="topAdminBtn8">🧑‍💻 Admin</div></div>
+<div class="page" id="pg-player"><div class="player-top"><button class="back-btn" onclick="window.playerBack()">← HOME</button><div class="ac-icon purple">AC</div><div class="logo">Ayush<span>CoderZ</span></div><div class="admin-top-btn" id="topAdminBtn8">🔧 Admin</div></div>
 <div class="v-yt-wrap" id="v-yt-wrap"><iframe id="v-yt-iframe" allowfullscreen src=""></iframe></div>
 <div class="vwrap" id="v-poster-wrap"><div class="vbg"></div><div class="vglow"></div><div><div class="vcenter"><div class="vs-tag" id="v-stag"></div><div class="vbatch">प्रारंभ</div><div class="vlname" id="v-lname"></div><div class="vlnum" id="v-lnum"></div></div></div><div class="vplay-ov" id="v-play-ov" onclick="window.togglePlay()">▶</div></div>
 <div class="vctrl" id="v-ctrl"><div class="prog-row"><span id="v-curr">00:00</span><div class="prog-track" id="v-track"><div class="prog-fill" id="v-fill"></div><div class="prog-handle" id="v-handle"></div></div><span id="v-total">00:00</span></div>
@@ -306,7 +307,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <!-- ADMIN PANEL -->
 <div id="adminOverlay" class="admin-overlay"><div class="admin-card"><div class="admin-header"><h2>🛠️ ADMIN PANEL</h2><button class="close-admin" id="closeAdminBtn">✖ CLOSE</button></div>
 <div class="admin-tabs"><button class="admin-tab active" data-tab="batches">📦 Batches</button><button class="admin-tab" data-tab="chapters">📚 Chapters</button><button class="admin-tab" data-tab="lectures">🎥 Lectures</button><button class="admin-tab" data-tab="pdfs">📄 PDFs</button></div>
-<div id="batchesPane" class="admin-pane active-pane"><h3>➕ Add Batch</h3><div class="form-grid"><div class="form-field"><label>Batch Name</label><input type="text" id="batchName" placeholder="e.g., PRARAMBH PLUS"></div><div class="form-field"><label>Class</label><input type="text" id="batchClass" placeholder="e.g., 11th Commerce"></div><div class="form-field"><label>Price (₹)</label><input type="text" id="batchPrice" placeholder="Price"></div><div class="form-field"><label>Old Price (₹)</label><input type="text" id="batchOldPrice" placeholder="Old Price"></div><div class="form-field"><label>Thumb text</label><input type="text" id="batchThumb" placeholder="e.g., प्रारंभ"></div><div class="form-field"><label>Sub text</label><input type="text" id="batchSub" placeholder="e.g., PLUS"></div></div><button id="addBatchBtn">➕ Add Batch</button><div id="batchesListAdmin" style="margin-top:15px;"></div></div>
+<div id="batchesPane" class="admin-pane active-pane"><h3>➕ Add Batch</h3><div class="form-grid"><div class="form-field"><label>Batch Name</label><input type="text" id="batchName" placeholder="e.g., PRARAMBH PLUS"></div><div class="form-field"><label>Class</label><input type="text" id="batchClass" placeholder="e.g., 11th Commerce"></div><div class="form-field"><label>Price (₹)</label><input type="text" id="batchPrice" placeholder="Price"></div><div class="form-field"><label>Old Price (₹)</label><input type="text" id="batchOldPrice" placeholder="Old Price"></div><div class="form-field"><label>Thumb text</label><input type="text" id="batchThumb" placeholder="e.g., प्रारंभ"></div><div class="form-field"><label>Sub text</label><input type="text" id="batchSub" placeholder="e.g., PLUS"></div><div class="form-field full-width"><label>Banner Image URL</label><input type="text" id="batchBanner" placeholder="https://i.ibb.co/xyz/banner.jpg"></div></div><button id="addBatchBtn">➕ Add Batch</button><div id="batchesListAdmin" style="margin-top:15px;"></div></div>
 <div id="chaptersPane" class="admin-pane"><h3>➕ Add Chapter</h3><div class="form-grid"><div class="form-field full-width"><label>Select Batch</label><select id="chapterBatchSelect"></select></div><div class="form-field full-width"><label>Chapter Name</label><input type="text" id="chapterName" placeholder="e.g., Micro Economics"></div></div><button id="addChapterBtn">➕ Add Chapter</button><div id="chaptersListAdmin" style="margin-top:15px;"></div></div>
 <div id="lecturesPane" class="admin-pane"><h3>➕ Add Lecture</h3><div class="form-grid"><div class="form-field"><label>Select Batch</label><select id="lectureBatchSelect"></select></div><div class="form-field"><label>Select Chapter</label><select id="lectureChapterSelect"></select></div><div class="form-field full-width"><label>Lecture Name</label><input type="text" id="lectureName" placeholder="e.g., Introduction"></div><div class="form-field"><label>Duration</label><input type="text" id="lectureDuration" placeholder="e.g., 58:40"></div><div class="form-field full-width"><label>Video URL</label><input type="text" id="lectureUrl" placeholder="YouTube or MP4 link"></div></div><button id="addLectureBtn">➕ Add Lecture</button><div id="lecturesListAdmin" style="margin-top:15px;"></div></div>
 <div id="pdfsPane" class="admin-pane"><h3>➕ Add PDF</h3><div class="form-grid"><div class="form-field"><label>Select Batch</label><select id="pdfBatchSelect"></select></div><div class="form-field"><label>Select Chapter</label><select id="pdfChapterSelect"></select></div><div class="form-field full-width"><label>PDF Name</label><input type="text" id="pdfName" placeholder="PDF Name"></div><div class="form-field"><label>Pages</label><input type="text" id="pdfPages" placeholder="e.g., 12 pages"></div><div class="form-field full-width"><label>PDF URL</label><input type="text" id="pdfUrl" placeholder="PDF link"></div></div><button id="addPdfBtn">➕ Add PDF</button><div id="pdfsListAdmin" style="margin-top:15px;"></div></div>
@@ -348,7 +349,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
       pdfs = pdfSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
       if(batches.length === 0) {
-        await addDoc(batchesRef, { name: "PRARAMBH PLUS Commerce 2026-27", className: "Class 11th", price: "3499", oldPrice: "4999", thumb: "प्रारंभ", sub: "PLUS" });
+        await addDoc(batchesRef, { name: "PRARAMBH PLUS Commerce 2026-27", className: "Class 11th", price: "3499", oldPrice: "4999", thumb: "प्रारंभ", sub: "PLUS", banner: "" });
         await loadData();
         return;
       }
@@ -367,8 +368,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
     const c = document.getElementById('batches-list');
     if(!c) return;
     document.getElementById('batch-count').innerText = batches.length;
-    if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;">No batches. Add from Admin! 🧑‍💻</div>'; return; }
-    c.innerHTML = batches.map(b => `<div class="bcard" onclick="window.selectBatch('${b.id}')"><div class="bthumb"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
+    if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;">No batches. Add from Admin! 🔧</div>'; return; }
+    c.innerHTML = batches.map(b => `<div class="bcard" onclick="window.selectBatch('${b.id}')"><div class="bthumb" style="background:linear-gradient(135deg,#1a0a2e,#2a1a0e);"><img class="bthumb-img" src="${b.banner || 'https://i.ibb.co/3YfbZNXb/Screenshot-20260424-234159-Chrome.png'}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:2; display:${b.banner ? 'block' : 'none'};" onload="this.style.display='block'" onerror="this.style.display='none'"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb}</div><div class="bclass-badge">${b.className}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice}/-</div><div class="bprice-new">${b.price}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className}</div><div class="bcard-title">${b.name}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH #01</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
   }
 
   window.selectBatch = function(id) {
@@ -403,7 +404,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   window.openLectures = function() {
     const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === window.currentChapter && l.batchId === window.currentBatch?.id; });
     document.getElementById('lec-subject').textContent = window.currentChapter.toUpperCase()+' · PRARAMBH BATCH';
-    document.getElementById('lec-ttl').textContent = window.currentchapter+' — Lectures';
+    document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
     document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('lec-btag').textContent = '#'+window.currentBatch?.id.substring(0,8);
     document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-thumb-bg"></div><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('');
@@ -420,7 +421,7 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   }
 
   async function renderBatchesAdmin() {
-    document.getElementById('batchesListAdmin').innerHTML = batches.map(b => `<div class="item-card"><span><strong>${b.name}</strong> (${b.className}) ₹${b.price}</span><button class="delete-btn" data-id="${b.id}" data-type="batch">Delete</button></div>`).join('');
+    document.getElementById('batchesListAdmin').innerHTML = batches.map(b => `<div class="item-card"><span><strong>${b.name}</strong> (${b.className}) ₹${b.price}${b.banner ? ' 🖼️' : ''}</span><button class="delete-btn" data-id="${b.id}" data-type="batch">Delete</button></div>`).join('');
     attachDelete();
   }
   async function renderChaptersAdmin() {
@@ -460,8 +461,8 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   async function fullRefresh() { renderBatches(); if(isAdminOpen) { await renderBatchesAdmin(); await renderChaptersAdmin(); await renderLecturesAdmin(); await renderPdfsAdmin(); } }
 
   document.getElementById('addBatchBtn')?.addEventListener('click', async () => {
-    const n=document.getElementById('batchName').value, cl=document.getElementById('batchClass').value, p=document.getElementById('batchPrice').value, op=document.getElementById('batchOldPrice').value, t=document.getElementById('batchThumb').value, s=document.getElementById('batchSub').value;
-    if(n&&cl&&p){ const docRef = await addDoc(batchesRef, { name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'' }); batches.push({ id:docRef.id, name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'' }); fullRefresh(); alert('Batch added!'); }
+    const n=document.getElementById('batchName').value, cl=document.getElementById('batchClass').value, p=document.getElementById('batchPrice').value, op=document.getElementById('batchOldPrice').value, t=document.getElementById('batchThumb').value, s=document.getElementById('batchSub').value, b=document.getElementById('batchBanner').value;
+    if(n&&cl&&p){ const docRef = await addDoc(batchesRef, { name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'', banner:b||'' }); batches.push({ id:docRef.id, name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'', banner:b||'' }); fullRefresh(); alert('Batch added!'); }
     else alert('Fill name, class and price');
   });
   document.getElementById('addChapterBtn')?.addEventListener('click', async () => {
