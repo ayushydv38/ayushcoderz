@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Admin Panel | AyushCoderZ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#0a0a0f;color:#fff;padding:20px;}
+.login-container{max-width:400px;margin:100px auto;background:#111118;border:1px solid #0ff;border-radius:20px;padding:30px;text-align:center;}
+.login-container input{width:100%;padding:12px;margin:10px 0;background:#1a1a2e;border:1px solid #2c5a6e;border-radius:10px;color:#fff;font-size:14px;}
+.login-container input:focus{outline:none;border-color:#0ff;}
+.login-container button{background:#0ff;border:none;padding:12px;border-radius:10px;color:#000;font-weight:700;width:100%;cursor:pointer;font-size:16px;}
+.login-container button:hover{background:#00ddff;}
+.login-error{color:#ff4444;font-size:13px;margin-top:8px;display:none;}
+.admin-panel{display:none;}
+.section{background:#111118;border:1px solid #0ff;border-radius:16px;padding:20px;margin-bottom:30px;}
+.section h2{margin-bottom:20px;font-size:20px;color:#0ff;}
+input,select,textarea{background:#1a1a2e;border:1px solid #2c5a6e;border-radius:8px;padding:10px;color:#fff;font-family:inherit;width:100%;margin:5px 0;}
+input:focus,select:focus{outline:none;border-color:#0ff;}
+button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#000;font-weight:700;cursor:pointer;margin:5px;}
+.delete-btn{background:#e63946;color:#fff;}
+.delete-btn:hover{background:#cc2233;}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.logout-btn{background:#e63946;padding:8px 20px;color:#fff;}
+.logout-btn:hover{background:#cc2233;}
+.nav-tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.nav-tab{background:#1a1a2e;padding:10px 20px;border-radius:10px;cursor:pointer;border:1px solid transparent;color:#88bbff;}
+.nav-tab:hover{border-color:#0ff;}
+.nav-tab.active{background:#0ff;color:#000;border-color:#0ff;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.full-width{grid-column:span 2;}
+.form-field label{font-size:12px;color:#88aaff;display:block;margin-bottom:3px;}
+.item-card{background:#0f1a2a;padding:12px 16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin:6px 0;border-left:3px solid #0ff;flex-wrap:wrap;gap:8px;}
+.item-card span{font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="login-container" id="loginContainer">
+    <h2 style="margin-bottom:20px;color:#0ff;">🔐 Admin Login</h2>
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="password" id="password" placeholder="Enter Password">
+    <div class="login-error" id="loginError">❌ Invalid username or password!</div>
+    <button onclick="login()">Login</button>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+    <div class="top-bar">
+        <h1 style="color:#0ff;">🛠️ Admin Panel</h1>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="batches">📦 Batches</div>
+        <div class="nav-tab" data-tab="chapters">📚 Chapters</div>
+        <div class="nav-tab" data-tab="lectures">🎥 Lectures</div>
+        <div class="nav-tab" data-tab="pdfs">📄 PDFs</div>
+    </div>
+
+    <!-- BATCHES -->
+    <div id="batchesTab" class="tab-content active">
+        <div class="section"><h2>➕ Add Batch</h2>
+            <div class="form-grid">
+                <div class="form-field"><label>Batch Name</label><input type="text" id="batchName" placeholder="PRARAMBH PLUS"></div>
+                <div class="form-field"><label>Class</label><input type="text" id="batchClass" placeholder="11th Commerce"></div>
+                <div class="form-field"><label>Price (₹)</label><input type="text" id="batchPrice" placeholder="3499"></div>
+                <div class="form-field"><label>Old Price (₹)</label><input type="text" id="batchOldPrice" placeholder="4999"></div>
+                <div class="form-field"><label>Thumb text</label><input type="text" id="batchThumb" placeholder="प्रारंभ"></div>
+                <div class="form-field"><label>Sub text</label><input type="text" id="batchSub" placeholder="PLUS"></div>
+                <div class="full-width"><label>Banner Image URL</label><input type="text" id="batchBanner" placeholder="https://i.ibb.co/xyz/banner.jpg"></div>
+            </div>
+            <button id="addBatchBtn">➕ Add Batch</button>
+            <div id="batchesListAdmin" style="margin-top:15px;"></div>
+        </div>
+    </div>
+
+    <!-- CHAPTERS -->
+    <div id="chaptersTab" class="tab-content">
+        <div class="section"><h2>➕ Add Chapter</h2>
+            <div class="form-grid">
+                <div class="full-width"><label>Select Batch</label><select id="chapterBatchSelect"></select></div>
+                <div class="full-width"><label>Chapter Name</label><input type="text" id="chapterName" placeholder="Micro Economics"></div>
+            </div>
+            <button id="addChapterBtn">➕ Add Chapter</button>
+            <div id="chaptersListAdmin" style="margin-top:15px;"></div>
+        </div>
+    </div>
+
+    <!-- LECTURES -->
+    <div id="lecturesTab" class="tab-content">
+        <div class="section"><h2>➕ Add Lecture</h2>
+            <div class="form-grid">
+                <div class="form-field"><label>Select Batch</label><select id="lectureBatchSelect"></select></div>
+                <div class="form-field"><label>Select Chapter</label><select id="lectureChapterSelect"></select></div>
+                <div class="full-width"><label>Lecture Name</label><input type="text" id="lectureName" placeholder="Introduction"></div>
+                <div class="form-field"><label>Duration</label><input type="text" id="lectureDuration" placeholder="58:40"></div>
+                <div class="full-width"><label>Video URL</label><input type="text" id="lectureUrl" placeholder="YouTube or MP4 link"></div>
+            </div>
+            <button id="addLectureBtn">➕ Add Lecture</button>
+            <div id="lecturesListAdmin" style="margin-top:15px;"></div>
+        </div>
+    </div>
+
+    <!-- PDFS -->
+    <div id="pdfsTab" class="tab-content">
+        <div class="section"><h2>➕ Add PDF</h2>
+            <div class="form-grid">
+                <div class="form-field"><label>Select Batch</label><select id="pdfBatchSelect"></select></div>
+                <div class="form-field"><label>Select Chapter</label><select id="pdfChapterSelect"></select></div>
+                <div class="full-width"><label>PDF Name</label><input type="text" id="pdfName" placeholder="Handwritten Notes"></div>
+                <div class="form-field"><label>Pages</label><input type="text" id="pdfPages" placeholder="12 pages"></div>
+                <div class="full-width"><label>PDF URL</label><input type="text" id="pdfUrl" placeholder="https://example.com/notes.pdf"></div>
+            </div>
+            <button id="addPdfBtn">➕ Add PDF</button>
+            <div id="pdfsListAdmin" style="margin-top:15px;"></div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
+  authDomain: "ayushcoderz-edu-final.firebaseapp.com",
+  projectId: "ayushcoderz-edu-final",
+  storageBucket: "ayushcoderz-edu-final.firebasestorage.app",
+  messagingSenderId: "575316793225",
+  appId: "1:575316793225:web:cd7f2df83470648328b358"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let batches=[], chapters=[], lectures=[], pdfs=[];
+
+async function loadData() {
+  try {
+    const batchSnap=await getDocs(collection(db,"batches"));
+    batches=batchSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    const chapSnap=await getDocs(collection(db,"chapters"));
+    chapters=chapSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    const lecSnap=await getDocs(collection(db,"lectures"));
+    lectures=lecSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    const pdfSnap=await getDocs(collection(db,"pdfs"));
+    pdfs=pdfSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    renderAll();
+  } catch(e){ console.error("Load error:", e); }
+}
+
+function renderAll(){ renderBatchesAdmin(); renderChaptersAdmin(); renderLecturesAdmin(); renderPdfsAdmin(); updateSelects(); }
+
+function renderBatchesAdmin(){
+  document.getElementById('batchesListAdmin').innerHTML=batches.map(b=> 
+    `<div class="item-card"><span><strong>${b.name}</strong> (${b.className}) ₹${b.price}</span>
+    <button class="delete-btn" data-id="${b.id}" data-type="batch">Delete</button></div>`
+  ).join('');
+  attachDelete();
+}
+function renderChaptersAdmin(){
+  const sel=document.getElementById('chapterBatchSelect');
+  sel.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  document.getElementById('chaptersListAdmin').innerHTML=chapters.map(c=> 
+    `<div class="item-card"><span><strong>${c.name}</strong> (${batches.find(b=>b.id===c.batchId)?.name||'-'})</span>
+    <button class="delete-btn" data-id="${c.id}" data-type="chapter">Delete</button></div>`
+  ).join('');
+  attachDelete();
+}
+function renderLecturesAdmin(){
+  const sel=document.getElementById('lectureBatchSelect');
+  sel.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  document.getElementById('lecturesListAdmin').innerHTML=lectures.map(l=> 
+    `<div class="item-card"><span><strong>${l.name}</strong> (${batches.find(b=>b.id===l.batchId)?.name||'-'}/${chapters.find(c=>c.id===l.chapterId)?.name||'-'}) ${l.duration}</span>
+    <button class="delete-btn" data-id="${l.id}" data-type="lecture">Delete</button></div>`
+  ).join('');
+  attachDelete();
+}
+function renderPdfsAdmin(){
+  const sel=document.getElementById('pdfBatchSelect');
+  sel.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
+  document.getElementById('pdfsListAdmin').innerHTML=pdfs.map(p=> 
+    `<div class="item-card"><span><strong>${p.name}</strong> (${batches.find(b=>b.id===p.batchId)?.name||'-'}/${chapters.find(c=>c.id===p.chapterId)?.name||'-'}) ${p.pages}</span>
+    <button class="delete-btn" data-id="${p.id}" data-type="pdf">Delete</button></div>`
+  ).join('');
+  attachDelete();
+}
+
+function attachDelete(){
+  document.querySelectorAll('.delete-btn').forEach(btn=>btn.onclick=async ()=>{
+    const id=btn.dataset.id, type=btn.dataset.type;
+    if(confirm('Delete this item?')){
+      if(type==='batch'){ await deleteDoc(doc(db,"batches",id)); batches=batches.filter(b=>b.id!==id); chapters=chapters.filter(c=>c.batchId!==id); lectures=lectures.filter(l=>l.batchId!==id); pdfs=pdfs.filter(p=>p.batchId!==id); }
+      if(type==='chapter'){ await deleteDoc(doc(db,"chapters",id)); chapters=chapters.filter(c=>c.id!==id); lectures=lectures.filter(l=>l.chapterId!==id); pdfs=pdfs.filter(p=>p.chapterId!==id); }
+      if(type==='lecture'){ await deleteDoc(doc(db,"lectures",id)); lectures=lectures.filter(l=>l.id!==id); }
+      if(type==='pdf'){ await deleteDoc(doc(db,"pdfs",id)); pdfs=pdfs.filter(p=>p.id!==id); }
+      renderAll();
+    }
+  });
+}
+
+function updateSelects(){
+  const bid=document.getElementById('lectureBatchSelect')?.value;
+  if(bid) document.getElementById('lectureChapterSelect').innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==bid).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  const pbid=document.getElementById('pdfBatchSelect')?.value;
+  if(pbid) document.getElementById('pdfChapterSelect').innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==pbid).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+}
+
+// Add operations
+document.getElementById('addBatchBtn')?.addEventListener('click', async()=>{
+  const n=document.getElementById('batchName').value.trim(), cl=document.getElementById('batchClass').value.trim(), p=document.getElementById('batchPrice').value.trim(), op=document.getElementById('batchOldPrice').value.trim(), t=document.getElementById('batchThumb').value.trim(), s=document.getElementById('batchSub').value.trim(), b=document.getElementById('batchBanner').value.trim();
+  if(n&&cl&&p){ const docRef=await addDoc(collection(db,"batches"),{name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); batches.push({id:docRef.id,name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); renderAll(); alert('✅ Batch added!'); }
+  else alert('❌ Fill name, class and price');
+});
+document.getElementById('addChapterBtn')?.addEventListener('click', async()=>{
+  const bid=document.getElementById('chapterBatchSelect').value, n=document.getElementById('chapterName').value.trim();
+  if(bid&&n){ const docRef=await addDoc(collection(db,"chapters"),{batchId:bid,name:n}); chapters.push({id:docRef.id,batchId:bid,name:n}); renderAll(); alert('✅ Chapter added!'); }
+  else alert('❌ Select batch & enter name');
+});
+document.getElementById('addLectureBtn')?.addEventListener('click', async()=>{
+  const bid=document.getElementById('lectureBatchSelect').value, cid=document.getElementById('lectureChapterSelect').value, n=document.getElementById('lectureName').value.trim(), d=document.getElementById('lectureDuration').value.trim(), u=document.getElementById('lectureUrl').value.trim();
+  if(bid&&cid&&n&&d&&u){ const docRef=await addDoc(collection(db,"lectures"),{batchId:bid,chapterId:cid,name:n,duration:d,url:u}); lectures.push({id:docRef.id,batchId:bid,chapterId:cid,name:n,duration:d,url:u}); renderAll(); alert('✅ Lecture added!'); }
+  else alert('❌ Fill all fields');
+});
+document.getElementById('addPdfBtn')?.addEventListener('click', async()=>{
+  const bid=document.getElementById('pdfBatchSelect').value, cid=document.getElementById('pdfChapterSelect').value, n=document.getElementById('pdfName').value.trim(), p=document.getElementById('pdfPages').value.trim(), u=document.getElementById('pdfUrl').value.trim();
+  if(bid&&cid&&n&&u){ const docRef=await addDoc(collection(db,"pdfs"),{batchId:bid,chapterId:cid,name:n,pages:p||'N/A',url:u}); pdfs.push({id:docRef.id,batchId:bid,chapterId:cid,name:n,pages:p||'N/A',url:u}); renderAll(); alert('✅ PDF added!'); }
+  else alert('❌ Fill all fields');
+});
+
+document.getElementById('lectureBatchSelect')?.addEventListener('change', updateSelects);
+document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSelects);
+
+// Tab switching
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab+'Tab').classList.add('active');
+    renderAll();
+  });
+});
+
+// 🔐 LOGIN SYSTEM - FIXED
+window.login = function() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorEl = document.getElementById('loginError');
+  
+  if(username === 'Admin' && password === 'admin34') {
+    errorEl.style.display = 'none';
+    document.getElementById('loginContainer').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadData();
+  } else {
+    errorEl.style.display = 'block';
+    document.getElementById('password').value = '';
+    document.getElementById('password').focus();
+  }
+};
+
+window.logout = function() {
+  document.getElementById('loginContainer').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+  document.getElementById('loginError').style.display = 'none';
+};
+
+// Enter key se login
+document.getElementById('password').addEventListener('keydown', function(e) {
+  if(e.key === 'Enter') window.login();
+});
+document.getElementById('username').addEventListener('keydown', function(e) {
+  if(e.key === 'Enter') document.getElementById('password').focus();
+});
+
+loadData();
+</script>
+</body>
+</html>
