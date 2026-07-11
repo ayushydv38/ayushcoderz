@@ -12,7 +12,6 @@ body{font-family:'DM Sans',sans-serif;background:#0a0a0f;color:#fff;padding:20px
 .login-container input{width:100%;padding:12px;margin:10px 0;background:#1a1a2e;border:1px solid #2c5a6e;border-radius:10px;color:#fff;font-size:14px;}
 .login-container input:focus{outline:none;border-color:#0ff;}
 .login-container button{background:#0ff;border:none;padding:12px;border-radius:10px;color:#000;font-weight:700;width:100%;cursor:pointer;font-size:16px;}
-.login-container button:hover{background:#00ddff;}
 .login-error{color:#ff4444;font-size:13px;margin-top:8px;display:none;}
 .admin-panel{display:none;}
 .section{background:#111118;border:1px solid #0ff;border-radius:16px;padding:20px;margin-bottom:30px;}
@@ -23,7 +22,11 @@ input:focus,select:focus{outline:none;border-color:#0ff;}
 button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#000;font-weight:700;cursor:pointer;margin:5px;}
 .delete-btn{background:#e63946;color:#fff;}
 .delete-btn:hover{background:#cc2233;}
-.edit-btn{background:#f5a623;color:#000;}
+.edit-btn{background:#f5a623;color:#000;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-size:11px;margin:2px;}
+.edit-btn:hover{background:#e8940a;}
+.del-btn{background:#e63946;color:#fff;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;font-size:11px;margin:2px;}
+.del-btn:hover{background:#cc2233;}
+.notif-actions{display:flex;gap:5px;flex-wrap:wrap;}
 .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
 .logout-btn{background:#e63946;padding:8px 20px;color:#fff;}
 .logout-btn:hover{background:#cc2233;}
@@ -31,8 +34,7 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
 .nav-tab{background:#1a1a2e;padding:10px 20px;border-radius:10px;cursor:pointer;border:1px solid transparent;color:#88bbff;}
 .nav-tab:hover{border-color:#0ff;}
 .nav-tab.active{background:#0ff;color:#000;border-color:#0ff;}
-.tab-content{display:none;}
-.tab-content.active{display:block;}
+.tab-content{display:none;}.tab-content.active{display:block;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .full-width{grid-column:span 2;}
 .form-field label{font-size:12px;color:#88aaff;display:block;margin-bottom:3px;}
@@ -42,6 +44,20 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
 .filter-section select{width:auto;min-width:200px;flex:1;}
 .filter-section label{color:#88aaff;font-size:13px;font-weight:600;}
 .count-badge{background:rgba(0,255,255,0.15);color:#0ff;padding:2px 10px;border-radius:20px;font-size:12px;}
+.notification-section{border:2px solid #FF6B6B !important;}
+.notification-section h2{color:#FF6B6B !important;}
+#notifyMessage{min-height:80px;resize:vertical;}
+.status-msg{font-size:14px;margin-top:10px;}
+.popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:9999;display:none;align-items:center;justify-content:center;}
+.popup-overlay.open{display:flex;}
+.popup-box{background:#1a1a2e;border:1px solid #0ff;border-radius:20px;padding:30px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;}
+.popup-box h3{color:#0ff;margin-bottom:15px;}
+.popup-box input,.popup-box textarea{width:100%;padding:10px;margin:8px 0;background:#111c28;border:1px solid #2c5a6e;border-radius:10px;color:#fff;}
+.popup-box textarea{min-height:60px;resize:vertical;}
+.popup-actions{display:flex;gap:10px;margin-top:15px;}
+.popup-actions button{padding:10px 20px;border-radius:10px;border:none;font-weight:700;cursor:pointer;}
+.popup-actions .save-btn{background:#0ff;color:#000;}
+.popup-actions .cancel-btn{background:#e63946;color:#fff;}
 </style>
 </head>
 <body>
@@ -56,7 +72,7 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
 
 <div class="admin-panel" id="adminPanel">
     <div class="top-bar">
-        <h1 style="color:#0ff;">🛠️ Admin Panel</h1>
+        <h1 style="color:#0ff;">🧑‍💻 Admin Panel</h1>
         <button class="logout-btn" onclick="logout()">🚪 Logout</button>
     </div>
 
@@ -65,9 +81,10 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
         <div class="nav-tab" data-tab="chapters">📚 Chapters</div>
         <div class="nav-tab" data-tab="lectures">🎥 Lectures</div>
         <div class="nav-tab" data-tab="pdfs">📄 PDFs</div>
+        <div class="nav-tab" data-tab="notifications" style="border-color:#FF6B6B;color:#FF6B6B;">🔔 Notifications</div>
     </div>
 
-    <!-- BATCHES -->
+    <!-- BATCHES TAB -->
     <div id="batchesTab" class="tab-content active">
         <div class="section"><h2>➕ Add Batch</h2>
             <div class="form-grid">
@@ -84,7 +101,7 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
         </div>
     </div>
 
-    <!-- CHAPTERS -->
+    <!-- CHAPTERS TAB -->
     <div id="chaptersTab" class="tab-content">
         <div class="section"><h2>➕ Add Chapter</h2>
             <div class="form-grid">
@@ -96,7 +113,7 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
         </div>
     </div>
 
-    <!-- LECTURES - CHAPTER WISE -->
+    <!-- LECTURES TAB -->
     <div id="lecturesTab" class="tab-content">
         <div class="section"><h2>➕ Add Lecture</h2>
             <div class="form-grid">
@@ -112,16 +129,14 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
             <h2>📂 Chapter-wise Lectures</h2>
             <div class="filter-section">
                 <label>🔍 Filter by Chapter:</label>
-                <select id="lectureFilterChapter">
-                    <option value="all">-- All Chapters --</option>
-                </select>
+                <select id="lectureFilterChapter"><option value="all">-- All Chapters --</option></select>
                 <span class="count-badge" id="lectureCount">0 lectures</span>
             </div>
             <div id="lecturesListAdmin" style="margin-top:15px;"></div>
         </div>
     </div>
 
-    <!-- PDFS - CHAPTER WISE -->
+    <!-- PDFS TAB -->
     <div id="pdfsTab" class="tab-content">
         <div class="section"><h2>➕ Add PDF</h2>
             <div class="form-grid">
@@ -137,19 +152,56 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
             <h2>📂 Chapter-wise PDFs</h2>
             <div class="filter-section">
                 <label>🔍 Filter by Chapter:</label>
-                <select id="pdfFilterChapter">
-                    <option value="all">-- All Chapters --</option>
-                </select>
+                <select id="pdfFilterChapter"><option value="all">-- All Chapters --</option></select>
                 <span class="count-badge" id="pdfCount">0 PDFs</span>
             </div>
             <div id="pdfsListAdmin" style="margin-top:15px;"></div>
+        </div>
+    </div>
+
+    <!-- 🔥 NOTIFICATIONS TAB -->
+    <div id="notificationsTab" class="tab-content">
+        <div class="section notification-section">
+            <h2>🔔 Send Notification to All Users</h2>
+            <div class="form-grid">
+                <div class="full-width"><label>📌 Title</label><input type="text" id="notifyTitle" placeholder="e.g., New Lecture Added!"></div>
+                <div class="full-width"><label>📝 Message</label><textarea id="notifyMessage" rows="3" placeholder="e.g., Arithmetic - Lecture 5 is now available!"></textarea></div>
+                <div class="full-width"><label>🖼️ Image URL (Optional)</label><input type="text" id="notifyImage" placeholder="https://i.ibb.co/xyz/notification-image.jpg"></div>
+                <div class="full-width"><label>🔗 Click Action (URL)</label><input type="text" id="notifyUrl" placeholder="https://ayushydv38.github.io/ayushcoderz/" value="https://ayushydv38.github.io/ayushcoderz/"></div>
+            </div>
+            <button id="sendNotificationBtn" style="background:#FF6B6B;color:#fff;font-size:16px;padding:12px 30px;">📤 Send Notification</button>
+            <div id="notificationStatus" class="status-msg"></div>
+        </div>
+        <div class="section">
+            <h2>📋 Sent Notifications History</h2>
+            <div id="notificationsHistory" style="margin-top:10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 🔥 EDIT NOTIFICATION POPUP -->
+<div class="popup-overlay" id="editPopup">
+    <div class="popup-box">
+        <h3>✏️ Edit Notification</h3>
+        <input type="hidden" id="editNotifId">
+        <label style="color:#88aaff;font-size:12px;">📌 Title</label>
+        <input type="text" id="editNotifTitle" placeholder="Notification Title">
+        <label style="color:#88aaff;font-size:12px;">📝 Message</label>
+        <textarea id="editNotifMessage" placeholder="Notification Message"></textarea>
+        <label style="color:#88aaff;font-size:12px;">🖼️ Image URL (Optional)</label>
+        <input type="text" id="editNotifImage" placeholder="https://i.ibb.co/xyz/image.jpg">
+        <label style="color:#88aaff;font-size:12px;">🔗 Click URL</label>
+        <input type="text" id="editNotifUrl" placeholder="https://ayushydv38.github.io/ayushcoderz/">
+        <div class="popup-actions">
+            <button class="save-btn" onclick="saveEditedNotification()">💾 Save</button>
+            <button class="cancel-btn" onclick="closeEditPopup()">❌ Cancel</button>
         </div>
     </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, limit, updateDoc, where } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
@@ -163,7 +215,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let batches=[], chapters=[], lectures=[], pdfs=[];
+let batches=[], chapters=[], lectures=[], pdfs=[], notifications=[];
 
 async function loadData() {
   try {
@@ -175,6 +227,8 @@ async function loadData() {
     lectures=lecSnap.docs.map(d=> ({id:d.id,...d.data()}));
     const pdfSnap=await getDocs(collection(db,"pdfs"));
     pdfs=pdfSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    const notifSnap=await getDocs(query(collection(db,"notifications"), orderBy("timestamp", "desc"), limit(100)));
+    notifications=notifSnap.docs.map(d=> ({id:d.id,...d.data()}));
     renderAll();
   } catch(e){ console.error("Load error:", e); }
 }
@@ -184,6 +238,7 @@ function renderAll(){
   renderChaptersAdmin(); 
   renderLecturesAdmin(); 
   renderPdfsAdmin(); 
+  renderNotificationsHistory();
   updateSelects(); 
   updateFilterDropdowns();
 }
@@ -206,133 +261,220 @@ function renderChaptersAdmin(){
   attachDelete();
 }
 
-// 🔥 LECTURES - CHAPTER WISE RENDER
 function renderLecturesAdmin(){
   const filterChapter = document.getElementById('lectureFilterChapter')?.value || 'all';
-  
-  let filteredLectures = lectures;
-  if(filterChapter !== 'all'){
-    filteredLectures = lectures.filter(l => l.chapterId === filterChapter);
-  }
-  
-  document.getElementById('lectureCount').textContent = filteredLectures.length + ' lectures';
-  
-  document.getElementById('lecturesListAdmin').innerHTML = filteredLectures.map(l => {
-    const chapter = chapters.find(c => c.id === l.chapterId);
-    const batch = batches.find(b => b.id === l.batchId);
-    return `<div class="item-card">
-      <span><strong>${l.name}</strong> (${batch?.name||'-'}/${chapter?.name||'-'}) ${l.duration}</span>
-      <button class="delete-btn" data-id="${l.id}" data-type="lecture">Delete</button>
-    </div>`;
+  let filtered = filterChapter==='all'? lectures : lectures.filter(l=>l.chapterId===filterChapter);
+  document.getElementById('lectureCount').textContent = filtered.length + ' lectures';
+  document.getElementById('lecturesListAdmin').innerHTML = filtered.map(l => {
+    const ch = chapters.find(c=>c.id===l.chapterId);
+    const b = batches.find(b=>b.id===l.batchId);
+    return `<div class="item-card"><span><strong>${l.name}</strong> (${b?.name||'-'}/${ch?.name||'-'}) ${l.duration}</span>
+    <button class="delete-btn" data-id="${l.id}" data-type="lecture">Delete</button></div>`;
   }).join('') || '<div style="text-align:center;padding:20px;color:#8888a8;">No lectures in this chapter.</div>';
   attachDelete();
 }
 
-// 🔥 PDFS - CHAPTER WISE RENDER
 function renderPdfsAdmin(){
   const filterChapter = document.getElementById('pdfFilterChapter')?.value || 'all';
-  
-  let filteredPdfs = pdfs;
-  if(filterChapter !== 'all'){
-    filteredPdfs = pdfs.filter(p => p.chapterId === filterChapter);
-  }
-  
-  document.getElementById('pdfCount').textContent = filteredPdfs.length + ' PDFs';
-  
-  document.getElementById('pdfsListAdmin').innerHTML = filteredPdfs.map(p => {
-    const chapter = chapters.find(c => c.id === p.chapterId);
-    const batch = batches.find(b => b.id === p.batchId);
-    return `<div class="item-card">
-      <span><strong>${p.name}</strong> (${batch?.name||'-'}/${chapter?.name||'-'}) ${p.pages}</span>
-      <button class="delete-btn" data-id="${p.id}" data-type="pdf">Delete</button>
-    </div>`;
+  let filtered = filterChapter==='all'? pdfs : pdfs.filter(p=>p.chapterId===filterChapter);
+  document.getElementById('pdfCount').textContent = filtered.length + ' PDFs';
+  document.getElementById('pdfsListAdmin').innerHTML = filtered.map(p => {
+    const ch = chapters.find(c=>c.id===p.chapterId);
+    const b = batches.find(b=>b.id===p.batchId);
+    return `<div class="item-card"><span><strong>${p.name}</strong> (${b?.name||'-'}/${ch?.name||'-'}) ${p.pages}</span>
+    <button class="delete-btn" data-id="${p.id}" data-type="pdf">Delete</button></div>`;
   }).join('') || '<div style="text-align:center;padding:20px;color:#8888a8;">No PDFs in this chapter.</div>';
   attachDelete();
 }
 
-// 🔥 UPDATE FILTER DROPDOWNS
+// 🔥 RENDER NOTIFICATIONS WITH EDIT/DELETE
+function renderNotificationsHistory() {
+    const container = document.getElementById('notificationsHistory');
+    if (!container) return;
+    
+    if (notifications.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:#8888a8;">No notifications sent yet.</div>';
+        return;
+    }
+    
+    container.innerHTML = notifications.map(n => `
+        <div class="item-card" style="border-left-color:#FF6B6B;">
+            <span>
+                <strong>${n.title}</strong><br>
+                <small style="color:#8888a8;">${n.body}</small><br>
+                ${n.image ? `<small style="color:#22d3ee;">🖼️ Image attached</small>` : ''}
+                <br><small style="color:#8888a8;">${n.timestamp?.substring(0,16) || ''}</small>
+            </span>
+            <div class="notif-actions">
+                <button class="edit-btn" onclick="window.openEditPopup('${n.id}')">✏️ Edit</button>
+                <button class="del-btn" onclick="window.deleteNotification('${n.id}')">🗑️ Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// 🔥 EDIT POPUP FUNCTIONS
+window.openEditPopup = function(id) {
+    const notif = notifications.find(n => n.id === id);
+    if (!notif) return;
+    
+    document.getElementById('editNotifId').value = id;
+    document.getElementById('editNotifTitle').value = notif.title || '';
+    document.getElementById('editNotifMessage').value = notif.body || '';
+    document.getElementById('editNotifImage').value = notif.image || '';
+    document.getElementById('editNotifUrl').value = notif.url || '';
+    
+    document.getElementById('editPopup').classList.add('open');
+}
+
+window.closeEditPopup = function() {
+    document.getElementById('editPopup').classList.remove('open');
+}
+
+window.saveEditedNotification = async function() {
+    const id = document.getElementById('editNotifId').value;
+    const title = document.getElementById('editNotifTitle').value.trim();
+    const body = document.getElementById('editNotifMessage').value.trim();
+    const image = document.getElementById('editNotifImage').value.trim();
+    const url = document.getElementById('editNotifUrl').value.trim();
+    
+    if (!title || !body) {
+        alert('❌ Title and Message are required!');
+        return;
+    }
+    
+    try {
+        await updateDoc(doc(db, "notifications", id), {
+            title: title,
+            body: body,
+            image: image || '',
+            url: url || 'https://ayushydv38.github.io/ayushcoderz/',
+            edited: true,
+            editedAt: new Date().toISOString()
+        });
+        
+        const notif = notifications.find(n => n.id === id);
+        if (notif) {
+            notif.title = title;
+            notif.body = body;
+            notif.image = image || '';
+            notif.url = url || 'https://ayushydv38.github.io/ayushcoderz/';
+        }
+        
+        document.getElementById('editPopup').classList.remove('open');
+        renderNotificationsHistory();
+        alert('✅ Notification updated successfully!');
+        
+    } catch(e) {
+        alert('❌ Error: ' + e.message);
+        console.error(e);
+    }
+}
+
+// 🔥 DELETE NOTIFICATION
+window.deleteNotification = async function(id) {
+    if (!confirm('⚠️ Are you sure you want to delete this notification?')) return;
+    
+    try {
+        await deleteDoc(doc(db, "notifications", id));
+        notifications = notifications.filter(n => n.id !== id);
+        renderNotificationsHistory();
+        alert('✅ Notification deleted successfully!');
+    } catch(e) {
+        alert('❌ Error: ' + e.message);
+        console.error(e);
+    }
+}
+
 function updateFilterDropdowns(){
-  // Lecture filter
-  const lecFilter = document.getElementById('lectureFilterChapter');
-  if(lecFilter){
-    const currentVal = lecFilter.value;
-    lecFilter.innerHTML = '<option value="all">-- All Chapters --</option>' + 
-      chapters.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-    lecFilter.value = currentVal;
-  }
-  
-  // PDF filter
-  const pdfFilter = document.getElementById('pdfFilterChapter');
-  if(pdfFilter){
-    const currentVal = pdfFilter.value;
-    pdfFilter.innerHTML = '<option value="all">-- All Chapters --</option>' + 
-      chapters.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-    pdfFilter.value = currentVal;
-  }
+  ['lectureFilterChapter','pdfFilterChapter'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){ const val=el.value; el.innerHTML='<option value="all">-- All Chapters --</option>'+chapters.map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); el.value=val; }
+  });
+}
+
+function updateSelects(){
+  const lecBatch=document.getElementById('lectureBatchSelect');
+  if(lecBatch){ const val=lecBatch.value; lecBatch.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join(''); lecBatch.value=val; }
+  const lecChapter=document.getElementById('lectureChapterSelect');
+  const batchId=document.getElementById('lectureBatchSelect')?.value||'';
+  if(lecChapter){ const val=lecChapter.value; lecChapter.innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==batchId).map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); lecChapter.value=val; }
+  const pdfBatch=document.getElementById('pdfBatchSelect');
+  if(pdfBatch){ const val=pdfBatch.value; pdfBatch.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join(''); pdfBatch.value=val; }
+  const pdfChapter=document.getElementById('pdfChapterSelect');
+  const pdfBatchId=document.getElementById('pdfBatchSelect')?.value||'';
+  if(pdfChapter){ const val=pdfChapter.value; pdfChapter.innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==pdfBatchId).map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); pdfChapter.value=val; }
 }
 
 function attachDelete(){
   document.querySelectorAll('.delete-btn').forEach(btn=>btn.onclick=async ()=>{
     const id=btn.dataset.id, type=btn.dataset.type;
-    if(confirm('Delete this item?')){
-      if(type==='batch'){ await deleteDoc(doc(db,"batches",id)); batches=batches.filter(b=>b.id!==id); chapters=chapters.filter(c=>c.batchId!==id); lectures=lectures.filter(l=>l.batchId!==id); pdfs=pdfs.filter(p=>p.batchId!==id); }
-      if(type==='chapter'){ await deleteDoc(doc(db,"chapters",id)); chapters=chapters.filter(c=>c.id!==id); lectures=lectures.filter(l=>l.chapterId!==id); pdfs=pdfs.filter(p=>p.chapterId!==id); }
-      if(type==='lecture'){ await deleteDoc(doc(db,"lectures",id)); lectures=lectures.filter(l=>l.id!==id); }
-      if(type==='pdf'){ await deleteDoc(doc(db,"pdfs",id)); pdfs=pdfs.filter(p=>p.id!==id); }
-      renderAll();
-    }
+    if(!confirm('Delete this item?')) return;
+    if(type==='batch'){ await deleteDoc(doc(db,"batches",id)); batches=batches.filter(b=>b.id!==id); chapters=chapters.filter(c=>c.batchId!==id); lectures=lectures.filter(l=>l.batchId!==id); pdfs=pdfs.filter(p=>p.batchId!==id); }
+    if(type==='chapter'){ await deleteDoc(doc(db,"chapters",id)); chapters=chapters.filter(c=>c.id!==id); lectures=lectures.filter(l=>l.chapterId!==id); pdfs=pdfs.filter(p=>p.chapterId!==id); }
+    if(type==='lecture'){ await deleteDoc(doc(db,"lectures",id)); lectures=lectures.filter(l=>l.id!==id); }
+    if(type==='pdf'){ await deleteDoc(doc(db,"pdfs",id)); pdfs=pdfs.filter(p=>p.id!==id); }
+    renderAll();
   });
 }
 
-function updateSelects(){
-  // 🔥 LECTURE ADD - BATCH SELECT
-  const lecBatch = document.getElementById('lectureBatchSelect');
-  if(lecBatch){
-    const currentVal = lecBatch.value;
-    lecBatch.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
-    lecBatch.value = currentVal;
-  }
-  
-  // 🔥 LECTURE ADD - CHAPTER SELECT (based on batch)
-  const lecChapter = document.getElementById('lectureChapterSelect');
-  const batchId = document.getElementById('lectureBatchSelect')?.value || '';
-  if(lecChapter){
-    const currentVal = lecChapter.value;
-    lecChapter.innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==batchId).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-    lecChapter.value = currentVal;
-  }
-  
-  // 🔥 PDF ADD - BATCH SELECT
-  const pdfBatch = document.getElementById('pdfBatchSelect');
-  if(pdfBatch){
-    const currentVal = pdfBatch.value;
-    pdfBatch.innerHTML='<option value="">-- Select Batch --</option>'+batches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
-    pdfBatch.value = currentVal;
-  }
-  
-  // 🔥 PDF ADD - CHAPTER SELECT (based on batch)
-  const pdfChapter = document.getElementById('pdfChapterSelect');
-  const pdfBatchId = document.getElementById('pdfBatchSelect')?.value || '';
-  if(pdfChapter){
-    const currentVal = pdfChapter.value;
-    pdfChapter.innerHTML='<option value="">-- Select Chapter --</option>'+chapters.filter(c=>c.batchId==pdfBatchId).map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-    pdfChapter.value = currentVal;
-  }
-}
+// 🔥 SEND NOTIFICATION
+document.getElementById('sendNotificationBtn')?.addEventListener('click', async function() {
+    const title = document.getElementById('notifyTitle').value.trim();
+    const message = document.getElementById('notifyMessage').value.trim();
+    const image = document.getElementById('notifyImage').value.trim();
+    const url = document.getElementById('notifyUrl').value.trim() || 'https://ayushydv38.github.io/ayushcoderz/';
+    const status = document.getElementById('notificationStatus');
+    
+    if(!title || !message) {
+        status.innerHTML = '❌ Please fill Title and Message!';
+        status.style.color = '#FF6B6B';
+        return;
+    }
+    
+    status.innerHTML = '⏳ Sending notification...';
+    status.style.color = '#FFD93D';
+    
+    try {
+        const notifRef = collection(db, "notifications");
+        await addDoc(notifRef, {
+            title: title,
+            body: message,
+            image: image || '',
+            url: url,
+            timestamp: new Date().toISOString(),
+            read: false,
+            createdAt: Date.now()
+        });
+        
+        status.innerHTML = '✅ Notification sent successfully!';
+        status.style.color = '#6BCB77';
+        
+        document.getElementById('notifyTitle').value = '';
+        document.getElementById('notifyMessage').value = '';
+        document.getElementById('notifyImage').value = '';
+        
+        // Reload notifications
+        const notifSnap = await getDocs(query(collection(db,"notifications"), orderBy("timestamp", "desc"), limit(100)));
+        notifications = notifSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderNotificationsHistory();
+        
+        setTimeout(() => { status.innerHTML = ''; }, 5000);
+        
+    } catch(e) {
+        status.innerHTML = '❌ Error: ' + e.message;
+        status.style.color = '#FF6B6B';
+        console.error(e);
+    }
+});
 
-// 🔥 FILTER CHANGE EVENTS
+// FILTER EVENTS
 document.getElementById('lectureFilterChapter')?.addEventListener('change', renderLecturesAdmin);
 document.getElementById('pdfFilterChapter')?.addEventListener('change', renderPdfsAdmin);
+document.getElementById('lectureBatchSelect')?.addEventListener('change', updateSelects);
+document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSelects);
 
-// 🔥 BATCH SELECT CHANGE EVENTS - Update chapters
-document.getElementById('lectureBatchSelect')?.addEventListener('change', function() {
-  updateSelects();
-});
-document.getElementById('pdfBatchSelect')?.addEventListener('change', function() {
-  updateSelects();
-});
-
-// ADD OPERATIONS
+// ADD BUTTONS
 document.getElementById('addBatchBtn')?.addEventListener('click', async()=>{
   const n=document.getElementById('batchName').value.trim(), cl=document.getElementById('batchClass').value.trim(), p=document.getElementById('batchPrice').value.trim(), op=document.getElementById('batchOldPrice').value.trim(), t=document.getElementById('batchThumb').value.trim(), s=document.getElementById('batchSub').value.trim(), b=document.getElementById('batchBanner').value.trim();
   if(n&&cl&&p){ const docRef=await addDoc(collection(db,"batches"),{name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); batches.push({id:docRef.id,name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); renderAll(); alert('✅ Batch added!'); }
@@ -368,13 +510,12 @@ document.querySelectorAll('.nav-tab').forEach(tab=>{
   });
 });
 
-// LOGIN SYSTEM
+// LOGIN
 window.login = function() {
   const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value.trim();
   const errorEl = document.getElementById('loginError');
-  
-  if(username === 'Admin' && password === 'admin34') {
+  if(username === 'admin' && password === 'admin123') {
     errorEl.style.display = 'none';
     document.getElementById('loginContainer').style.display = 'none';
     document.getElementById('adminPanel').style.display = 'block';
@@ -394,12 +535,8 @@ window.logout = function() {
   document.getElementById('loginError').style.display = 'none';
 };
 
-document.getElementById('password').addEventListener('keydown', function(e) {
-  if(e.key === 'Enter') window.login();
-});
-document.getElementById('username').addEventListener('keydown', function(e) {
-  if(e.key === 'Enter') document.getElementById('password').focus();
-});
+document.getElementById('password').addEventListener('keydown', e => { if(e.key==='Enter') window.login(); });
+document.getElementById('username').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('password').focus(); });
 
 loadData();
 </script>
