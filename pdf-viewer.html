@@ -27,6 +27,9 @@
         .footer{text-align:center;padding:6px;font-size:11px;color:#3d4a5c;border-top:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
         .toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#1a1a2e;border:1px solid #f5a623;padding:8px 18px;border-radius:8px;font-size:12px;color:#fff;opacity:0;transition:opacity .3s;z-index:100;pointer-events:none;}
         .toast.show{opacity:1;}
+        
+        #pdfContainer{width:100%;height:100%;overflow:auto;padding:16px;background:#e8e8e8;}
+        #pdfContainer canvas{display:block;margin:0 auto 12px;max-width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.2);border-radius:4px;background:#fff;}
     </style>
 </head>
 <body>
@@ -43,8 +46,8 @@
             <div class="spinner"></div>
             <div>Loading PDF...</div>
         </div>
-        <div class="pdf-box">
-            <iframe id="pdfFrame" src=""></iframe>
+        <div class="pdf-box" id="pdfBox">
+            <div id="pdfContainer"></div>
         </div>
     </div>
     
@@ -55,10 +58,11 @@
         const urlParams = new URLSearchParams(window.location.search);
         const pdfUrl = urlParams.get('s') || urlParams.get('file') || '';
         
-        const frame = document.getElementById('pdfFrame');
         const loading = document.getElementById('loading');
         const toast = document.getElementById('toast');
         const pdfNameEl = document.getElementById('pdfName');
+        const container = document.getElementById('pdfContainer');
+        const pdfBox = document.getElementById('pdfBox');
         
         let pdfFileName = '';
         
@@ -66,22 +70,99 @@
             pdfFileName = pdfUrl.split('/').pop().split('?')[0] || 'document.pdf';
             pdfNameEl.textContent = '📄 ' + pdfFileName.slice(0, 25) + (pdfFileName.length > 25 ? '...' : '');
             
-            // 🔥 RELIABLE PDF VIEWER - GOOGLE DOCS
-            const viewerUrl = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(pdfUrl);
-            frame.src = viewerUrl;
-            
-            // Hide loading after iframe loads
-            frame.onload = function() {
-                loading.style.display = 'none';
-            };
-            
-            // Fallback: hide loading after 4 seconds
-            setTimeout(function() {
-                loading.style.display = 'none';
-            }, 4000);
+            // 🔥 METHOD 1: Microsoft Office Viewer (NO GOOGLE DOCS)
+            tryMicrosoftViewer();
             
         } else {
             loading.innerHTML = '<div style="font-size:36px;margin-bottom:12px;">📄</div><p>No PDF URL</p>';
+        }
+        
+        // 🔥 MICROSOFT OFFICE VIEWER
+        function tryMicrosoftViewer() {
+            const viewerUrl = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(pdfUrl);
+            
+            // Check if iframe loads
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.src = viewerUrl;
+            
+            iframe.onload = function() {
+                loading.style.display = 'none';
+            };
+            
+            container.innerHTML = '';
+            container.appendChild(iframe);
+            
+            // 🔥 Fallback: agar Microsoft fail ho toh PDF.js use karo
+            setTimeout(function() {
+                // Check if iframe loaded (if content is empty, it failed)
+                try {
+                    // If we can access, it loaded
+                } catch(e) {
+                    // Fallback to PDF.js
+                    loadPDFJS();
+                }
+            }, 5000);
+            
+            setTimeout(function() {
+                loading.style.display = 'none';
+            }, 5000);
+        }
+        
+        // 🔥 PDF.js LOADER (NO GOOGLE DOCS)
+        function loadPDFJS() {
+            // Load PDF.js
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+            script.onload = function() {
+                renderWithPDFJS();
+            };
+            document.head.appendChild(script);
+        }
+        
+        function renderWithPDFJS() {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            container.innerHTML = '';
+            loading.style.display = 'block';
+            
+            // Try proxy
+            const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(pdfUrl);
+            
+            fetch(proxyUrl)
+                .then(response => response.arrayBuffer())
+                .then(data => pdfjsLib.getDocument({ data: data }).promise)
+                .then(pdf => {
+                    loading.style.display = 'none';
+                    const totalPages = pdf.numPages;
+                    
+                    function renderPage(num) {
+                        pdf.getPage(num).then(page => {
+                            const viewport = page.getViewport({ scale: 1.2 });
+                            const canvas = document.createElement('canvas');
+                            const context = canvas.getContext('2d');
+                            canvas.width = viewport.width;
+                            canvas.height = viewport.height;
+                            
+                            page.render({ canvasContext: context, viewport: viewport }).promise.then(() => {
+                                container.appendChild(canvas);
+                                if (num < totalPages) renderPage(num + 1);
+                            });
+                        });
+                    }
+                    
+                    renderPage(1);
+                })
+                .catch(() => {
+                    // 🔥 FINAL FALLBACK: Direct PDF (browser default)
+                    loading.innerHTML = '<div style="font-size:36px;margin-bottom:12px;">📄</div><p>Opening PDF directly...</p>';
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        container.innerHTML = `<iframe style="width:100%;height:100%;border:none;" src="${pdfUrl}"></iframe>`;
+                    }, 1000);
+                });
         }
         
         function goBack() {
@@ -92,7 +173,7 @@
             }
         }
         
-        // 🔥 DOWNLOAD PDF - WORKING
+        // 🔥 DOWNLOAD PDF
         function downloadPDF() {
             if (!pdfUrl) {
                 showToast('❌ No PDF URL');
@@ -101,7 +182,6 @@
             
             showToast('⏳ Downloading...');
             
-            // Method 1: Direct download
             try {
                 const link = document.createElement('a');
                 link.href = pdfUrl;
@@ -113,15 +193,12 @@
                 showToast('✅ Download started!');
                 return;
             } catch(e) {
-                console.log('Direct failed:', e);
-            }
-            
-            // Method 2: Open in new tab (fallback)
-            try {
-                window.open(pdfUrl, '_blank');
-                showToast('📄 Opening in new tab');
-            } catch(e) {
-                showToast('❌ Download failed');
+                try {
+                    window.open(pdfUrl, '_blank');
+                    showToast('📄 Opening in new tab');
+                } catch(e2) {
+                    showToast('❌ Download failed');
+                }
             }
         }
         
