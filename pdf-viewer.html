@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AyushCoderZ | PDF Viewer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{background:#0a0a0f;color:#fff;font-family:'DM Sans',sans-serif;height:100vh;display:flex;flex-direction:column;}
@@ -18,12 +17,10 @@
         .btn-download{background:#f5a623;color:#000;border:none;}
         .btn-download:hover{background:#e8940a;}
         
-        .viewer-wrap{flex:1;overflow:auto;padding:16px;background:#0f1520;position:relative;}
-        #pdfContainer{max-width:900px;margin:0 auto;}
-        .page-wrap{margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,0.4);border-radius:4px;overflow:hidden;background:#fff;}
-        .page-wrap canvas{display:block;width:100%;height:auto;}
+        .viewer-wrap{flex:1;overflow:hidden;position:relative;background:#0f1520;}
+        .viewer-wrap iframe{width:100%;height:100%;border:none;background:#0a0a0f;}
         
-        .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#8888a8;}
+        .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#8888a8;z-index:10;}
         .loading .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#f5a623;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
         @keyframes spin{to{transform:rotate(360deg)}}
         
@@ -34,9 +31,6 @@
         .toast.show{opacity:1;}
         .toast.success{border-color:#10b981;}
         .toast.error{border-color:#ef4444;}
-        
-        .page-counter{text-align:center;padding:10px;color:#8888a8;font-size:13px;}
-        .page-counter span{color:#f5a623;font-weight:700;}
         
         @media(max-width:480px){.btn span{display:none;}}
     </style>
@@ -55,7 +49,7 @@
             <div class="spinner"></div>
             <div>Loading PDF...</div>
         </div>
-        <div id="pdfContainer"></div>
+        <iframe id="pdfFrame" src=""></iframe>
     </div>
     
     <div class="footer">AyushCoderZ · <span id="pdfName">PDF Viewer</span></div>
@@ -65,87 +59,33 @@
         const urlParams = new URLSearchParams(window.location.search);
         const pdfUrl = urlParams.get('s') || urlParams.get('file') || '';
         
-        const container = document.getElementById('pdfContainer');
+        const frame = document.getElementById('pdfFrame');
         const loading = document.getElementById('loading');
         const toast = document.getElementById('toast');
         const pdfNameEl = document.getElementById('pdfName');
         
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        
-        let pdfDoc = null;
-        let totalPages = 0;
         let pdfFileName = '';
         
         if (pdfUrl) {
             pdfFileName = pdfUrl.split('/').pop().split('?')[0] || 'document.pdf';
             pdfNameEl.textContent = pdfFileName.slice(0, 30) + (pdfFileName.length > 30 ? '...' : '');
-            loadPDF(pdfUrl);
+            
+            // 🔥 GOOGLE DOCS VIEWER - MOST RELIABLE
+            const viewerUrl = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(pdfUrl);
+            frame.src = viewerUrl;
+            
+            // Hide loading after iframe loads
+            frame.onload = function() {
+                loading.style.display = 'none';
+            };
+            
+            // Fallback: if iframe doesn't load in 10 sec
+            setTimeout(function() {
+                loading.style.display = 'none';
+            }, 10000);
+            
         } else {
             loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">📄</div><p>No PDF URL provided</p>';
-        }
-        
-        async function loadPDF(url) {
-            try {
-                // Try direct fetch with credentials
-                const response = await fetch(url, {
-                    mode: 'cors',
-                    credentials: 'include'
-                });
-                
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                
-                const pdfData = await response.arrayBuffer();
-                pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
-                totalPages = pdfDoc.numPages;
-                
-                loading.style.display = 'none';
-                renderAllPages();
-                
-            } catch(e) {
-                console.error('PDF Load Error:', e);
-                // Try proxy as fallback
-                try {
-                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
-                    const response = await fetch(proxyUrl);
-                    const pdfData = await response.arrayBuffer();
-                    pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
-                    totalPages = pdfDoc.numPages;
-                    loading.style.display = 'none';
-                    renderAllPages();
-                } catch(e2) {
-                    loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">❌</div><p>Failed to load PDF. Try again.</p>';
-                }
-            }
-        }
-        
-        function renderAllPages() {
-            container.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                renderSinglePage(i);
-            }
-        }
-        
-        async function renderSinglePage(pageNum) {
-            try {
-                const page = await pdfDoc.getPage(pageNum);
-                const viewport = page.getViewport({ scale: 1.5 });
-                
-                const wrapper = document.createElement('div');
-                wrapper.className = 'page-wrap';
-                
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                
-                await page.render({ canvasContext: context, viewport: viewport }).promise;
-                
-                wrapper.appendChild(canvas);
-                container.appendChild(wrapper);
-                
-            } catch(e) {
-                console.error('Page render error:', e);
-            }
         }
         
         function goBack() {
@@ -156,7 +96,7 @@
             }
         }
         
-        // 🔥 FIXED: Download PDF with notification
+        // 🔥 DOWNLOAD PDF - DIRECT LINK
         function downloadPDF() {
             if (!pdfUrl) {
                 showToast('❌ No PDF URL found', 'error');
@@ -165,40 +105,21 @@
             
             showToast('⏳ Downloading...', '');
             
-            // Method 1: Try direct download with fetch
-            fetch(pdfUrl)
-                .then(response => {
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    return response.blob();
-                })
-                .then(blob => {
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = pdfFileName;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    setTimeout(() => URL.revokeObjectURL(url), 5000);
-                    showToast('✅ Download started! Check notification bar', 'success');
-                })
-                .catch(() => {
-                    // Method 2: Direct link open (fallback)
-                    try {
-                        const link = document.createElement('a');
-                        link.href = pdfUrl;
-                        link.download = pdfFileName;
-                        link.target = '_blank';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        showToast('📄 Opening in new tab', '');
-                    } catch(e) {
-                        // Method 3: Open in new window
-                        window.open(pdfUrl, '_blank');
-                        showToast('📄 Opening in new window', '');
-                    }
-                });
+            // 🔥 DIRECT DOWNLOAD - WORKS FOR MOST PDFS
+            try {
+                const link = document.createElement('a');
+                link.href = pdfUrl;
+                link.download = pdfFileName;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast('✅ Download started!', 'success');
+            } catch(e) {
+                // Fallback: open in new tab
+                window.open(pdfUrl, '_blank');
+                showToast('📄 Opening PDF in new tab', '');
+            }
         }
         
         function showToast(msg, type) {
@@ -217,13 +138,6 @@
             if (e.key === 'Escape') goBack();
             if (e.key === 'd' || e.key === 'D') downloadPDF();
         });
-        
-        // 🔥 Android download notification support
-        if (window.Android) {
-            window.Android.showNotification = function(title, body) {
-                // Android native notification
-            };
-        }
     </script>
 </body>
 </html>
