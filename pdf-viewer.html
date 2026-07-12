@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AyushCoderZ | PDF Viewer</title>
-    <!-- PDF.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
@@ -33,6 +32,8 @@
         
         .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a2e;border:1px solid #f5a623;padding:10px 20px;border-radius:10px;font-size:13px;color:#fff;opacity:0;transition:opacity .3s;z-index:100;pointer-events:none;}
         .toast.show{opacity:1;}
+        .toast.success{border-color:#10b981;}
+        .toast.error{border-color:#ef4444;}
         
         .page-counter{text-align:center;padding:10px;color:#8888a8;font-size:13px;}
         .page-counter span{color:#f5a623;font-weight:700;}
@@ -61,7 +62,6 @@
     <div id="toast" class="toast">✅ Download started!</div>
 
     <script>
-        // Get PDF URL
         const urlParams = new URLSearchParams(window.location.search);
         const pdfUrl = urlParams.get('s') || urlParams.get('file') || '';
         
@@ -70,15 +70,15 @@
         const toast = document.getElementById('toast');
         const pdfNameEl = document.getElementById('pdfName');
         
-        // PDF.js worker
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
         
         let pdfDoc = null;
-        let currentPage = 1;
         let totalPages = 0;
+        let pdfFileName = '';
         
         if (pdfUrl) {
-            pdfNameEl.textContent = pdfUrl.split('/').pop().slice(0, 30) + '...';
+            pdfFileName = pdfUrl.split('/').pop().split('?')[0] || 'document.pdf';
+            pdfNameEl.textContent = pdfFileName.slice(0, 30) + (pdfFileName.length > 30 ? '...' : '');
             loadPDF(pdfUrl);
         } else {
             loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">📄</div><p>No PDF URL provided</p>';
@@ -86,40 +86,40 @@
         
         async function loadPDF(url) {
             try {
-                // 🔥 PROXY: CORS bypass for download
-                const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+                // Try direct fetch with credentials
+                const response = await fetch(url, {
+                    mode: 'cors',
+                    credentials: 'include'
+                });
                 
-                // Try direct first, if fails use proxy
-                let pdfData = null;
-                try {
-                    const response = await fetch(url);
-                    pdfData = await response.arrayBuffer();
-                } catch(e) {
-                    // Direct fail - try proxy
-                    const response = await fetch(proxyUrl);
-                    pdfData = await response.arrayBuffer();
-                }
+                if (!response.ok) throw new Error('HTTP ' + response.status);
                 
+                const pdfData = await response.arrayBuffer();
                 pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
                 totalPages = pdfDoc.numPages;
-                currentPage = 1;
                 
                 loading.style.display = 'none';
-                renderPage(currentPage);
+                renderAllPages();
                 
             } catch(e) {
                 console.error('PDF Load Error:', e);
-                loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">❌</div><p>Failed to load PDF. Try again.</p>';
+                // Try proxy as fallback
+                try {
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+                    const response = await fetch(proxyUrl);
+                    const pdfData = await response.arrayBuffer();
+                    pdfDoc = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                    totalPages = pdfDoc.numPages;
+                    loading.style.display = 'none';
+                    renderAllPages();
+                } catch(e2) {
+                    loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">❌</div><p>Failed to load PDF. Try again.</p>';
+                }
             }
         }
         
-        function renderPage(pageNum) {
-            if (!pdfDoc) return;
-            
-            // Clear container except page counter
+        function renderAllPages() {
             container.innerHTML = '';
-            
-            // Show all pages
             for (let i = 1; i <= totalPages; i++) {
                 renderSinglePage(i);
             }
@@ -130,22 +130,15 @@
                 const page = await pdfDoc.getPage(pageNum);
                 const viewport = page.getViewport({ scale: 1.5 });
                 
-                // Create wrapper
                 const wrapper = document.createElement('div');
                 wrapper.className = 'page-wrap';
-                wrapper.style.position = 'relative';
                 
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.width = viewport.width;
                 canvas.height = viewport.height;
                 
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                
-                await page.render(renderContext).promise;
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
                 
                 wrapper.appendChild(canvas);
                 container.appendChild(wrapper);
@@ -163,57 +156,74 @@
             }
         }
         
-        // 🔥 FIXED: Download PDF - CORS safe
+        // 🔥 FIXED: Download PDF with notification
         function downloadPDF() {
             if (!pdfUrl) {
-                showToast('❌ No PDF URL found');
+                showToast('❌ No PDF URL found', 'error');
                 return;
             }
             
-            showToast('📥 Downloading...');
+            showToast('⏳ Downloading...', '');
             
-            // Try direct download first
-            const a = document.createElement('a');
-            a.href = pdfUrl;
-            a.download = pdfUrl.split('/').pop() || 'document.pdf';
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            
-            // Try with proxy if direct fails
+            // Method 1: Try direct download with fetch
             fetch(pdfUrl)
-                .then(response => response.blob())
+                .then(response => {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.blob();
+                })
                 .then(blob => {
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = pdfUrl.split('/').pop() || 'document.pdf';
+                    link.download = pdfFileName;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
-                    showToast('✅ Download started!');
+                    setTimeout(() => URL.revokeObjectURL(url), 5000);
+                    showToast('✅ Download started! Check notification bar', 'success');
                 })
                 .catch(() => {
-                    // Fallback: open in new tab
-                    window.open(pdfUrl, '_blank');
-                    showToast('📄 Opening in new tab');
+                    // Method 2: Direct link open (fallback)
+                    try {
+                        const link = document.createElement('a');
+                        link.href = pdfUrl;
+                        link.download = pdfFileName;
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        showToast('📄 Opening in new tab', '');
+                    } catch(e) {
+                        // Method 3: Open in new window
+                        window.open(pdfUrl, '_blank');
+                        showToast('📄 Opening in new window', '');
+                    }
                 });
         }
         
-        function showToast(msg) {
+        function showToast(msg, type) {
             toast.textContent = msg;
+            toast.className = 'toast';
+            if (type === 'success') toast.classList.add('success');
+            if (type === 'error') toast.classList.add('error');
             toast.classList.add('show');
             clearTimeout(toast._timer);
             toast._timer = setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3000);
+            }, 4000);
         }
         
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') goBack();
             if (e.key === 'd' || e.key === 'D') downloadPDF();
         });
+        
+        // 🔥 Android download notification support
+        if (window.Android) {
+            window.Android.showNotification = function(title, body) {
+                // Android native notification
+            };
+        }
     </script>
 </body>
 </html>
