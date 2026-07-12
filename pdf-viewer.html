@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AyushCoderZ | PDF Viewer</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:#0a0a0f;color:#fff;font-family:'DM Sans',sans-serif;height:100vh;display:flex;flex-direction:column;}
+        .header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#111118;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+        .logo{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:#f5a623;}
+        .logo span{color:#fff;}
+        .actions{display:flex;gap:10px;}
+        .btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:6px;}
+        .btn:hover{background:rgba(245,166,35,0.2);border-color:#f5a623;}
+        .btn-download{background:#f5a623;color:#000;border:none;}
+        .btn-download:hover{background:#e8940a;}
+        .viewer-wrap{flex:1;overflow:hidden;position:relative;}
+        .viewer-wrap iframe{width:100%;height:100%;border:none;background:#0a0a0f;}
+        .loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#8888a8;}
+        .loading .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#f5a623;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .footer{text-align:center;padding:8px;font-size:11px;color:#3d4a5c;border-top:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+        .footer a{color:#f5a623;text-decoration:none;}
+        .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a2e;border:1px solid #f5a623;padding:10px 20px;border-radius:10px;font-size:13px;color:#fff;opacity:0;transition:opacity .3s;z-index:100;}
+        .toast.show{opacity:1;}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Ayush<span>CoderZ</span></div>
+        <div class="actions">
+            <button class="btn" onclick="goBack()">← Back</button>
+            <button class="btn btn-download" onclick="downloadPDF()">📥 Download</button>
+        </div>
+    </div>
+    <div class="viewer-wrap" id="viewerWrap">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Loading PDF...</div>
+        </div>
+        <iframe id="pdfFrame" src=""></iframe>
+    </div>
+    <div class="footer">AyushCoderZ · <span id="pdfName">PDF Viewer</span></div>
+    <div id="toast" class="toast">✅ Download started!</div>
+
+    <script>
+        // Get PDF URL from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfUrl = urlParams.get('s') || urlParams.get('file') || '';
+
+        const frame = document.getElementById('pdfFrame');
+        const loading = document.getElementById('loading');
+        const toast = document.getElementById('toast');
+
+        // Load PDF in iframe
+        if (pdfUrl) {
+            // Use Google PDF Viewer (clean, no branding)
+            frame.src = 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(pdfUrl);
+            frame.onload = function() {
+                loading.style.display = 'none';
+            };
+            document.getElementById('pdfName').textContent = pdfUrl.split('/').pop().slice(0, 30) + '...';
+        } else {
+            loading.innerHTML = '<div style="font-size:40px;margin-bottom:16px;">📄</div><p>No PDF URL provided</p>';
+        }
+
+        function goBack() {
+            if (document.referrer) {
+                window.location.href = document.referrer;
+            } else {
+                window.history.back();
+            }
+        }
+
+        function downloadPDF() {
+            if (!pdfUrl) {
+                showToast('❌ No PDF URL found');
+                return;
+            }
+            
+            // Create download link
+            const a = document.createElement('a');
+            a.href = pdfUrl;
+            a.download = pdfUrl.split('/').pop() || 'document.pdf';
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            showToast('📥 Download started!');
+        }
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') goBack();
+            if (e.key === 'd' || e.key === 'D') downloadPDF();
+        });
+    </script>
+</body>
+</html>
