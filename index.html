@@ -17,14 +17,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .logo{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;}.logo span{color:var(--accent);}
 .ac-icon{width:33px;height:33px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:#000;flex-shrink:0;}
 .back-btn{display:flex;align-items:center;gap:4px;padding:6px 11px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;cursor:pointer;text-decoration:none;}
-
-/* 🔥 NOTIFICATION ICON */
-.notif-icon-wrap{position:relative;cursor:pointer;display:flex;align-items:center;padding:6px 8px;border-radius:30px;background:rgba(255,255,255,0.05);border:1px solid var(--border);transition:all .2s;}
-.notif-icon-wrap:hover{background:rgba(255,255,255,0.1);}
-.notif-icon{font-size:18px;}
-.notif-badge{position:absolute;top:-4px;right:-4px;background:#FF6B6B;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;border:2px solid var(--bg);}
-.notif-badge.show{display:flex;}
-
 .home-hero{padding:36px 22px 20px;}
 .home-bc{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:5px;}.home-bc .dol{color:var(--accent);}
 .home-cmd{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted2);margin-bottom:24px;}
@@ -152,22 +144,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 .vinfo{padding:16px 18px;background:var(--bg);flex:1;}
 .vvtitle{font-size:15px;font-weight:700;margin-bottom:5px;}
 .vvmeta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;}
-
-/* 🔥 NOTIFICATION POPUP PAGE */
-.notif-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:none;flex-direction:column;}
-.notif-popup.open{display:flex;}
-.notif-popup-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--bg2);border-bottom:1px solid var(--border);}
-.notif-popup-header h2{font-size:18px;font-weight:700;color:var(--text);}
-.notif-popup-close{background:rgba(255,255,255,0.08);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
-.notif-popup-close:hover{background:rgba(255,255,255,0.15);}
-.notif-popup-body{flex:1;overflow-y:auto;padding:16px 20px 80px;}
-.notif-popup-body .notif-item{padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
-.notif-popup-body .notif-item:hover{background:rgba(255,255,255,0.03);}
-.notif-popup-body .notif-item .notif-title{font-weight:700;font-size:15px;color:var(--text);}
-.notif-popup-body .notif-item .notif-body{font-size:13px;color:var(--muted2);margin-top:4px;}
-.notif-popup-body .notif-item .notif-time{font-size:10px;color:var(--t2);margin-top:4px;}
-.notif-popup-body .notif-item .notif-image{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-top:8px;}
-.notif-empty{text-align:center;padding:60px 20px;color:var(--muted2);font-size:15px;}
 </style>
 </head>
 <body>
@@ -176,16 +152,12 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page active" id="pg-home">
   <div class="topbar">
     <div class="tl"><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="home-hero"><div class="home-bc"><span class="dol">$</span>~/platforms</div><div class="home-cmd">$ select_platform</div>
   <h1 class="home-h">Pick your <span class="hl">institute.</span></h1><p class="home-sub">Direct access to course platforms.<br>Click a card to open.</p></div>
   <div class="divider"></div>
   <div class="plist">
-    <div class="pcard" onclick="window.goToBatches()"><div class="picon" style="background:rgba(34,120,34,.15);">🚀</div><div class="pinfo"><div class="pname">KGS</div><div class="pmeta">Preparation  · Education</div></div><div class="parr">→</div></div>
+    <div class="pcard" onclick="window.goToBatches()"><div class="picon" style="background:rgba(34,120,34,.15);">🚀</div><div class="pinfo"><div class="pname">KGS</div><div class="pmeta">Preparation · Education</div></div><div class="parr">→</div></div>
   </div>
 </div>
 
@@ -193,10 +165,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page" id="pg-batches">
   <div class="topbar">
     <div class="tl"><button class="back-btn" onclick="window.goHome()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="bhero"><div class="lbadge"><span class="ldot"></span>YOUR BATCHES</div><h1 class="btitle">PICK YOUR<br><span class="ac">BATCH & START</span></h1><p class="btagline">SABSE PEHLE BATCH CHOOSE KARO,<br><span class="or">PHIR LEARNING SHURU</span></p>
   <div class="srow"><div class="sitem">🔥 <span id="batch-count">0</span> BATCHES AVAILABLE</div><div class="sitem">⚡ LIVE NOW</div><div class="sitem">🎯 SELF-PACED</div></div></div>
@@ -208,10 +176,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page" id="pg-content">
   <div class="topbar">
     <div class="tl"><button class="back-btn" onclick="window.goToBatches()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="chero"><div class="clabel"><span class="dot"></span>COURSE</div><div class="ctitle" id="c-title"></div>
   <div class="cthumb"><div class="cthumb-bg"></div><div><div class="cthumb-text" id="c-thumb-text"></div><span class="cthumb-sub" id="c-thumb-sub"></span></div><div class="cclass-badge" id="c-class-badge"></div><div class="cprice-badge"><div class="bprice-old" id="c-old-price"></div><div class="bprice-new" id="c-new-price"></div></div></div></div>
@@ -222,10 +186,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page" id="pg-subchapter">
   <div class="topbar">
     <div class="tl"><button class="back-btn" onclick="window.backToChapters()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="sub-hd"><div class="sub-subject" id="sub-subject">COURSE</div><div class="sub-title" id="sub-title">Loading...</div></div>
   <div class="sfl-list"><div class="sfl-card" onclick="window.openLectures()"><div class="sfl-icon">🎬</div><div class="sfl-info"><div class="sfl-name">Lectures</div><div class="sfl-meta" id="sub-lec-meta">0 lectures</div></div><div class="sfl-arr">→</div></div>
@@ -236,10 +196,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page" id="pg-lectures">
   <div class="topbar">
     <div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="lec-hd"><div class="lec-subject" id="lec-subject"></div><div class="lec-ttl" id="lec-ttl"></div><div class="lec-cnt" id="lec-cnt"></div></div>
   <div class="lec-list" id="lec-list"></div>
@@ -249,10 +205,6 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 <div class="page" id="pg-pdfs">
   <div class="topbar">
     <div class="tl"><button class="back-btn" onclick="window.goBackToSubChapter()">← HOME</button><div class="ac-icon">AC</div><div class="logo">Ayush<span>CoderZ</span></div></div>
-    <div class="notif-icon-wrap" onclick="openNotificationPopup()">
-        <span class="notif-icon">🔔</span>
-        <span class="notif-badge" id="notifBadge">0</span>
-    </div>
   </div>
   <div class="lec-hd"><div class="lec-subject" id="pdf-subject"></div><div class="lec-ttl">PDF Notes</div><div class="lec-cnt" id="pdf-cnt"></div></div>
   <div class="pdf-list" id="pdf-list"></div>
@@ -308,168 +260,63 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
   </div>
 </div>
 
-<!-- 🔥 NOTIFICATION POPUP PAGE -->
-<div class="notif-popup" id="notifPopup">
-    <div class="notif-popup-header">
-        <h2>📬 Notifications</h2>
-        <button class="notif-popup-close" onclick="closeNotificationPopup()">✕</button>
-    </div>
-    <div class="notif-popup-body" id="notifPopupBody">
-        <div class="notif-empty">📭 No notifications</div>
-    </div>
-</div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where, updateDoc, doc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
-  authDomain: "ayushcoderz-edu-final.firebaseapp.com",
-  projectId: "ayushcoderz-edu-final",
-  storageBucket: "ayushcoderz-edu-final.firebasestorage.app",
-  messagingSenderId: "575316793225",
-  appId: "1:575316793225:web:cd7f2df83470648328b358"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
+    authDomain: "ayushcoderz-edu-final.firebaseapp.com",
+    projectId: "ayushcoderz-edu-final",
+    storageBucket: "ayushcoderz-edu-final.firebasestorage.app",
+    messagingSenderId: "575316793225",
+    appId: "1:575316793225:web:cd7f2df83470648328b358"
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-let batches = [], chapters = [], lectures = [], pdfs = [];
+  let batches = [], chapters = [], lectures = [], pdfs = [];
 
-// ============================================================
-// 🔥 NOTIFICATION FUNCTIONS - POPUP PAGE
-// ============================================================
-
-let notificationsData = [];
-
-// 🔥 OPEN NOTIFICATION POPUP
-window.openNotificationPopup = function() {
-    document.getElementById('notifPopup').classList.add('open');
-    renderNotificationsInPopup();
-}
-
-// 🔥 CLOSE NOTIFICATION POPUP
-window.closeNotificationPopup = function() {
-    document.getElementById('notifPopup').classList.remove('open');
-}
-
-async function fetchNotifications() {
+  async function loadData() {
     try {
-        const notifRef = collection(db, "notifications");
-        const q = query(notifRef, orderBy("timestamp", "desc"), limit(50));
-        const snapshot = await getDocs(q);
-        notificationsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        updateNotificationUI();
-    } catch(e) {
-        console.error("Fetch notifications error:", e);
-    }
-}
-
-function updateNotificationUI() {
-    const unreadCount = notificationsData.filter(n => !n.read).length;
-    const badge = document.getElementById('notifBadge');
-    if (badge) {
-        badge.textContent = unreadCount;
-        badge.style.display = unreadCount > 0 ? 'flex' : 'none';
-    }
-}
-
-function renderNotificationsInPopup() {
-    const body = document.getElementById('notifPopupBody');
-    if (!body) return;
-    
-    if (notificationsData.length === 0) {
-        body.innerHTML = '<div class="notif-empty">📭 No notifications</div>';
-        return;
-    }
-    
-    body.innerHTML = notificationsData.map(n => `
-        <div class="notif-item" onclick="markNotificationRead('${n.id}')">
-            <div class="notif-title">${n.title}</div>
-            <div class="notif-body">${n.body}</div>
-            ${n.image ? `<img class="notif-image" src="${n.image}" onerror="this.style.display='none'">` : ''}
-            <div class="notif-time">${n.timestamp ? new Date(n.timestamp).toLocaleString() : ''}</div>
-        </div>
-    `).join('');
-}
-
-async function markNotificationRead(id) {
-    try {
-        await updateDoc(doc(db, "notifications", id), { read: true });
-        const notif = notificationsData.find(n => n.id === id);
-        if (notif) notif.read = true;
-        updateNotificationUI();
-        renderNotificationsInPopup();
-    } catch(e) {
-        console.error("Mark read error:", e);
-    }
-}
-
-async function checkNewNotifications() {
-    try {
-        const notifRef = collection(db, "notifications");
-        const q = query(notifRef, where("read", "==", false), orderBy("timestamp", "desc"));
-        const snapshot = await getDocs(q);
-        if (snapshot.size > 0) {
-            fetchNotifications();
-        }
-    } catch(e) {
-        console.error("Check new notifications error:", e);
-    }
-}
-
-if (Notification.permission === "default") {
-    Notification.requestPermission();
-}
-
-setInterval(checkNewNotifications, 30000);
-setTimeout(checkNewNotifications, 3000);
-
-// ============================================================
-// EXISTING FUNCTIONS (PEHLE JAISA)
-// ============================================================
-
-async function loadData() {
-    try {
-        const batchSnap = await getDocs(collection(db, "batches"));
-        batches = batchSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const chapSnap = await getDocs(collection(db, "chapters"));
-        chapters = chapSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const lecSnap = await getDocs(collection(db, "lectures"));
-        lectures = lecSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        const pdfSnap = await getDocs(collection(db, "pdfs"));
-        pdfs = pdfSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        
-        if(batches.length === 0) {
-            batches = [{ id: 'default', name: 'SSC Mahapack Bilingual 2024', className: 'SSC', price: '1299', oldPrice: '1899', thumb: 'SSC', sub: 'Bilingual', banner: '' }];
-        }
-        renderBatches();
-        fetchNotifications();
+      const batchSnap = await getDocs(collection(db, "batches"));
+      batches = batchSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const chapSnap = await getDocs(collection(db, "chapters"));
+      chapters = chapSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const lecSnap = await getDocs(collection(db, "lectures"));
+      lectures = lecSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const pdfSnap = await getDocs(collection(db, "pdfs"));
+      pdfs = pdfSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      if(batches.length === 0) {
+        batches = [{ id: 'default', name: 'SSC Mahapack Bilingual 2024', className: 'SSC', price: '1299', oldPrice: '1899', thumb: 'SSC', sub: 'Bilingual', banner: '' }];
+      }
+      renderBatches();
     } catch(e) { console.error("Load error:", e); }
-}
+  }
 
-window.goHome = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-home').classList.add('active'); }
-window.goToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
-window.goBackToSubChapter = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active'); }
-
-window.backToChapters = function() { 
+  window.goHome = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-home').classList.add('active'); }
+  window.goToBatches = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-batches').classList.add('active'); }
+  window.goBackToSubChapter = function() { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active'); }
+  
+  window.backToChapters = function() { 
     window.goToBatches(); 
     setTimeout(()=>{ 
-        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
-        document.getElementById('pg-content').classList.add('active'); 
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
+      document.getElementById('pg-content').classList.add('active'); 
     },100); 
-}
-
-function renderBatches() {
+  }
+  
+  function renderBatches() {
     const c = document.getElementById('batches-list');
     if(!c) return;
     document.getElementById('batch-count').innerText = batches.length;
     if(batches.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted2);">No batches available. 🚀</div>'; return; }
     c.innerHTML = batches.map(b => `<div class="bcard" onclick="window.selectBatch('${b.id}')"><div class="bthumb" style="background:linear-gradient(135deg,#1a0a2e,#2a1a0e);"><img class="bthumb-img" src="${b.banner || ''}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:2; display:${b.banner ? 'block' : 'none'};" onload="this.style.display='block'" onerror="this.style.display='none'"><div class="bthumb-grd"></div><div class="bthumb-name">${b.thumb || '📚'}</div><div class="bclass-badge">${b.className || 'Batch'}</div><div class="bprice-badge"><div class="bprice-old">₹${b.oldPrice || '0'}/-</div><div class="bprice-new">₹${b.price || '0'}</div></div></div><div class="bcard-body"><div class="bcard-tag"><span class="tdot"></span>${b.className || 'Batch'}</div><div class="bcard-title">${b.name || 'Untitled'}</div><div class="bcard-meta"><div class="mitem">🏷 BATCH</div><div class="mitem">▶ START ANYTIME</div></div><div class="bcard-foot"><div class="sl">START LEARNING</div><div class="arr-btn">→</div></div></div></div>`).join('');
-}
+  }
 
-window.selectBatch = function(id) {
+  window.selectBatch = function(id) {
     const batch = batches.find(b => b.id === id);
     if(!batch) return;
     window.currentBatch = batch;
@@ -482,9 +329,9 @@ window.selectBatch = function(id) {
     document.getElementById('chapters-list').innerHTML = chapters.filter(c => c.batchId === id).map(ch => `<div class="ch-item" onclick="window.selectChapter('${ch.name}')"><div class="ch-l"><div class="ch-icon">📁</div><div class="ch-name">${ch.name}</div></div><div class="ch-arr">→</div></div>`).join('') || '<div style="text-align:center;padding:20px;color:var(--muted2);">No chapters yet.</div>';
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); 
     document.getElementById('pg-content').classList.add('active');
-}
+  }
 
-window.selectChapter = function(name) {
+  window.selectChapter = function(name) {
     window.currentChapter = name;
     const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === name && l.batchId === window.currentBatch?.id; });
     const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === name && p.batchId === window.currentBatch?.id; });
@@ -493,50 +340,55 @@ window.selectChapter = function(name) {
     document.getElementById('sub-lec-meta').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('sub-pdf-meta').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-subchapter').classList.add('active');
-}
+  }
 
-window.openLectures = function() {
+  window.openLectures = function() {
     const cls = lectures.filter(l => { const ch = chapters.find(c => c.id === l.chapterId); return ch?.name === window.currentChapter && l.batchId === window.currentBatch?.id; });
     document.getElementById('lec-subject').textContent = window.currentChapter.toUpperCase();
     document.getElementById('lec-ttl').textContent = window.currentChapter+' — Lectures';
     document.getElementById('lec-cnt').textContent = cls.length+' lecture'+(cls.length!==1?'s':'');
     document.getElementById('lec-list').innerHTML = cls.map(l => `<div class="lec-item" onclick='window.openVideo(${JSON.stringify(l)}, "${window.currentChapter}")'><div class="lec-thumb"><div class="lec-thumb-bg"></div><div class="lec-play">▶</div></div><div class="lec-info"><div class="lec-name">${l.name}</div><span class="lec-badge">VIDEO</span></div><div class="lec-dur">${l.duration}</div></div>`).join('') || '<div style="text-align:center;padding:20px;color:var(--muted2);">No lectures yet.</div>';
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-lectures').classList.add('active');
-}
+  }
 
-window.openPdfs = function() {
+  window.openPdfs = function() {
     const pdfsCh = pdfs.filter(p => { const ch = chapters.find(c => c.id === p.chapterId); return ch?.name === window.currentChapter && p.batchId === window.currentBatch?.id; });
     document.getElementById('pdf-subject').textContent = window.currentChapter.toUpperCase();
     document.getElementById('pdf-cnt').textContent = pdfsCh.length+' PDF'+(pdfsCh.length!==1?'s':'');
     document.getElementById('pdf-list').innerHTML = pdfsCh.map(p => `<div class="pdf-item" onclick='window.open("${p.url}","_blank")'><div class="pdf-icon">📄</div><div class="pdf-info"><div class="pdf-name">${p.name}</div><div class="pdf-meta">${p.pages}</div></div><span class="pdf-badge">PDF</span></div>`).join('') || '<div style="text-align:center;padding:20px;color:var(--muted2);">No PDFs yet.</div>';
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('pg-pdfs').classList.add('active');
-}
+  }
 
-// ============================================================
-// PLAYER FUNCTIONS
-// ============================================================
+  // ============================================================
+  // 🎬 PLAYER FUNCTIONS - FIXED YOUTUBE SUPPORT
+  // ============================================================
 
-let isPlaying = false, curTime = 0, totalDur = 0, pInterval = null, speed = 1, speedIdx = 2;
-const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
+  let isPlaying = false, curTime = 0, totalDur = 0, pInterval = null, speed = 1, speedIdx = 2;
+  const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
-function getYouTubeId(url) {
+  // ✅ YouTube ID extractor - sabhi formats
+  function getYouTubeId(url) {
     if (!url) return null;
+    
     const patterns = [
-        /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
-        /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
-        /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
-        /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-        /(?:m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/
+      /(?:youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
+      /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+      /(?:youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+      /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
+      /(?:m\.youtube\.com\/watch\?v=)([a-zA-Z0-9_-]{11})/,
+      /(?:youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/
     ];
+    
     for (let pattern of patterns) {
-        const match = url.match(pattern);
-        if (match) return match[1];
+      const match = url.match(pattern);
+      if (match) return match[1];
     }
+    
     const genericMatch = url.match(/([a-zA-Z0-9_-]{11})/);
     return genericMatch ? genericMatch[1] : null;
-}
+  }
 
-window.openVideo = function(lec, ch) {
+  window.openVideo = function(lec, ch) {
     document.getElementById('v-title').textContent = lec.name;
     document.getElementById('v-meta').textContent = ch + ' · Batch';
     document.getElementById('v-lname').textContent = lec.name.split(' - ')[0] || lec.name;
@@ -552,36 +404,37 @@ window.openVideo = function(lec, ch) {
     const videoId = lec.url ? getYouTubeId(lec.url) : null;
     
     if (videoId) {
-        const embedUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&fs=1&modestbranding=1&enablejsapi=1';
-        ytFrame.src = embedUrl;
-        ytWrap.classList.add('active');
-        posterWrap.style.display = 'none';
-        ctrl.style.display = 'none';
+      // ✅ YOUTUBE EMBED - DESKTOP VERSION
+      const embedUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&fs=1&modestbranding=1&enablejsapi=1';
+      ytFrame.src = embedUrl;
+      ytWrap.classList.add('active');
+      posterWrap.style.display = 'none';
+      ctrl.style.display = 'none';
     } else if (lec.url && lec.url.trim() !== '') {
-        ytFrame.src = lec.url;
-        ytWrap.classList.add('active');
-        posterWrap.style.display = 'none';
-        ctrl.style.display = 'none';
+      ytFrame.src = lec.url;
+      ytWrap.classList.add('active');
+      posterWrap.style.display = 'none';
+      ctrl.style.display = 'none';
     } else {
-        ytWrap.classList.remove('active');
-        ytFrame.src = '';
-        posterWrap.style.display = '';
-        ctrl.style.display = '';
-        const t = (lec.duration || '00:00').split(':');
-        totalDur = t.length === 3 ? +t[0] * 3600 + +t[1] * 60 + +t[2] : +t[0] * 60 + +t[1];
-        stopPlayer();
-        curTime = 0;
-        speed = 1;
-        speedIdx = 2;
-        document.getElementById('v-spd').textContent = '1x';
-        updateUI();
+      ytWrap.classList.remove('active');
+      ytFrame.src = '';
+      posterWrap.style.display = '';
+      ctrl.style.display = '';
+      const t = (lec.duration || '00:00').split(':');
+      totalDur = t.length === 3 ? +t[0] * 3600 + +t[1] * 60 + +t[2] : +t[0] * 60 + +t[1];
+      stopPlayer();
+      curTime = 0;
+      speed = 1;
+      speedIdx = 2;
+      document.getElementById('v-spd').textContent = '1x';
+      updateUI();
     }
     
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('pg-player').classList.add('active');
-}
+  }
 
-window.playerBack = function() {
+  window.playerBack = function() {
     stopPlayer();
     document.getElementById('v-yt-iframe').src = '';
     document.getElementById('v-yt-wrap').classList.remove('active');
@@ -589,91 +442,92 @@ window.playerBack = function() {
     document.getElementById('v-ctrl').style.display = '';
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('pg-subchapter').classList.add('active');
-}
+  }
 
-window.togglePlay = function() {
+  window.togglePlay = function() {
     isPlaying = !isPlaying;
     updateUI();
     if (isPlaying) {
-        pInterval = setInterval(() => {
-            curTime += speed;
-            if (curTime >= totalDur) {
-                curTime = totalDur;
-                isPlaying = false;
-                clearInterval(pInterval);
-            }
-            updateProgress();
-        }, 1000);
+      pInterval = setInterval(() => {
+        curTime += speed;
+        if (curTime >= totalDur) {
+          curTime = totalDur;
+          isPlaying = false;
+          clearInterval(pInterval);
+        }
+        updateProgress();
+      }, 1000);
     } else {
-        clearInterval(pInterval);
+      clearInterval(pInterval);
     }
-}
+  }
 
-function stopPlayer() { isPlaying = false; clearInterval(pInterval); }
+  function stopPlayer() { isPlaying = false; clearInterval(pInterval); }
 
-function updateUI() {
+  function updateUI() {
     document.getElementById('v-main-btn').textContent = isPlaying ? '⏸' : '▶';
     document.getElementById('v-play-ov').style.display = isPlaying ? 'none' : 'flex';
     updateProgress();
-}
+  }
 
-function updateProgress() {
+  function updateProgress() {
     const p = totalDur > 0 ? Math.min((curTime / totalDur) * 100, 100) : 0;
     document.getElementById('v-fill').style.width = p + '%';
     document.getElementById('v-handle').style.left = 'calc(' + p + '% - 6px)';
     document.getElementById('v-curr').textContent = fmt(Math.floor(curTime));
-}
+  }
 
-function fmt(s) {
+  function fmt(s) {
     const h = Math.floor(s / 3600);
     const m = Math.floor((s % 3600) / 60);
     const sec = s % 60;
     return h > 0 ? h + ':' + pad(m) + ':' + pad(sec) : pad(m) + ':' + pad(sec);
-}
+  }
 
-function pad(n) { return n.toString().padStart(2, '0'); }
+  function pad(n) { return n.toString().padStart(2, '0'); }
 
-window.skipBack = function() { curTime = Math.max(0, curTime - 10); updateProgress(); }
-window.skipFwd = function() { curTime = Math.min(totalDur, curTime + 10); updateProgress(); }
+  window.skipBack = function() { curTime = Math.max(0, curTime - 10); updateProgress(); }
+  window.skipFwd = function() { curTime = Math.min(totalDur, curTime + 10); updateProgress(); }
 
-window.cycleSpeed = function() {
+  window.cycleSpeed = function() {
     speedIdx = (speedIdx + 1) % SPEEDS.length;
     speed = SPEEDS[speedIdx];
     document.getElementById('v-spd').textContent = speed + 'x';
     if (isPlaying) {
-        clearInterval(pInterval);
-        pInterval = setInterval(() => {
-            curTime += speed;
-            if (curTime >= totalDur) {
-                curTime = totalDur;
-                isPlaying = false;
-                clearInterval(pInterval);
-            }
-            updateProgress();
-        }, 1000);
-    }
-}
-
-window.toggleFS = function() {
-    const el = document.getElementById('v-yt-wrap').classList.contains('active') ? 
-        document.getElementById('v-yt-iframe') : 
-        document.getElementById('pg-player');
-    if (!document.fullscreenElement) {
-        el.requestFullscreen?.().catch(() => {});
-    } else {
-        document.exitFullscreen?.();
-    }
-}
-
-let dragging = false;
-const tr = document.getElementById('v-track');
-if (tr) {
-    function seek(e) {
-        const rect = tr.getBoundingClientRect();
-        const cx = e.clientX;
-        const p = Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
-        curTime = p * totalDur;
+      clearInterval(pInterval);
+      pInterval = setInterval(() => {
+        curTime += speed;
+        if (curTime >= totalDur) {
+          curTime = totalDur;
+          isPlaying = false;
+          clearInterval(pInterval);
+        }
         updateProgress();
+      }, 1000);
+    }
+  }
+
+  // ✅ Fullscreen toggle - browser fullscreen
+  window.toggleFS = function() {
+    const el = document.getElementById('v-yt-wrap').classList.contains('active') ? 
+      document.getElementById('v-yt-iframe') : 
+      document.getElementById('pg-player');
+    if (!document.fullscreenElement) {
+      el.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.();
+    }
+  }
+
+  let dragging = false;
+  const tr = document.getElementById('v-track');
+  if (tr) {
+    function seek(e) {
+      const rect = tr.getBoundingClientRect();
+      const cx = e.clientX;
+      const p = Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
+      curTime = p * totalDur;
+      updateProgress();
     }
     tr.addEventListener('mousedown', e => { dragging = true; seek(e); });
     tr.addEventListener('touchstart', e => { dragging = true; seek(e.touches[0]); }, { passive: true });
@@ -681,9 +535,9 @@ if (tr) {
     document.addEventListener('touchmove', e => { if (dragging) seek(e.touches[0]); }, { passive: true });
     document.addEventListener('mouseup', () => dragging = false);
     document.addEventListener('touchend', () => dragging = false);
-}
+  }
 
-loadData();
+  loadData();
 </script>
 </body>
 </html>
