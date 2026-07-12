@@ -539,5 +539,22 @@ html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-seri
 
   loadData();
 </script>
+
+<!-- 🔥 PDF VIEWER SCRIPT - SIRF YEH ADD KIYA HAI -->
+<script>
+// Website mein PDF link click karne par PDF viewer open
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link) {
+        const href = link.getAttribute('href');
+        if (href && (href.endsWith('.pdf') || href.includes('.pdf'))) {
+            e.preventDefault();
+            const viewerUrl = 'https://ayushydv38.github.io/ayushcoderz/pdf-viewer.html?s=' + encodeURIComponent(href);
+            window.open(viewerUrl, '_blank');
+        }
+    }
+});
+</script>
+
 </body>
 </html>
