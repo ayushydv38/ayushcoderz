@@ -200,8 +200,9 @@ button{background:#0ff;border:none;padding:10px 20px;border-radius:8px;color:#00
 </div>
 
 <script type="module">
+// 🔥 FIREBASE IMPORT - CHANGED TO REALTIME DATABASE
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, orderBy, limit, updateDoc, where } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getDatabase, ref, get, child, set, push, remove, update, query, orderByChild, limitToLast, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCxGznIYDWet052xmhaSOSrE-MyIMYU9bU",
@@ -213,22 +214,60 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// 🔥 DB CHANGED TO REALTIME DATABASE
+const db = getDatabase(app);
 
 let batches=[], chapters=[], lectures=[], pdfs=[], notifications=[];
 
 async function loadData() {
   try {
-    const batchSnap=await getDocs(collection(db,"batches"));
-    batches=batchSnap.docs.map(d=> ({id:d.id,...d.data()}));
-    const chapSnap=await getDocs(collection(db,"chapters"));
-    chapters=chapSnap.docs.map(d=> ({id:d.id,...d.data()}));
-    const lecSnap=await getDocs(collection(db,"lectures"));
-    lectures=lecSnap.docs.map(d=> ({id:d.id,...d.data()}));
-    const pdfSnap=await getDocs(collection(db,"pdfs"));
-    pdfs=pdfSnap.docs.map(d=> ({id:d.id,...d.data()}));
-    const notifSnap=await getDocs(query(collection(db,"notifications"), orderBy("timestamp", "desc"), limit(100)));
-    notifications=notifSnap.docs.map(d=> ({id:d.id,...d.data()}));
+    // Load batches
+    const batchSnap = await get(child(ref(db), "batches"));
+    if (batchSnap.exists()) {
+      const data = batchSnap.val();
+      batches = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+    } else {
+      batches = [];
+    }
+    
+    // Load chapters
+    const chapSnap = await get(child(ref(db), "chapters"));
+    if (chapSnap.exists()) {
+      const data = chapSnap.val();
+      chapters = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+    } else {
+      chapters = [];
+    }
+    
+    // Load lectures
+    const lecSnap = await get(child(ref(db), "lectures"));
+    if (lecSnap.exists()) {
+      const data = lecSnap.val();
+      lectures = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+    } else {
+      lectures = [];
+    }
+    
+    // Load pdfs
+    const pdfSnap = await get(child(ref(db), "pdfs"));
+    if (pdfSnap.exists()) {
+      const data = pdfSnap.val();
+      pdfs = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+    } else {
+      pdfs = [];
+    }
+    
+    // Load notifications (ordered by timestamp desc)
+    const notifSnap = await get(child(ref(db), "notifications"));
+    if (notifSnap.exists()) {
+      const data = notifSnap.val();
+      notifications = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+      notifications.sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+      notifications = notifications.slice(0, 100);
+    } else {
+      notifications = [];
+    }
+    
     renderAll();
   } catch(e){ console.error("Load error:", e); }
 }
@@ -344,7 +383,7 @@ window.saveEditedNotification = async function() {
     }
     
     try {
-        await updateDoc(doc(db, "notifications", id), {
+        await update(ref(db, `notifications/${id}`), {
             title: title,
             body: body,
             image: image || '',
@@ -376,7 +415,7 @@ window.deleteNotification = async function(id) {
     if (!confirm('⚠️ Are you sure you want to delete this notification?')) return;
     
     try {
-        await deleteDoc(doc(db, "notifications", id));
+        await remove(ref(db, `notifications/${id}`));
         notifications = notifications.filter(n => n.id !== id);
         renderNotificationsHistory();
         alert('✅ Notification deleted successfully!');
@@ -410,10 +449,10 @@ function attachDelete(){
   document.querySelectorAll('.delete-btn').forEach(btn=>btn.onclick=async ()=>{
     const id=btn.dataset.id, type=btn.dataset.type;
     if(!confirm('Delete this item?')) return;
-    if(type==='batch'){ await deleteDoc(doc(db,"batches",id)); batches=batches.filter(b=>b.id!==id); chapters=chapters.filter(c=>c.batchId!==id); lectures=lectures.filter(l=>l.batchId!==id); pdfs=pdfs.filter(p=>p.batchId!==id); }
-    if(type==='chapter'){ await deleteDoc(doc(db,"chapters",id)); chapters=chapters.filter(c=>c.id!==id); lectures=lectures.filter(l=>l.chapterId!==id); pdfs=pdfs.filter(p=>p.chapterId!==id); }
-    if(type==='lecture'){ await deleteDoc(doc(db,"lectures",id)); lectures=lectures.filter(l=>l.id!==id); }
-    if(type==='pdf'){ await deleteDoc(doc(db,"pdfs",id)); pdfs=pdfs.filter(p=>p.id!==id); }
+    if(type==='batch'){ await remove(ref(db,`batches/${id}`)); batches=batches.filter(b=>b.id!==id); chapters=chapters.filter(c=>c.batchId!==id); lectures=lectures.filter(l=>l.batchId!==id); pdfs=pdfs.filter(p=>p.batchId!==id); }
+    if(type==='chapter'){ await remove(ref(db,`chapters/${id}`)); chapters=chapters.filter(c=>c.id!==id); lectures=lectures.filter(l=>l.chapterId!==id); pdfs=pdfs.filter(p=>p.chapterId!==id); }
+    if(type==='lecture'){ await remove(ref(db,`lectures/${id}`)); lectures=lectures.filter(l=>l.id!==id); }
+    if(type==='pdf'){ await remove(ref(db,`pdfs/${id}`)); pdfs=pdfs.filter(p=>p.id!==id); }
     renderAll();
   });
 }
@@ -436,8 +475,8 @@ document.getElementById('sendNotificationBtn')?.addEventListener('click', async 
     status.style.color = '#FFD93D';
     
     try {
-        const notifRef = collection(db, "notifications");
-        await addDoc(notifRef, {
+        const newRef = push(ref(db, "notifications"));
+        await set(newRef, {
             title: title,
             body: message,
             image: image || '',
@@ -455,8 +494,13 @@ document.getElementById('sendNotificationBtn')?.addEventListener('click', async 
         document.getElementById('notifyImage').value = '';
         
         // Reload notifications
-        const notifSnap = await getDocs(query(collection(db,"notifications"), orderBy("timestamp", "desc"), limit(100)));
-        notifications = notifSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const notifSnap = await get(child(ref(db), "notifications"));
+        if (notifSnap.exists()) {
+            const data = notifSnap.val();
+            notifications = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            notifications.sort((a, b) => (b.timestamp || '').localeCompare(a.timestamp || ''));
+            notifications = notifications.slice(0, 100);
+        }
         renderNotificationsHistory();
         
         setTimeout(() => { status.innerHTML = ''; }, 5000);
@@ -477,25 +521,49 @@ document.getElementById('pdfBatchSelect')?.addEventListener('change', updateSele
 // ADD BUTTONS
 document.getElementById('addBatchBtn')?.addEventListener('click', async()=>{
   const n=document.getElementById('batchName').value.trim(), cl=document.getElementById('batchClass').value.trim(), p=document.getElementById('batchPrice').value.trim(), op=document.getElementById('batchOldPrice').value.trim(), t=document.getElementById('batchThumb').value.trim(), s=document.getElementById('batchSub').value.trim(), b=document.getElementById('batchBanner').value.trim();
-  if(n&&cl&&p){ const docRef=await addDoc(collection(db,"batches"),{name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); batches.push({id:docRef.id,name:n,className:cl,price:p,oldPrice:op||p,thumb:t||n.substring(0,4),sub:s||'',banner:b||''}); renderAll(); alert('✅ Batch added!'); }
+  if(n&&cl&&p){ 
+    const newRef = push(ref(db, "batches"));
+    await set(newRef, {name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'', banner:b||''});
+    batches.push({id:newRef.key, name:n, className:cl, price:p, oldPrice:op||p, thumb:t||n.substring(0,4), sub:s||'', banner:b||''}); 
+    renderAll(); 
+    alert('✅ Batch added!'); 
+  }
   else alert('❌ Fill name, class and price');
 });
 
 document.getElementById('addChapterBtn')?.addEventListener('click', async()=>{
   const bid=document.getElementById('chapterBatchSelect').value, n=document.getElementById('chapterName').value.trim();
-  if(bid&&n){ const docRef=await addDoc(collection(db,"chapters"),{batchId:bid,name:n}); chapters.push({id:docRef.id,batchId:bid,name:n}); renderAll(); alert('✅ Chapter added!'); }
+  if(bid&&n){ 
+    const newRef = push(ref(db, "chapters"));
+    await set(newRef, {batchId:bid, name:n});
+    chapters.push({id:newRef.key, batchId:bid, name:n}); 
+    renderAll(); 
+    alert('✅ Chapter added!'); 
+  }
   else alert('❌ Select batch & enter name');
 });
 
 document.getElementById('addLectureBtn')?.addEventListener('click', async()=>{
   const bid=document.getElementById('lectureBatchSelect').value, cid=document.getElementById('lectureChapterSelect').value, n=document.getElementById('lectureName').value.trim(), d=document.getElementById('lectureDuration').value.trim(), u=document.getElementById('lectureUrl').value.trim();
-  if(bid&&cid&&n&&d&&u){ const docRef=await addDoc(collection(db,"lectures"),{batchId:bid,chapterId:cid,name:n,duration:d,url:u}); lectures.push({id:docRef.id,batchId:bid,chapterId:cid,name:n,duration:d,url:u}); renderAll(); alert('✅ Lecture added!'); }
+  if(bid&&cid&&n&&d&&u){ 
+    const newRef = push(ref(db, "lectures"));
+    await set(newRef, {batchId:bid, chapterId:cid, name:n, duration:d, url:u});
+    lectures.push({id:newRef.key, batchId:bid, chapterId:cid, name:n, duration:d, url:u}); 
+    renderAll(); 
+    alert('✅ Lecture added!'); 
+  }
   else alert('❌ Fill all fields');
 });
 
 document.getElementById('addPdfBtn')?.addEventListener('click', async()=>{
   const bid=document.getElementById('pdfBatchSelect').value, cid=document.getElementById('pdfChapterSelect').value, n=document.getElementById('pdfName').value.trim(), p=document.getElementById('pdfPages').value.trim(), u=document.getElementById('pdfUrl').value.trim();
-  if(bid&&cid&&n&&u){ const docRef=await addDoc(collection(db,"pdfs"),{batchId:bid,chapterId:cid,name:n,pages:p||'N/A',url:u}); pdfs.push({id:docRef.id,batchId:bid,chapterId:cid,name:n,pages:p||'N/A',url:u}); renderAll(); alert('✅ PDF added!'); }
+  if(bid&&cid&&n&&u){ 
+    const newRef = push(ref(db, "pdfs"));
+    await set(newRef, {batchId:bid, chapterId:cid, name:n, pages:p||'N/A', url:u});
+    pdfs.push({id:newRef.key, batchId:bid, chapterId:cid, name:n, pages:p||'N/A', url:u}); 
+    renderAll(); 
+    alert('✅ PDF added!'); 
+  }
   else alert('❌ Fill all fields');
 });
 
